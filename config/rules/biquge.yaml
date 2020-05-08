@@ -1,0 +1,241 @@
+RuleConfigInfo:
+  GetSiteCharset:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: gbk
+    RegexName: GetSiteCharset
+  GetSiteName:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "biquge-cn"
+    RegexName: GetSiteName
+  GetSiteUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "https://www.xbaquge.com/"
+    RegexName: GetSiteUrl
+  LagerSort:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:novel:category\" content=\"(.+?)\"/>"
+    RegexName: LagerSort
+  NovelAuthor:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:novel:author\" content=\"(.+?)\"/>"
+    RegexName: NovelAuthor
+  NovelCover:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:image\" content=\"(.+?)\"/>"
+    RegexName: NovelCover
+  NovelDefaultCoverUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: NovelDefaultCoverUrl
+  NovelDegree:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:novel:status\" content=\"(.+?)\"/>"
+    RegexName: NovelDegree
+  NovelErr:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: 1111111111
+    RegexName: NovelErr
+  NovelInfo_GetNovelPubKey:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: NovelInfo_GetNovelPubKey
+  NovelIntro:
+    FilterPattern: "<table>|<table.+?>|</table>|<label.+?>|</label>|<div.+?>|<div>|</div>|<td.+?>|</td>|<tr>|</tr>|<a.+?</a>|<[Aa].+?</[Aa]>|<a[^>]*>|<a>|</a>|<FONT.+?</FONT>|<font.+?</font>|<font.+?>|<font>|</font>|<SPAN.+?</SPAN>|<img.+?>|<script.+?</script>|</script>|<script>|<strong[^>]*>|</strong>|<span[^>]*>|</span>|<!--.+?-->|<p style[^>]*>|<font[^>]*>|</font>|<center>|</center>|<h1>|</h1>|\n<[Ss][Cc][Rr][Ii][Pp][Tt](.|\\n)+?</[Ss][Cc][Rr][Ii][Pp][Tt]>|<[Ff][Oo][Nn][Tt](.|\\n)*?</[Ff][Oo][Nn][Tt]>|<[Ii][Ff][Rr][Aa][Mm][Ee](.|\\n)+?</[Ii][Ff][Rr][Aa][Mm][Ee]>|<[Aa].+?</[Aa]>|<[Dd][Ii][Vv].+?>|</[Dd][Ii][Vv]>|<!--.+?-->|<[Ss>][Pp][Aa][Nn](.|\\n)*?</[Ss>][Pp][Aa][Nn]>|\nQ|ｑ|Ｑ♂q\nW|ｗ|Ｗ♂w\nE|ｅ|Ｅ♂e\nR|ｒ|Ｒ♂r\nT|ｔ|Ｔ♂t\nY|ｙ|Ｙ♂y\nU|ｕ|Ｕ♂u\nI|ｉ|Ｉ♂i\nO|ｏ|Ｏ♂o\nP|ｐ|Ｐ♂p\nA|ａ|Ａ♂a\nS|ｓ|Ｓ♂s\nD|ｄ|Ｄ♂d\nF|ｆ|Ｆ♂f\nG|ｇ|Ｇ♂g\nH|ｈ|Ｈ♂h\nJ|ｊ|Ｊ♂j\nK|ｋ|Ｋ♂k\nL|ｌ|Ｌ♂l\nZ|ｚ|Ｚ♂z\nX|ｘ|Ｘ♂x\nC|ｃ|Ｃ♂c\nV|ｖ|Ｖ♂v\nB|ｂ|Ｂ♂b\nN|ｎ|Ｎ♂n\nM|ｍ|Ｍ♂m\n１|①|㈠|⑴|⒈|Ⅰ|ⅰ♂1\n２|②|㈡|⑵|⒉|Ⅱ|ⅱ♂2\n３|③|㈢|⑶|⒊|Ⅲ|ⅲ♂3\n４|④|㈣|⑷|⒋|Ⅳ|ⅳ♂4\n５|⑤|㈤|⑸|⒌|Ⅴ|ⅴ♂5\n６|ⅵ|Ⅵ|⒍|⑹|㈥|⑥♂6\n７|⑦|㈦|⑺|⒎|Ⅶ|ⅶ♂7\n８|⑧|㈧|⑻|⒏|Ⅷ|ⅷ♂8\n９|ⅸ|Ⅸ|⒐|⑼|㈨|⑨♂9\n１０|⑩|㈩|⑽|⒑|Ⅹ|ⅹ♂10\nа|ａ♂a\n℃|С|с|Ｃ|ｃ♂c\nC|℃|С|с|Ｃ|ｃ♂c\nD|Ｄ|ｄ♂d\nE|Ё|ё|Е|е|Ε|ε|Ｅ|ｅ♂e\nF|℉|Ｆ|ｆ♂f\nG|ɡ|Ｇ|ｇ♂g\nH|Н|н|Η|Ｈ|ｈ♂h\nI|ì|í|ī|ǐ|∣|Ⅰ|ⅰ|Ι|ι|Ｉ|ｉ♂i\nJ|Ｊ|ｊ♂j\nK|К|к|Κ|κ|Ｋ|ｋ♂k\nL|Ｌ|ｌ♂l\nM||М|м|Μ|Ｍ|ｍ♂m\nN||ń|ň|∏|∩|И|и|Й|й|Ν|Ｎ|ｎ♂n\nO|ò|ó|ō|ǒ|О|о|Ο|ο|Ｏ|ｏ♂o\nP|Р|р|Ρ|p|ρ|Ｐ|ｐ|p♂p\nQ|Ｑ|ｑ♂q\nR|Я|я|Ｒ|ｒ♂r\nS|Ｓ|ｓ♂s\nT|Т|т|Τ|τ|Ｔ|ｔ♂t\nU|ū|ú|ǔ|ù|ǖ|ǘ|ǚ|ǜ|ü|∪|υ|Ｕ|ｕ♂u\nV|Ⅴ|∨|ˇ|Ｖ|ｖ♂v\nW|ω|w|w|Ｗ|ｗ♂w\nX|×|Ⅹ|ⅹ|Х|х|Χ|χ|Ｘ|ｘ♂x\nY|У|у|Ｙ|ｙ♂y\nZ|Ζ|Ｚ|ｚ♂z\n１|①|⑴|⒈|㈠♂1\n２|②|⑵|⒉|㈡♂2\n３|③|⑶|⒊|З|з|㈢♂3\n４|④|⑷|⒋|㈣♂4\n５|⑤|⑸|⒌|㈤♂5\n６|⑥|⑹|⒍|б|㈥♂6\n７|⑦|⑺|⒎|㈦♂7\n８|⑧|⑻|⒏|㈧♂8\n９|⑨|⑼|⒐|㈨♂9\n０♂0\n⑩|⑽|⒑♂10\n⑾|⒒♂11\n⑿|⒓♂12\n⒀|⒔♂13\n⒁|⒕♂14\n⒂|⒖♂15\n⒃|⒗♂16\n⒄|⒘♂17\n⒅|⒙♂18\n⒆|⒚♂19\n⒇|⒛♂20\nhttp://|www|[.@#$%^*]|biqudao|baquge|com|net|la|cc|co|cm|cn|pw|tw|info|org|me|in|win|vip|top|xyz|us|m|lu|xs|zw|xiaoshuo|zhongwen|[┡]|[『]|[．]|[＊]|新(.{0,4})笔(.{0,4})趣(.{0,4})阁|笔(.{0,4})趣(.{0,4})阁|新笔趣阁|w|&32;|&33;|&34;|&35;|&36;|&37;|&38;|&39;|&40;|&41;|&42;|&43;|&44;|&45;|&46;|&47;|&48;|&49;|&50;|&51;|&52;|&53;|&54;|&55;|&56;|&57;|&58;|&59;|&60;|&61;|&62;|&63;|&64;|&65;|&66;|&67;|&71;|&72;|&73;|&76;|&77;|&78;|&79;|&80;|&81;|&82;|&83;|&84;|&85;|&86;|&87;|&88;|&89;|&90;|&91;|&92;|&93;|&94;|&95;|&96;|&97;|&98;|&99;|&100;|&101;|&102;|&103;|&104;|&105;|&106;|&107|&108;;|&109;|&110;|&111;|&112;|&113;|&114;|&115;|&116;|&117;|&118;|&119;|&120;|&121;|&122;|&215;|&8220;|&8216;|&8217;|&8218;|&8222;|&8226;|&8598;|&8644;|&8649;|&8730;|&8814;|&8815;|&9314;|&9792;|&1097;|&10166;|&12290;|&12304;|&12398;|&12305;|&12354;|&12833;|&12834;|&19968;|&19969;|&19979;|&20070;|&20108;|&20113;|&20316;|&20320;|&20379;|&20813;|&20837;|&20851;|&21147;|&21457;|&22312;|&22320;|&22336;|&23398;|&22552;|&22860;|&23398;|&23450;|&23567;|&23601;|&23627;|&24230;|&24555;|&25110;|&25509;|&25512;|&25628;|&25991;|&26032;|&26356;|&26368;|&26377;|&26412;|&26469;|&26825;|&28857;|&30334;|&30340;|&30452;|&30475;|&31070;|&31283;|&31449;|&31456;|&31958;|&32034;|&32473;|&32773;|&32593;|&33410;|&33457;|&35498;|&33616;|&35775;|&35789;|&35828;|&35835;|&36153;|&36335;|&36733;|&36755;|&38190;|&38307;|&38382;|&38401;|&38405;|&38642;|&38914;|&39029;|&39030;|&39318;|&40670;|&65281;|&65288;|&65292;|&65306;|&65533;|&315|&29256;|&20027;|&27426;|&36814;|&24744;|&65306;|&10;|&25105;|&20204;|&26159;|&65306;|\n[︽^]|[↗]|[●]|[∑]|[≧]|[【]|[⊙]|[】]|[¤]|[⊥]|[%％]|[↑]|[※]|[∏]|[∈]|[￠]|[￡]|[◎]|[‰]|[△]|[*｜]|[\\/]|[@]|[(]|[（]|[)]|[）]|[_—]|[-—]|[+]|[=]|[|｜]|[!！]|[$]|[￥]|[／]|[∽]|[·]|[｝]|[｛]|[?]|[？]|[←]|[→]|[↓]|[≈]|[≡]|[≠]|[±]|[≤]|[≥]|[×]|[÷]|[?]|[‘]|[’]|[√]|[∮]|[︾]|[□]|[≌]|[…]|[◇]|[＋]|[≦]|[▲]|[≯]|[∝]|[▽]|[∟]|[≡]|[★]|[＠]|[＄]|[∞]|[▼]|[∫]|[↖]|[☆]|[⊕]|[≯]|[⌒]|[↘]|[♀]|[》]|[◆]|[◇]|[↙]|[〖]|[』]|[∧]|[∵]|[《]|[∠]|[～]|[∷]|[■]|[『]|[≮]|[[]|[]]|[Ω]|[ζ]|[╯]|[~]|[Щ]|[■]|[lā]|[◢]|[щ]|[┢]|[┡]|[φ]|[ψ]|[§]|[№]|[#]|[¤]|[≯]|[＆]|[∮]|[α]|[ν]|[λ]|[．]|[乛]|[亠]|[乆]|[冂]|[亻]|[Ⅻ]|[乂]|[∈]|[≦]|[＜]|[＜]|[﹤]|[＞]|[罓]|[￠][|￡]|[卍]|[≥]|[≧]|[&;</>]|\nbr♂<br />\nnbsp♂&nbsp;"
+    Method: Match
+    Options: None
+    Pattern: "<div id=\"intro\">\\s*((.|\\n)+?)\\s*<p>各位书友要是觉得"
+    RegexName: NovelIntro
+  NovelKeyword:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:novel:author\" content=\"(.+?)\"/>"
+    RegexName: NovelKeyword
+  NovelList_GetNovelKey:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<span class=\"s2\">《<a href=\"/book/(\\d*)/\" target=\"_blank\">(.+?)</a>》</span><span class=\"s3\">"
+    RegexName: NovelList_GetNovelKey
+  NovelListUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "http://www.biquge.cn/qita/"
+    RegexName: NovelListUrl
+  NovelName:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:novel:book_name\" content=\"(.+?)\"/>"
+    RegexName: NovelName
+  NovelSearch_GetNovelKey:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: NovelSearch_GetNovelKey
+  NovelSearchData:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "searchkey={SearchKey}&searchtype=articlename"
+    RegexName: NovelSearchData
+  NovelSearchUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: NovelSearchUrl
+  NovelUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "http://www.baquge.tw/files/article/html/{NovelKey/1000}/{NovelKey}/"
+    RegexName: NovelUrl
+  PubChapter_GetChapterKey:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<dd><a href=\"/files/article/html/\\d*/\\d*/(\\d*).html\">(.+?)</a></dd>"
+    RegexName: PubChapter_GetChapterKey
+  PubChapterName:
+    FilterPattern: ""
+    Method: Url
+    Options: IgnoreCase
+    Pattern: "<dd><a href=\"/files/article/html/\\d*/\\d*/\\d*.html\">(.+?)</a></dd>"
+    RegexName: PubChapterName
+  PubContent_GetTextKey:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: PubContent_GetTextKey
+  PubContentErr:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "这里必须填写"
+    RegexName: PubContentErr
+  PubContentImages:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<[^<]*((?<=<(?:img|IMG)[^>]*(?:(?:src|SRC)(?:\\s*=\\s*(?:[\"']?))))(?:[^\\s\"'>]*)\\.(?:jpg|gif|jpeg|bmp|png|GIF|JPG))[^>]*>"
+    RegexName: PubContentImages
+  PubContentPage:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: ""
+  PubContentReplace:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<span[^>]*>.{15,200}</span>|<p\\s*class[^>]*>.{15,200}</p>|txt下载(?=.{0,6}?请).{1,50}(~|#|%|&|\\^)|更多好看的小说|好看的小说|txt下载|\n[a-zA-Z0-9][-a-zA-Z0-9]{3,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\\.?|[a-zA-Z0-9]\\s*[-a-zA-Z0-9]{3,62}\\s*(\\.\\s*[a-zA-Z0-9]\\s*[-a-zA-Z0-9]{0,62})+\\.?|y.{0,6}b.{0,6}d.{0,6}u|一.{0,6}本.{0,6}读.{0,6}s|\n．♂.\n\\s*<br>♂<br>♂\n<br>\\s*♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n&nbsp;&nbsp;&nbsp;&nbsp;♂<br>\n&nbsp;&nbsp;&nbsp;&nbsp;♂<br>\n&nbsp;&nbsp;&nbsp;&nbsp;♂<br>\n&nbsp;&nbsp;&nbsp;♂<br>\n&nbsp;&nbsp;&nbsp;♂<br>\n\\s*<br>♂<br>♂\n<br>\\s*♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n\\s*<br>♂<br>♂\n<br>\\s*♂<br>♂\n<br><br><br><br>♂<br>♂\n<br><br><br>♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n<[^<]*((?<=<?:img|IMG)[^>]*(?:(?:src|SRC)(?:\\s*=\\s*(?:[\"']?))))(?:[^\\s\"'>]*)\\.(?:jpg|gif|jpeg|bmp|png|GIF|JPG)[^>]*>|\n\\）\\[\\]|<br>'\\)|\\[\\]|'\\)|<div[^>]*>|<img[^>]*>|[a-z]{0,3}@[a-z]{0,3}\\s*|\\（\\）|（）|\n<a[^>]*>|</a>|<b style[^>]*>|新人写作季作品|\\*j|&nbsp;|\n┏[^┛]*┛|╔[^╝]*╝|\\[快捷键:←\\]|上页|\\-下页|\\[快捷键:→\\]|\\-目录|\n<!--.+?-->|<u>|</u>|<b>|</b>|<i>|</i>|<li>|</li>|</ul>|<ul>|\\?\\?\\?|\n\\(\\)|\\[\\.\\.]|<script[^>]*>|</script>|<div[^>]*>|</div>|</table>|\n<a[^>]*>|</a>|<font[^>]*>|</font>|</span>|<span>|<objec[^>]*>|\n<embe[^>]*>|<script[^>]*>|</script>|<fiel[^>]*>|</fieldset>|\n<span[^>]*>|<label[^>]*>|</label>|<script[^>]*>|</script>|\n<if[^>]*>|</iframe>|<img[^>]*>|9\\s*v\\s*k|\n<st[^>]*>\\s*.+?\\s*<.+?tyl[^>]*>|\n<ta[^>]*>|<tr>|<td>|</td>|</tr>|\n\\?\\@|setfontsize\\(\\)|\n如欲知后事.+?正版阅读！|\n16977\\.com|16977小游戏|每天更新好玩的小游戏|\n等你来发现|免费送逐浪币|快来抢吧！|\nhttp://|www\\.|www|\nnét|net|org|nêt|n\\|e\\|t|n\\s*e\\s*t♂\n\\.tv|\\.la|\\.in|\\.cn|\\.cc|\\.se|\\.ne♂\n<br>.{1}<br>♂<br>♂\n\\s.[a-z0-9]\\s|\n[a-zA-Z0-9][-a-zA-Z0-9]{3,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\\.?|\n[-a-z]\\s[-a-z]\\s[-a-z]|\ntxt下载(?=.{0,6}?请).{1,50}(~|#)|绿(?=.{0,6}?小).{2,6}网|混(?=.{1,8}?说).{2,8}网|无/弹窗广/告|1(.{0,6})5(.{0,6})1(.{0,6})看(.{0,6})书(.{0,6})网|1(.{0,6})5(.{0,6})1(.{0,6})看(.{0,6})书|六零小说|全文字txt下载|89免费小说阅|修真小说|5500小游戏|旋风山寨|奇书屋|逆龙道|启杰小说吧|读小说|清逸文学|零点书屋|百书屋|混混小说网|151看书网|墨坛文学|重要小说网|元元小说网|369书库|重要小说网|奇书屋|无弹窗|吾读小说网|生生世世小说网|品书网|大书包|追书网|泡书中文|好书楼|114中文|9vk|ABC小说|吾读|拉牛牛|请看小说网|读书库|酒神吧|百度贴吧|启航文字|1553小说|起航更新|起航|yy小说|书哈|万书社|爱去看看|l10读书|六九中文|86中文|89文学|读网小说|读网|猫扑中文|世纪艺术|大文学|怡红院|燃文|玄幻小说网|吾爱文学|就爱看文学|小说吾爱|小说52|吾爱|大家读书院|大众小说|华夏小说|东方小说|午夜吧|看好书|诺秋|书书|看吧小说|第二中文网|名书楼|读书啦|好小说|下载楼|落秋中文网|中文网|小说网|123读|文趣吧|3Q中文|飞速中文|万书楼|书海阁|书\\s*海\\s*阁|\nluoqiu|200xs|123du|1rxs|xiuzhenxiaoshuo|haoxiaoshuo|520xs|duduwo|ttzw|doulaidu|obooko|soudu|zhuixiaoshuo|hahawx|h\\s*u\\s*n\\s*h\\s*u\\s*n|hunhun|22mt|zybook|yywx|qishu|9vk|9v|dashubao|xs52|zhuishu|haoshulou|114zw|bookabc|dushuku|jiu+shen+8|jiushen8|wapyyy|wanshushe|caihongwenxue|27kk|suimèng|96book|16kxs|free97|fyxs|zhen1|8azw|kandy|meishiq|aizheli|kaojinnvlingdao|la66|ha18|kanshu|biquge|suimeng|1553|88book8|hxqwx|shumilou|wcxiaoshuo|xiaoshuo555|zhuixiaoshuo|nilongdao|ttzw|fyxs|lvexs|zhongheng|qidian|xiaoshuox|xshuotxt|2552|4619|soudu|zhuzhudao|dawenxue|qukanshu|76zw|dukankan|nuoshu|16977|58xs|epzw|book|llw2|shuanshu|126aa|101du|aiyun|8du8|89read|5ccc|3vbook|3qzw|2100art|paoshu8|16kxs|16kbook|16k|17k|35xs|3zcn|58xs|69zw|86zw|aiyun|bokan|xslong|wjsw|wenxuemi|xs8|5ye8|6ycn|lnwow|txt6|xunshu|xhxsw|yxg|yzuu|shuoshuo520|shouda8|ranwen|nuoqiu|mx99|myshulou|dzxsw|cmfu|caizige|dawenxue|huaixiu|kenwen|kanshuge|yunxuange|du5|doxiaoshuo|92k|91du|laikanshuba|khshu|bxzw|bxz|wwanjuan|shuhaige|qmshu|\nshenmaxiaoshuo|d9zw|cmfu|nuoqiu|shushuw|35xs|book.kankankan8|kankaan8|lvsexs|shuhaige|21zw|piaotian|66721|00ks|零零看书|\ncom|\n嚩|囘|冇|「|」|『|』|〖|〗|圌|龘|卝|垩|更多好看的小说|好看的小说|txt下载|\n网》网♂网》\n\\s*<br>♂<br>♂\n<br>\\s*♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n\\s*<br>♂<br>♂\n<br>\\s*♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n\\s*<br>♂<br>♂\n<br>\\s*♂<br>♂\n<br><br><br><br>♂<br>♂\n<br><br><br>♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n<br><br>♂<br>♂\n<br>.{1}<br>♂<br>♂\n\\s.[a-z0-9]\\s|\n1.{0,5}3.{0,5}8.{0,5}看.{0,5}(书|書).{0,5}(网|網)|绿.{0,5}色.{0,5}小.{0,5}说|书.{0,5}海.{0,5}阁|雨.{0,5}打.{0,5}萍|0.{0,5}0.{0,5}k.{0,5}s|零.{0,5}零.{0,5}看.{0,5}书|\n1.{0,5}3.{0,5}8.{0,5}0.{0,5}0.{0,5}1.{0,5}0.{0,5}0|s.{0,5}h.{0,5}u.{0,5}h.{0,5}a.{0,5}i.{0,5}g.{0,5}e|l.{0,5}v.{0,5}s.{0,5}e.{0,5}x.{0,5}s|\\（\\）|-<>-网|看首发无广告请到|《》|</p>|w.w.w.|看书网|【文字首发】|文字首发|<br>|三八文学|cad2;|cad1;|<br<br|\">|正努力为您加载中...|align=\"left<br|<p id=\"msg|\" target=\"_blank|”有最新章节更新及时|\n<br />”>|请搜索飘天文学，小说更好更新更快!|高速更新|\n感谢各位书友的支持，您的支持就是我们最大的动力|\n飘(.{0,6})天(.{0,6})文(.{0,6})学|\n飘天|piaotian|\n{}|\n\\[\\]|\n记住本站网址.{0,20}方便下次阅读.{0,20}百度输入.{0,20}进入本站|\n\\(\\)|\nww.qmshu|\nqmshu|"
+    RegexName: PubContentReplace
+  PubContentText:
+    FilterPattern: "<table>|<table.+?>|</table>|<label.+?>|</label>|<div.+?>|<div>|</div>|<td.+?>|</td>|<tr>|</tr>|<a.+?</a>|<[Aa].+?</[Aa]>|<a[^>]*>|<a>|</a>|<FONT.+?</FONT>|<font.+?</font>|<font.+?>|<font>|</font>|<SPAN.+?</SPAN>|<img.+?>|<script.+?</script>|</script>|<script>|<strong[^>]*>|</strong>|<span[^>]*>|</span>|<!--.+?-->|<p style[^>]*>|<font[^>]*>|</font>|<center>|</center>|<h1>|</h1>|\n<[Ss][Cc][Rr][Ii][Pp][Tt](.|\\n)+?</[Ss][Cc][Rr][Ii][Pp][Tt]>|<[Ff][Oo][Nn][Tt](.|\\n)*?</[Ff][Oo][Nn][Tt]>|<[Ii][Ff][Rr][Aa][Mm][Ee](.|\\n)+?</[Ii][Ff][Rr][Aa][Mm][Ee]>|<[Aa].+?</[Aa]>|<[Dd][Ii][Vv].+?>|</[Dd][Ii][Vv]>|<!--.+?-->|<[Ss>][Pp][Aa][Nn](.|\\n)*?</[Ss>][Pp][Aa][Nn]>|\nQ|ｑ|Ｑ♂q\nW|ｗ|Ｗ♂w\nE|ｅ|Ｅ♂e\nR|ｒ|Ｒ♂r\nT|ｔ|Ｔ♂t\nY|ｙ|Ｙ♂y\nU|ｕ|Ｕ♂u\nI|ｉ|Ｉ♂i\nO|ｏ|Ｏ♂o\nP|ｐ|Ｐ♂p\nA|ａ|Ａ♂a\nS|ｓ|Ｓ♂s\nD|ｄ|Ｄ♂d\nF|ｆ|Ｆ♂f\nG|ｇ|Ｇ♂g\nH|ｈ|Ｈ♂h\nJ|ｊ|Ｊ♂j\nK|ｋ|Ｋ♂k\nL|ｌ|Ｌ♂l\nZ|ｚ|Ｚ♂z\nX|ｘ|Ｘ♂x\nC|ｃ|Ｃ♂c\nV|ｖ|Ｖ♂v\nB|ｂ|Ｂ♂b\nN|ｎ|Ｎ♂n\nM|ｍ|Ｍ♂m\n１|①|㈠|⑴|⒈|Ⅰ|ⅰ♂1\n２|②|㈡|⑵|⒉|Ⅱ|ⅱ♂2\n３|③|㈢|⑶|⒊|Ⅲ|ⅲ♂3\n４|④|㈣|⑷|⒋|Ⅳ|ⅳ♂4\n５|⑤|㈤|⑸|⒌|Ⅴ|ⅴ♂5\n６|ⅵ|Ⅵ|⒍|⑹|㈥|⑥♂6\n７|⑦|㈦|⑺|⒎|Ⅶ|ⅶ♂7\n８|⑧|㈧|⑻|⒏|Ⅷ|ⅷ♂8\n９|ⅸ|Ⅸ|⒐|⑼|㈨|⑨♂9\n１０|⑩|㈩|⑽|⒑|Ⅹ|ⅹ♂10\nа|ａ♂a\n℃|С|с|Ｃ|ｃ♂c\nC|℃|С|с|Ｃ|ｃ♂c\nD|Ｄ|ｄ♂d\nE|Ё|ё|Е|е|Ε|ε|Ｅ|ｅ♂e\nF|℉|Ｆ|ｆ♂f\nG|ɡ|Ｇ|ｇ♂g\nH|Н|н|Η|Ｈ|ｈ♂h\nI|ì|í|ī|ǐ|∣|Ⅰ|ⅰ|Ι|ι|Ｉ|ｉ♂i\nJ|Ｊ|ｊ♂j\nK|К|к|Κ|κ|Ｋ|ｋ♂k\nL|Ｌ|ｌ♂l\nM||М|м|Μ|Ｍ|ｍ♂m\nN||ń|ň|∏|∩|И|и|Й|й|Ν|Ｎ|ｎ♂n\nO|ò|ó|ō|ǒ|О|о|Ο|ο|Ｏ|ｏ♂o\nP|Р|р|Ρ|p|ρ|Ｐ|ｐ|p♂p\nQ|Ｑ|ｑ♂q\nR|Я|я|Ｒ|ｒ♂r\nS|Ｓ|ｓ♂s\nT|Т|т|Τ|τ|Ｔ|ｔ♂t\nU|ū|ú|ǔ|ù|ǖ|ǘ|ǚ|ǜ|ü|∪|υ|Ｕ|ｕ♂u\nV|Ⅴ|∨|ˇ|Ｖ|ｖ♂v\nW|ω|w|w|Ｗ|ｗ♂w\nX|×|Ⅹ|ⅹ|Х|х|Χ|χ|Ｘ|ｘ♂x\nY|У|у|Ｙ|ｙ♂y\nZ|Ζ|Ｚ|ｚ♂z\n１|①|⑴|⒈|㈠♂1\n２|②|⑵|⒉|㈡♂2\n３|③|⑶|⒊|З|з|㈢♂3\n４|④|⑷|⒋|㈣♂4\n５|⑤|⑸|⒌|㈤♂5\n６|⑥|⑹|⒍|б|㈥♂6\n７|⑦|⑺|⒎|㈦♂7\n８|⑧|⑻|⒏|㈧♂8\n９|⑨|⑼|⒐|㈨♂9\n０♂0\n⑩|⑽|⒑♂10\n⑾|⒒♂11\n⑿|⒓♂12\n⒀|⒔♂13\n⒁|⒕♂14\n⒂|⒖♂15\n⒃|⒗♂16\n⒄|⒘♂17\n⒅|⒙♂18\n⒆|⒚♂19\n⒇|⒛♂20\nhttp://|www|[.@#$%^*]|biqudao|baquge|com|net|la|cc|co|cm|cn|pw|tw|info|org|me|in|win|vip|top|xyz|us|m|lu|xs|zw|xiaoshuo|zhongwen|[┡]|[『]|[．]|[＊]|新(.{0,4})笔(.{0,4})趣(.{0,4})阁|笔(.{0,4})趣(.{0,4})阁|新笔趣阁|w|&32;|&33;|&34;|&35;|&36;|&37;|&38;|&39;|&40;|&41;|&42;|&43;|&44;|&45;|&46;|&47;|&48;|&49;|&50;|&51;|&52;|&53;|&54;|&55;|&56;|&57;|&58;|&59;|&60;|&61;|&62;|&63;|&64;|&65;|&66;|&67;|&71;|&72;|&73;|&76;|&77;|&78;|&79;|&80;|&81;|&82;|&83;|&84;|&85;|&86;|&87;|&88;|&89;|&90;|&91;|&92;|&93;|&94;|&95;|&96;|&97;|&98;|&99;|&100;|&101;|&102;|&103;|&104;|&105;|&106;|&107|&108;;|&109;|&110;|&111;|&112;|&113;|&114;|&115;|&116;|&117;|&118;|&119;|&120;|&121;|&122;|&215;|&8220;|&8216;|&8217;|&8218;|&8222;|&8226;|&8598;|&8644;|&8649;|&8730;|&8814;|&8815;|&9314;|&9792;|&1097;|&10166;|&12290;|&12304;|&12398;|&12305;|&12354;|&12833;|&12834;|&19968;|&19969;|&19979;|&20070;|&20108;|&20113;|&20316;|&20320;|&20379;|&20813;|&20837;|&20851;|&21147;|&21457;|&22312;|&22320;|&22336;|&23398;|&22552;|&22860;|&23398;|&23450;|&23567;|&23601;|&23627;|&24230;|&24555;|&25110;|&25509;|&25512;|&25628;|&25991;|&26032;|&26356;|&26368;|&26377;|&26412;|&26469;|&26825;|&28857;|&30334;|&30340;|&30452;|&30475;|&31070;|&31283;|&31449;|&31456;|&31958;|&32034;|&32473;|&32773;|&32593;|&33410;|&33457;|&35498;|&33616;|&35775;|&35789;|&35828;|&35835;|&36153;|&36335;|&36733;|&36755;|&38190;|&38307;|&38382;|&38401;|&38405;|&38642;|&38914;|&39029;|&39030;|&39318;|&40670;|&65281;|&65288;|&65292;|&65306;|&65533;|&315|&29256;|&20027;|&27426;|&36814;|&24744;|&65306;|&10;|&25105;|&20204;|&26159;|&65306;|\n[︽^]|[↗]|[●]|[∑]|[≧]|[【]|[⊙]|[】]|[¤]|[⊥]|[%％]|[↑]|[※]|[∏]|[∈]|[￠]|[￡]|[◎]|[‰]|[△]|[*｜]|[\\/]|[@]|[(]|[（]|[)]|[）]|[_—]|[-—]|[+]|[=]|[|｜]|[!！]|[$]|[￥]|[／]|[∽]|[·]|[｝]|[｛]|[?]|[？]|[←]|[→]|[↓]|[≈]|[≡]|[≠]|[±]|[≤]|[≥]|[×]|[÷]|[?]|[‘]|[’]|[√]|[∮]|[︾]|[□]|[≌]|[…]|[◇]|[＋]|[≦]|[▲]|[≯]|[∝]|[▽]|[∟]|[≡]|[★]|[＠]|[＄]|[∞]|[▼]|[∫]|[↖]|[☆]|[⊕]|[≯]|[⌒]|[↘]|[♀]|[》]|[◆]|[◇]|[↙]|[〖]|[』]|[∧]|[∵]|[《]|[∠]|[～]|[∷]|[■]|[『]|[≮]|[[]|[]]|[Ω]|[ζ]|[╯]|[~]|[Щ]|[■]|[lā]|[◢]|[щ]|[┢]|[┡]|[φ]|[ψ]|[§]|[№]|[#]|[¤]|[≯]|[＆]|[∮]|[α]|[ν]|[λ]|[．]|[乛]|[亠]|[乆]|[冂]|[亻]|[Ⅻ]|[乂]|[∈]|[≦]|[＜]|[＜]|[﹤]|[＞]|[罓]|[￠][|￡]|[卍]|[≥]|[≧]|[&;</>]|\nbr♂<br />\nnbsp♂&nbsp;"
+    Method: Match
+    Options: None
+    Pattern: "<div id=\"content\">((.|\\n)+?)</div>"
+    RegexName: PubContentText
+  PubContentTitle:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: ""
+  PubContentUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "{ChapterKey}.html"
+    RegexName: PubContentUrl
+  PubCookies:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: PubCookies
+  PubIndexErr:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "这里必须填写"
+    RegexName: PubIndexErr
+  PubIndexUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "http://www.baquge.tw/files/article/html/{NovelKey/1000}/{NovelKey}/"
+    RegexName: PubIndexUrl
+  PubTextUrl:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: PubTextUrl
+  PubVolumeContent:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: PubVolumeContent
+  PubVolumeName:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "(.+?)</dt>"
+    RegexName: PubVolumeName
+  PubVolumeSplit:
+    FilterPattern: ""
+    Method: Spilt
+    Options: None
+    Pattern: "<dt>"
+    RegexName: PubVolumeSplit
+  RuleID:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: 102
+    RegexName: RuleID
+  RuleVersion:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: RuleVersion
+  SmallSort:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: "<meta property=\"og:novel:category\" content=\"(.+?)\"/>"
+    RegexName: SmallSort
+  TsContrary:
+    FilterPattern: ""
+    Method: Match
+    Options: None
+    Pattern: ""
+    RegexName: ""

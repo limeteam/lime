@@ -1,0 +1,54 @@
+.margin-bottom20{
+  margin-bottom: 20px;
+}
+.text-center{
+  text-align: center
+}
+.tip-right {
+  color: #666;
+  width: 30%;
+  max-width: 30%;
+  text-indent: 10px;
+
+  label {
+    padding-left: 10px;
+  }
+}
+.tip-below {
+  display: block;
+  color: #666;
+}
+.inline-false{//在form设置inline:true时设置独占一行的样式
+  position: relative;
+  .el-form-item{
+    display: flex;
+  }
+  .el-form-item__content{
+    flex: 1;
+  }
+}
+.limit-num{//右下角输入字数
+  position: absolute;
+  bottom: -20px;
+  right: 10px;
+}
+.dot{
+  margin-right: 5px;
+  vertical-align: middle;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%
+}
+.effective{//审核通过
+  background:#409EFF;
+}
+.effectiveIng{//待审核
+  background:#42b983;
+}
+.ineffective{//审核失败
+  background: #666666;
+}
+.contain{
+  margin: 20px 30px;
+}

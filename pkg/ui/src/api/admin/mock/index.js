@@ -1,0 +1,1 @@
+// import Mock from 'mockjs'
