@@ -12,17 +12,8 @@ func Init(e *gin.Engine) {
 	//e.Use(cors.Default()) // CORS
 	e.GET("/healthcheck", controllers.Healthy)
 
-	taskController := &controllers.TaskController{}
-	e.GET("/tasks", taskController.List)
-	e.POST("/tasks", taskController.Create)
-	e.GET("/tasks/:id/detail", taskController.Get)
-	e.PUT("/tasks/:id", taskController.Edit)
-	e.PUT("/tasks/:id/stop", taskController.StopTask)
-	e.PUT("/tasks/:id/start", taskController.StartTask)
-	e.PUT("/tasks/:id/restart", taskController.RestartTask)
-
-	ruleController := &controllers.RuleController{}
-	e.GET("/rules", ruleController.GetRuleList)
+	CategoryController := &controllers.CategoryController{}
+	e.GET("/category/list", CategoryController.List)
 
 	e.LoadHTMLGlob("./pkg/ui/dist/*.html")              // 添加入口index.html
 	e.LoadHTMLFiles("./pkg/ui/dist/static/*/*")         // 添加资源路径

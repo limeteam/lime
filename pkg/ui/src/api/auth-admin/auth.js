@@ -8,7 +8,7 @@ export function getMenu() {
     url: 'v1/user/menu',
     method: 'GET',
     params: {
-      domain: 'zeus-config'
+      domain: 'lime'
     }
   })
 }
@@ -21,7 +21,7 @@ export function permList() {
     url: 'v1/users/perm/list',
     method: 'GET',
     params: {
-      code: 'zeus-config'
+      code: 'lime'
     }
   })
 }

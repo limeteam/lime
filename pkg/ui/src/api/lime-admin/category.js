@@ -1,8 +1,8 @@
 import request from './request'
 
-export function getConfigList() {
+export function categoryList() {
   return request({
-    url: 'configlist/list',
+    url: 'category/list',
     method: 'GET'
   })
 }

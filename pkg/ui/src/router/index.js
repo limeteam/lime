@@ -77,20 +77,6 @@ export const constantRoutes = [
       }
     ]
   }
-  // {
-  //   path: '/profile',
-  //   component: Layout,
-  //   redirect: '/profile/index',
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/profile/index'),
-  //       name: 'Profile',
-  //       meta: { title: 'Profile', icon: 'user', noCache: true }
-  //     }
-  //   ]
-  // }
 ]
 
 /**
@@ -99,20 +85,21 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/configlist/list',
+    path: '/category',
     component: Layout,
-    redirect: '/configlist/list',
-    name: 'Config',
+    // redirect: '/category/list',
+    name: 'Category',
     meta: {
-      title: 'config',
-      icon: 'config'
+      title: '内容管理',
+      icon: 'list'
     },
     children: [
       {
-        path: '/configlist/list',
-        component: () => import('@/views/config/create'),
-        name: 'config list',
-        meta: { title: 'Create config', icon: 'edit' }
+        path: '/category/list',
+        component: () => import('@/views/category/list'),
+        name: 'CategoryList',
+        hidden: false,
+        meta: { title: '分类列表', icon: 'list' }
       }
     ]
   },

@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Zeus Admin',
+  title: 'Lime Admin',
 
   /**
    * @type {boolean} true | false
