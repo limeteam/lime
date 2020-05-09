@@ -1,12 +1,11 @@
 <template>
   <div :class="{'hidden':hidden}" class="pagination-container">
     <el-pagination
-      :layout="layout"
       :background="background"
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
+      :layout="layout"
       :page-sizes="pageSizes"
-      :pager-count="pagerCount"
       :total="total"
       v-bind="$attrs"
       @size-change="handleSizeChange"
@@ -16,7 +15,7 @@
 </template>
 
 <script>
-import { scrollTo } from '@/utils/scrollTo'
+import { scrollTo } from '@/utils/scroll-to'
 
 export default {
   name: 'Pagination',
@@ -31,21 +30,17 @@ export default {
     },
     limit: {
       type: Number,
-      default: 10
+      default: 20
     },
     pageSizes: {
       type: Array,
       default() {
-        return [10, 15, 20, 25]
+        return [10, 20, 30, 50]
       }
-    },
-    pagerCount: {
-      type: Number,
-      default: 5
     },
     layout: {
       type: String,
-      default: 'total, sizes, prev, pager, next, jumper' // 'total, sizes, prev, pager, next, jumper'
+      default: 'total, sizes, prev, pager, next, jumper'
     },
     background: {
       type: Boolean,
@@ -97,10 +92,8 @@ export default {
 
 <style scoped>
 .pagination-container {
-  float: right;
-  padding: 16px 16px 16px 32px;
-  margin-top: 0;
   background: #fff;
+  padding: 32px 16px;
 }
 .pagination-container.hidden {
   display: none;

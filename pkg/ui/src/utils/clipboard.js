@@ -1,6 +1,3 @@
-/**
- * 复制到剪切板 require clipboard
- */
 import Vue from 'vue'
 import Clipboard from 'clipboard'
 
@@ -25,14 +22,10 @@ export default function handleClipboard(text, event) {
   })
   clipboard.on('success', () => {
     clipboardSuccess()
-    clipboard.off('error')
-    clipboard.off('success')
     clipboard.destroy()
   })
   clipboard.on('error', () => {
     clipboardError()
-    clipboard.off('error')
-    clipboard.off('success')
     clipboard.destroy()
   })
   clipboard.onClick(event)

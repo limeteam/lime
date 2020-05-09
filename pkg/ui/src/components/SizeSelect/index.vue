@@ -4,14 +4,9 @@
       <svg-icon class-name="size-icon" icon-class="size" />
     </div>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item :disabled="size==='medium'" command="medium">
-        Medium
-      </el-dropdown-item>
-      <el-dropdown-item :disabled="size==='small'" command="small">
-        Small
-      </el-dropdown-item>
-      <el-dropdown-item :disabled="size==='mini'" command="mini">
-        Mini
+      <el-dropdown-item v-for="item of sizeOptions" :key="item.value" :disabled="size===item.value" :command="item.value">
+        {{
+          item.label }}
       </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
@@ -19,6 +14,16 @@
 
 <script>
 export default {
+  data() {
+    return {
+      sizeOptions: [
+        { label: 'Default', value: 'default' },
+        { label: 'Medium', value: 'medium' },
+        { label: 'Small', value: 'small' },
+        { label: 'Mini', value: 'mini' }
+      ]
+    }
+  },
   computed: {
     size() {
       return this.$store.getters.size
@@ -27,7 +32,7 @@ export default {
   methods: {
     handleSetSize(size) {
       this.$ELEMENT.size = size
-      this.$store.dispatch('setSize', size)
+      this.$store.dispatch('app/setSize', size)
       this.refreshView()
       this.$message({
         message: 'Switch Size Success',
@@ -36,7 +41,7 @@ export default {
     },
     refreshView() {
       // In order to make the cached page re-rendered
-      this.$store.dispatch('delAllCachedViews', this.$route)
+      this.$store.dispatch('tagsView/delAllCachedViews', this.$route)
 
       const { fullPath } = this.$route
 
@@ -50,12 +55,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-.size-icon {
-  font-size: 20px;
-  cursor: pointer;
-  vertical-align: -4px!important;
-}
-</style>
-

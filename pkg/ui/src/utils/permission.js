@@ -1,7 +1,6 @@
 import store from '@/store'
 
 /**
- * 检查 权限是否许可
  * @param {Array} value
  * @returns {Boolean}
  * @example see @/views/permission/directive.vue

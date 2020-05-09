@@ -1,9 +1,15 @@
 /**
- * Created by jiachenpan on 16/11/18.
+ * Created by PanJiaChen on 16/11/18.
  */
 
+/**
+ * Parse the time to string
+ * @param {(Object|string|number)} time
+ * @param {string} cFormat
+ * @returns {string | null}
+ */
 export function parseTime(time, cFormat) {
-  if (arguments.length === 0) {
+  if (arguments.length === 0 || !time) {
     return null
   }
   const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
@@ -11,7 +17,20 @@ export function parseTime(time, cFormat) {
   if (typeof time === 'object') {
     date = time
   } else {
-    if (('' + time).length === 10) time = parseInt(time) * 1000
+    if ((typeof time === 'string')) {
+      if ((/^[0-9]+$/.test(time))) {
+        // support "1548221490638"
+        time = parseInt(time)
+      } else {
+        // support safari
+        // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+        time = time.replace(new RegExp(/-/gm), '/')
+      }
+    }
+
+    if ((typeof time === 'number') && (time.toString().length === 10)) {
+      time = time * 1000
+    }
     date = new Date(time)
   }
   const formatObj = {
@@ -23,22 +42,26 @@ export function parseTime(time, cFormat) {
     s: date.getSeconds(),
     a: date.getDay()
   }
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
+  const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
+    const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') {
-      return ['日', '一', '二', '三', '四', '五', '六'][value]
-    }
-    if (result.length > 0 && value < 10) {
-      value = '0' + value
-    }
-    return value || 0
+    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    return value.toString().padStart(2, '0')
   })
   return time_str
 }
 
+/**
+ * @param {number} time
+ * @param {string} option
+ * @returns {string}
+ */
 export function formatTime(time, option) {
-  time = +time * 1000
+  if (('' + time).length === 10) {
+    time = parseInt(time) * 1000
+  } else {
+    time = +time
+  }
   const d = new Date(time)
   const now = Date.now()
 
@@ -71,9 +94,12 @@ export function formatTime(time, option) {
   }
 }
 
-/* 获取 url 携带的参数1 */
+/**
+ * @param {string} url
+ * @returns {Object}
+ */
 export function getQueryObject(url) {
-  url = !url ? window.location.href : url
+  url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf('?') + 1)
   const obj = {}
   const reg = /([^?&=]+)=([^?&=]*)/g
@@ -87,24 +113,40 @@ export function getQueryObject(url) {
   return obj
 }
 
-/* 获取 url 携带的参数2 */
-export function param2Obj(url) {
-  url = !url ? window.location.href : url
-  const search = url.split('?')[1]
-  if (!search) {
-    return {}
+/**
+ * @param {string} input value
+ * @returns {number} output value
+ */
+export function byteLength(str) {
+  // returns the byte length of an utf8 string
+  let s = str.length
+  for (var i = str.length - 1; i >= 0; i--) {
+    const code = str.charCodeAt(i)
+    if (code > 0x7f && code <= 0x7ff) s++
+    else if (code > 0x7ff && code <= 0xffff) s += 2
+    if (code >= 0xDC00 && code <= 0xDFFF) i--
   }
-  return JSON.parse(
-    '{"' +
-    decodeURIComponent(search)
-      .replace(/"/g, '\\"')
-      .replace(/&/g, '","')
-      .replace(/=/g, '":"') +
-    '"}'
-  )
+  return s
 }
 
-/* 对象转换为 param1=val1&param2=val2 */
+/**
+ * @param {Array} actual
+ * @returns {Array}
+ */
+export function cleanArray(actual) {
+  const newArray = []
+  for (let i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i])
+    }
+  }
+  return newArray
+}
+
+/**
+ * @param {Object} json
+ * @returns {Array}
+ */
 export function param(json) {
   if (!json) return ''
   return cleanArray(
@@ -116,45 +158,42 @@ export function param(json) {
 }
 
 /**
- *get getByteLen
- * @param {Sting} val input value
- * @returns {number} output value
+ * @param {string} url
+ * @returns {Object}
  */
-export function getByteLen(val) {
-  let len = 0
-  for (let i = 0; i < val.length; i++) {
-    if (val[i].match(/[^\x00-\xff]/gi) != null) {
-      len += 1
-    } else {
-      len += 0.5
-    }
+export function param2Obj(url) {
+  const search = url.split('?')[1]
+  if (!search) {
+    return {}
   }
-  return Math.floor(len)
+  return JSON.parse(
+    '{"' +
+      decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"')
+        .replace(/\+/g, ' ') +
+      '"}'
+  )
 }
 
-// 这个命名肯定错了
-export function cleanArray(actual) {
-  const newArray = []
-  for (let i = 0; i < actual.length; i++) {
-    if (actual[i]) {
-      newArray.push(actual[i])
-    }
-  }
-  return newArray
-}
-
-/* 获取 安全的html 代码 */
+/**
+ * @param {string} val
+ * @returns {string}
+ */
 export function html2Text(val) {
   const div = document.createElement('div')
   div.innerHTML = val
   return div.textContent || div.innerText
 }
 
-/* 合并对象 */
+/**
+ * Merges two objects, giving the last one precedence
+ * @param {Object} target
+ * @param {(Object|Array)} source
+ * @returns {Object}
+ */
 export function objectMerge(target, source) {
-  /* Merges two  objects,
-     giving the last one precedence */
-
   if (typeof target !== 'object') {
     target = {}
   }
@@ -172,7 +211,10 @@ export function objectMerge(target, source) {
   return target
 }
 
-/* toggleClass */
+/**
+ * @param {HTMLElement} element
+ * @param {string} className
+ */
 export function toggleClass(element, className) {
   if (!element || !className) {
     return
@@ -189,46 +231,10 @@ export function toggleClass(element, className) {
   element.className = classString
 }
 
-/* 选择器 设置项 */
-export const pickerOptions = [{
-  text: '今天',
-  onClick(picker) {
-    const end = new Date()
-    const start = new Date(new Date().toDateString())
-    end.setTime(start.getTime())
-    picker.$emit('pick', [start, end])
-  }
-},
-{
-  text: '最近一周',
-  onClick(picker) {
-    const end = new Date(new Date().toDateString())
-    const start = new Date()
-    start.setTime(end.getTime() - 3600 * 1000 * 24 * 7)
-    picker.$emit('pick', [start, end])
-  }
-},
-{
-  text: '最近一个月',
-  onClick(picker) {
-    const end = new Date(new Date().toDateString())
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-    picker.$emit('pick', [start, end])
-  }
-},
-{
-  text: '最近三个月',
-  onClick(picker) {
-    const end = new Date(new Date().toDateString())
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-    picker.$emit('pick', [start, end])
-  }
-}
-]
-
-/* 获取时间字符串 */
+/**
+ * @param {string} type
+ * @returns {Date}
+ */
 export function getTime(type) {
   if (type === 'start') {
     return new Date().getTime() - 3600 * 1000 * 24 * 90
@@ -238,10 +244,11 @@ export function getTime(type) {
 }
 
 /**
- * 去抖函数
- * 假如对一个按钮一直按下触发，相关事件会队列执行
- * 通过 去抖函数 返回实际执行的函数将 N 秒后才触发
- * */
+ * @param {Function} func
+ * @param {number} wait
+ * @param {boolean} immediate
+ * @return {*}
+ */
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
@@ -249,7 +256,7 @@ export function debounce(func, wait, immediate) {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
-    // 上次被包装函数被调用时间间隔last小于设定时间间隔wait
+    // 上次被包装函数被调用时间间隔 last 小于设定时间间隔 wait
     if (last < wait && last > 0) {
       timeout = setTimeout(later, wait - last)
     } else {
@@ -278,14 +285,15 @@ export function debounce(func, wait, immediate) {
 }
 
 /**
- * 深度复制对象
  * This is just a simple version of deep copy
  * Has a lot of edge cases bug
  * If you want to use a perfect deep copy, use lodash's _.cloneDeep
+ * @param {Object} source
+ * @returns {Object}
  */
 export function deepClone(source) {
   if (!source && typeof source !== 'object') {
-    throw new Error('error arguments', 'shallowClone')
+    throw new Error('error arguments', 'deepClone')
   }
   const targetObj = source.constructor === Array ? [] : {}
   Object.keys(source).forEach(keys => {
@@ -298,225 +306,54 @@ export function deepClone(source) {
   return targetObj
 }
 
-/* es6 数组去重 */
+/**
+ * @param {Array} arr
+ * @returns {Array}
+ */
 export function uniqueArr(arr) {
   return Array.from(new Set(arr))
 }
 
-/* 判断是否外部链接 */
-export function isExternal(path) {
-  return /^(https?:|mailto:|tel:)/.test(path)
-}
-
 /**
- *  treeMenus => list Menus
- *  created by Wendell Sheh
+ * @returns {string}
  */
-export function menusConverter(treeMenus) {
-  const listMenus = [];
-  // 转换方法
-  (function doConvert(tMenus) {
-    tMenus && tMenus.forEach(menu => {
-      const tMenu = {
-        'id': menu.id,
-        'pid': menu.pid,
-        'path': menu.path,
-        'value': menu.value,
-        'style': menu.style
-      }
-      listMenus.push(tMenu)
-      // console.log('menu.children', menu.children)
-      if (menu.children && menu.children.length > 0) {
-        doConvert(menu.children)
-      }
-    })
-  })(treeMenus)
-  return listMenus
-}
-
-// Edited by Wendell Sheh
-// 浮点型数值计算
-// ## 加
-/**
- ** 加法函数，用来得到精确的加法结果
- ** 说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。
- ** 调用：accAdd(arg1,arg2)
- ** 返回值：arg1加上arg2的精确结果
- **/
-export function accAdd(arg1, arg2) {
-  var r1, r2, m, c
-  try {
-    r1 = arg1.toString().split('.')[1].length
-  } catch (e) {
-    r1 = 0
-  }
-  try {
-    r2 = arg2.toString().split('.')[1].length
-  } catch (e) {
-    r2 = 0
-  }
-  c = Math.abs(r1 - r2)
-  m = Math.pow(10, Math.max(r1, r2))
-  if (c > 0) {
-    var cm = Math.pow(10, c)
-    if (r1 > r2) {
-      arg1 = Number(arg1.toString().replace('.', ''))
-      arg2 = Number(arg2.toString().replace('.', '')) * cm
-    } else {
-      arg1 = Number(arg1.toString().replace('.', '')) * cm
-      arg2 = Number(arg2.toString().replace('.', ''))
-    }
-  } else {
-    arg1 = Number(arg1.toString().replace('.', ''))
-    arg2 = Number(arg2.toString().replace('.', ''))
-  }
-  return (arg1 + arg2) / m
-}
-
-// ## 减
-/**
- ** 减法函数，用来得到精确的减法结果
- ** 说明：javascript的减法结果会有误差，在两个浮点数相减的时候会比较明显。这个函数返回较为精确的减法结果。
- ** 调用：accSub(arg1,arg2)
- ** 返回值：arg1加上arg2的精确结果
- **/
-export function accSub(arg1, arg2) {
-  var r1, r2, m, n
-  try {
-    r1 = arg1.toString().split('.')[1].length
-  } catch (e) {
-    r1 = 0
-  }
-  try {
-    r2 = arg2.toString().split('.')[1].length
-  } catch (e) {
-    r2 = 0
-  }
-  m = Math.pow(10, Math.max(r1, r2)) // last modify by deeka
-  // 动态控制精度长度
-  n = (r1 >= r2) ? r1 : r2
-  return ((arg1 * m - arg2 * m) / m).toFixed(n)
-}
-
-// ## 乘
-/**
- ** 乘法函数，用来得到精确的乘法结果
- ** 说明：javascript的乘法结果会有误差，在两个浮点数相乘的时候会比较明显。这个函数返回较为精确的乘法结果。
- ** 调用：accMul(arg1,arg2)
- ** 返回值：arg1乘以 arg2的精确结果
- **/
-export function accMul(arg1, arg2) {
-  let m = 0
-  const s1 = arg1.toString()
-  const s2 = arg2.toString()
-  try {
-    m += s1.split('.')[1].length
-  } catch (e) {
-    console.log('乘法函数 accMul:', e)
-  }
-  try {
-    m += s2.split('.')[1].length
-  } catch (e) {
-    console.log('乘法函数 accMul:', e)
-  }
-  return Number(s1.replace('.', '')) * Number(s2.replace('.', '')) / Math.pow(10, m)
-}
-
-// ## 除
-/**
- ** 除法函数，用来得到精确的除法结果
- ** 说明：javascript的除法结果会有误差，在两个浮点数相除的时候会比较明显。这个函数返回较为精确的除法结果。
- ** 调用：accDiv(arg1,arg2)
- ** 返回值：arg1除以arg2的精确结果
- **/
-export function accDiv(arg1, arg2) {
-  let t1 = 0
-  let t2 = 0
-  try {
-    t1 = arg1.toString().split('.')[1].length
-  } catch (e) {
-    // console.log('除法函数 accMul:', e)
-  }
-  try {
-    t2 = arg2.toString().split('.')[1].length
-  } catch (e) {
-    // console.log('除法函数 accMul:', e)
-  }
-  const r1 = Number(arg1.toString().replace('.', ''))
-  const r2 = Number(arg2.toString().replace('.', ''))
-  return (r1 / r2) * Math.pow(10, t2 - t1)
+export function createUniqueString() {
+  const timestamp = +new Date() + ''
+  const randomNum = parseInt((1 + Math.random()) * 65536) + ''
+  return (+(randomNum + timestamp)).toString(32)
 }
 
 /**
- * 把对象的空参数去除
- * * 这里简单的设置为 null 表单方式提交的时候不会序列化 null 值从参数
- * * vue 的 data 需要复制参数再处理
- * @param {*} obj
+ * Check if an element has a class
+ * @param {HTMLElement} elm
+ * @param {string} cls
+ * @returns {boolean}
  */
-export function deleteEmptyObj(obj) {
-  if (typeof obj === 'object') {
-    for (const i in obj) {
-      if (obj[i] === '') {
-        obj[i] = null
-      }
-    }
-  }
-  return obj
+export function hasClass(ele, cls) {
+  return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'))
 }
 
 /**
- * 随机字符串生成
- * @param {*} len
+ * Add class to element
+ * @param {HTMLElement} elm
+ * @param {string} cls
  */
-export function randomString(len) {
-  len = len || 10
-  var $chars = 'abcdefhijkmnprstwxyz2345678'
-  var maxPos = $chars.length
-  var pwd = ''
-  for (let i = 0; i < len; i++) {
-    pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
-  }
-  return pwd
+export function addClass(ele, cls) {
+  if (!hasClass(ele, cls)) ele.className += ' ' + cls
 }
 
 /**
- * 转换数据
- *{
-    "1": "安道尔共和国",
-    "4": "安提瓜和巴布达",
-    "5": "安圭拉岛",
-    "8": "安哥拉"
-  }
-
-  对象转换为数组 =>
-
-  [
-    {
-      value : 1,
-      label : "安道尔共和国"
-    },{
-      value : 4,
-      label : "安提瓜和巴布达"
-    },{
-      value : 5,
-      label : "安圭拉岛"
-    },{
-      value : 8,
-      label : "安哥拉"
-    }
-  ]
+ * Remove class from element
+ * @param {HTMLElement} elm
+ * @param {string} cls
  */
-export function obj2List(obj) {
-  if (Array.isArray(obj)) return obj
-  const arrData = []
-  for (const k in obj) {
-    arrData.push({
-      value: k,
-      label: obj[k]
-    })
+export function removeClass(ele, cls) {
+  if (hasClass(ele, cls)) {
+    const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
+    ele.className = ele.className.replace(reg, ' ')
   }
-  return arrData
 }
+
 
 /**
  * 获取当前域名的主域名(我们这边带端口 80默认没有)

@@ -1,131 +1,162 @@
-import {
-  login,
-  logout,
-  getMenu
-  // getUserInfo
-} from '@/api/admin/login'
-import {
-  getToken,
-  setToken,
-  removeToken
-} from '@/utils/auth'
-// import { MessageBox } from 'element-ui'
-import {
-// menusConverter
-} from '@/utils'
+// import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo } from '@/api/auth-admin/user'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import router, { resetRouter } from '@/router'
+import { getMenu } from '@/api/auth-admin/auth'
 
-const user = {
-  state: {
-    user: '',
-    status: '',
-    code: '',
-    token: getToken(),
-    name: '',
-    avatar: '',
-    introduction: '',
-    loadedMenus: false,
-    roles: [],
-    setting: {
-      articlePlatform: []
-    }
+const state = {
+  token: getToken(),
+  name: '',
+  avatar: '',
+  introduction: '',
+  roles: []
+}
+
+const mutations = {
+  SET_TOKEN: (state, token) => {
+    state.token = token
   },
-
-  mutations: {
-    SET_CODE: (state, code) => {
-      state.code = code
-    },
-    SET_TOKEN: (state, token) => {
-      state.token = token
-      setToken(token)
-    },
-    SET_INTRODUCTION: (state, introduction) => {
-      state.introduction = introduction
-    },
-    SET_SETTING: (state, setting) => {
-      state.setting = setting
-    },
-    SET_STATUS: (state, status) => {
-      state.status = status
-    },
-    SET_NAME: (state, name) => {
-      state.name = name
-    },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
-    },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
-    },
-    SET_LOADED_MENUS: (state, flag) => {
-      state.loadedMenus = flag
-    }
+  SET_INTRODUCTION: (state, introduction) => {
+    state.introduction = introduction
   },
-
-  actions: {
-    // ç”¨æˆ·åç™»å½•
-    LoginByUsername({
-      commit
-    }, userInfo) {
-      return new Promise((resolve, reject) => {
-        // request api
-        login(userInfo).then(response => {
-          const data = response.data
-          commit('SET_TOKEN', data.access_token)
-          commit('SET_NAME', data.username)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    GetMenu({
-      commit
-    }) {
-      return new Promise((resolve, reject) => {
-        getMenu().then(response => {
-          // æ‹‰å–äº†èœå•çš„è®¾ç½®
-          commit('SET_LOADED_MENUS', true)
-          const powerMenus = response.data.result || []
-          if (powerMenus.length > 0) {
-            resolve(response)
-          } else {
-            // åŽç«¯è¿”å›žèœå•åˆ—è¡¨ä¸ºç©º, æ— æƒé™
-            reject(' user has insufficient permissions!')
-          }
-        })
-      })
-    },
-
-    // ç™»å‡º
-    LogOut({
-      commit,
-      state
-    }) {
-      return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          commit('SET_MENUS', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    // å‰ç«¯ ç™»å‡º
-    FedLogOut({
-      commit
-    }) {
-      return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resolve()
-      })
-    }
+  SET_NAME: (state, name) => {
+    state.name = name
+  },
+  SET_AVATAR: (state, avatar) => {
+    state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
+  SET_LOADED_MENUS: (state, flag) => {
+    state.loadedMenus = flag
   }
 }
 
-export default user
+const actions = {
+  // user login
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      login({ username: username.trim(), password: password }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // get user info
+  getInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getInfo(state.token).then(response => {
+        const { data } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const { roles, name, avatar, introduction } = data
+
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
+
+        commit('SET_ROLES', roles)
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', avatar)
+        commit('SET_INTRODUCTION', introduction)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  getMenu({ commit }) {
+    return new Promise((resolve, reject) => {
+      getMenu().then(response => {
+        const { data } = response
+        // À­È¡ÁË²Ëµ¥µÄÉèÖÃ
+        commit('SET_LOADED_MENUS', true)
+        commit('SET_ROLES', data.result)
+        commit('SET_NAME', 'admin')
+        commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        commit('SET_INTRODUCTION', 'admin')
+        const powerMenus = response.data.result || []
+        if (powerMenus.length > 0) {
+          resolve(response)
+        } else {
+          // ºó¶Ë·µ»Ø²Ëµ¥ÁÐ±íÎª¿Õ, ÎÞÈ¨ÏÞ
+          reject(' user has insufficient permissions!')
+        }
+      })
+    })
+  },
+
+  // user logout
+  logout({ commit, state, dispatch }) {
+    return new Promise((resolve, reject) => {
+      logout(state.token).then(() => {
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        removeToken()
+        resetRouter()
+
+        // reset visited views and cached views
+        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
+        dispatch('tagsView/delAllViews', null, { root: true })
+
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // remove token
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resolve()
+    })
+  },
+
+  // dynamically modify permissions
+  changeRoles({ commit, dispatch }, role) {
+    return new Promise(async resolve => {
+      const token = role + '-token'
+
+      commit('SET_TOKEN', token)
+      setToken(token)
+
+      const { roles } = await dispatch('getInfo')
+
+      resetRouter()
+
+      // generate accessible routes map based on roles
+      const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+
+      // dynamically add accessible routes
+      router.addRoutes(accessRoutes)
+
+      // reset visited views and cached views
+      dispatch('tagsView/delAllViews', null, { root: true })
+
+      resolve()
+    })
+  }
+}
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  actions
+}

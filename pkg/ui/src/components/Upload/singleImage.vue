@@ -26,7 +26,6 @@
 </template>
 
 <script>
-// 预览效果见付费文章
 import { getToken } from '@/api/qiniu'
 
 export default {
@@ -78,8 +77,8 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-    @import "src/styles/mixin.scss";
+<style lang="scss" scoped>
+    @import "~@/styles/mixin.scss";
     .upload-container {
         width: 100%;
         position: relative;

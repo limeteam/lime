@@ -1,16 +1,30 @@
 <template>
-  <div class="app-container">
-    <div class="filter-container">
-      {{ msg }}
-    </div>
+  <div class="dashboard-container">
+    <component :is="currentRole" />
   </div>
 </template>
 
-<script type="text/javascript">
-export default{
+<script>
+import { mapGetters } from 'vuex'
+import adminDashboard from './admin'
+import editorDashboard from './editor'
+
+export default {
+  name: 'Dashboard',
+  components: { adminDashboard, editorDashboard },
   data() {
     return {
-      msg: 'lime：是一个爬小说程序，可以支持导出TXT文件格式小说'
+      currentRole: 'adminDashboard'
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
+  },
+  created() {
+    if (!this.roles.includes('admin')) {
+      this.currentRole = 'editorDashboard'
     }
   }
 }
