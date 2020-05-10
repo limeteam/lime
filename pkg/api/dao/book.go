@@ -1,10 +1,10 @@
 package dao
 
 import (
+	"github.com/jinzhu/gorm"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/model"
 	"lime/pkg/common/db"
-	"github.com/jinzhu/gorm"
 )
 
 type BookDao struct {

@@ -1,8 +1,8 @@
 package dingdian
 
 import (
-	"lime/pkg/crawler/core"
 	log "github.com/sirupsen/logrus"
+	"lime/pkg/crawler/core"
 )
 
 func init() {

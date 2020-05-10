@@ -1,11 +1,11 @@
 package down
 
 import (
-	"lime/pkg/down/store"
 	"fmt"
 	"github.com/go-yaml/yaml"
 	"io"
 	"io/ioutil"
+	"lime/pkg/down/store"
 	"sync"
 )
 
@@ -30,7 +30,7 @@ func (s *SyncStore) GetJob() (vi, ci int, url string, err error) {
 	for vi, vol := range s.Store.Volumes {
 		for ci, ch := range vol.Chapters {
 			if !s.jobs[vi][ci] {
-				if (len(ch.Text) == 0) {
+				if len(ch.Text) == 0 {
 					s.jobs[vi][ci] = true
 					return vi, ci, ch.URL, nil
 				}

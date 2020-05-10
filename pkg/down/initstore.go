@@ -1,12 +1,12 @@
 package down
 
 import (
-	"lime/pkg/down/site"
-	"lime/pkg/down/store"
 	"fmt"
 	"github.com/go-yaml/yaml"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"lime/pkg/down/site"
+	"lime/pkg/down/store"
 	"net/url"
 	"os"
 	"time"

@@ -2,17 +2,17 @@ package aoyuge
 
 import (
 	"fmt"
+	"github.com/go-yaml/yaml"
 	"io/ioutil"
 	"net/url"
 	"os"
 	"sync"
-	"github.com/go-yaml/yaml"
 )
 
 // Chapter 章节
 type Chapter struct {
-	Name    string   //名称
-	URL     string   //章节链接
+	Name    string //名称
+	URL     string //章节链接
 	Text    []string
 	Alias   []string   `yaml:"-"`
 	MuxLock sync.Mutex `yaml:"-"`
@@ -31,13 +31,13 @@ type Volume struct {
 type Store struct {
 	BookURL     string
 	BookName    string
-	Author      string   // 作者
-	CoverURL    string   // 封面链接
-	Description string   // 介绍
+	Author      string // 作者
+	CoverURL    string // 封面链接
+	Description string // 介绍
 	Volumes     []Volume
 }
 
-func WriteBook(bookurl string,chapter Store) error {
+func WriteBook(bookurl string, chapter Store) error {
 	bookURL, err := url.Parse(bookurl)
 	if err != nil {
 		return err

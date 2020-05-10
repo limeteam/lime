@@ -1,11 +1,13 @@
 package controllers
+
 import (
+	"github.com/gin-gonic/gin"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
-	"github.com/gin-gonic/gin"
 )
 
 var CategoryService = service.CategoryService{}
+
 type CategoryController struct {
 	BaseController
 }
@@ -25,7 +27,7 @@ func (Cate *CategoryController) List(c *gin.Context) {
 func (Cate *CategoryController) Create(c *gin.Context) {
 	var Dto dto.CategoryCreateDto
 	if Cate.BindAndValidate(c, &Dto) {
-		created,_ := CategoryService.Create(Dto)
+		created, _ := CategoryService.Create(Dto)
 		if created.Id <= 0 {
 			fail(c, ErrAddFail)
 			return

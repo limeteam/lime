@@ -1,10 +1,10 @@
 package core
 
 import (
+	log "github.com/sirupsen/logrus"
 	"lime/pkg/api/dao"
 	"lime/pkg/common"
 	"lime/pkg/crawler/novels"
-	log "github.com/sirupsen/logrus"
 )
 
 // Output output a row data
@@ -44,7 +44,7 @@ func (ctx *Context) Output(row map[int]interface{}, namespace ...string) error {
 		}
 	case common.OutputMongodb:
 		daospider := dao.SpiderDao{}
-		if err := daospider.Add(row);err != nil {
+		if err := daospider.Add(row); err != nil {
 			log.Error(err)
 			return err
 		}

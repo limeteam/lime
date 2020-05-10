@@ -1,13 +1,6 @@
 package task
 
 import (
-	"lime/pkg/api/dto"
-	"lime/pkg/api/service"
-	"lime/pkg/common/cache"
-	"lime/pkg/common/db"
-	_ "lime/pkg/crawler/novels/aoyuge"
-	_ "lime/pkg/crawler/novels/dingdian"
-	_ "lime/pkg/crawler/novels/fanfan"
 	"fmt"
 	"github.com/robfig/cron"
 	"github.com/rs/zerolog"
@@ -15,6 +8,13 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"io/ioutil"
+	"lime/pkg/api/dto"
+	"lime/pkg/api/service"
+	"lime/pkg/common/cache"
+	"lime/pkg/common/db"
+	_ "lime/pkg/crawler/novels/aoyuge"
+	_ "lime/pkg/crawler/novels/dingdian"
+	_ "lime/pkg/crawler/novels/fanfan"
 	"os"
 	"strings"
 )

@@ -1,9 +1,9 @@
 package fanfan
 
 import (
-	"lime/pkg/crawler/core"
 	"github.com/axgle/mahonia"
 	log "github.com/sirupsen/logrus"
+	"lime/pkg/crawler/core"
 )
 
 func init() {

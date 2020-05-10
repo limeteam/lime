@@ -1,8 +1,8 @@
 package router
 
 import (
-	"lime/pkg/api/controllers"
 	"github.com/gin-gonic/gin"
+	"lime/pkg/api/controllers"
 )
 
 func Init(e *gin.Engine) {
@@ -18,6 +18,18 @@ func Init(e *gin.Engine) {
 	e.POST("/categories", CategoryController.Create)
 	e.PUT("/categories/:id", CategoryController.Edit)
 	e.DELETE("/categories/:id", CategoryController.Delete)
+
+	BooksController := &controllers.BooksController{}
+	e.GET("/books", BooksController.List)
+	e.GET("/books/:id", BooksController.Get)
+	e.POST("/books", BooksController.Create)
+	e.PUT("/books/:id", BooksController.Edit)
+	e.DELETE("/books/:id", BooksController.Delete)
+
+	CommentsController := &controllers.CommentsController{}
+	e.GET("/comments", CommentsController.List)
+	e.GET("/comments/:id", CommentsController.Get)
+	e.DELETE("/comments/:id", CommentsController.Delete)
 
 	e.LoadHTMLGlob("./pkg/ui/dist/*.html")              // 添加入口index.html
 	e.LoadHTMLFiles("./pkg/ui/dist/static/*/*")         // 添加资源路径

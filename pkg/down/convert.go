@@ -1,9 +1,9 @@
 package down
 
 import (
-	"lime/pkg/down/output"
 	"fmt"
 	log "github.com/sirupsen/logrus"
+	"lime/pkg/down/output"
 )
 
 var outputOpt output.Option

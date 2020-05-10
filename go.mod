@@ -10,6 +10,7 @@ require (
 	github.com/benbjohnson/phantomjs v0.0.0-20181211182228-6499a20f5cd6
 	github.com/bmaupin/go-epub v0.5.3
 	github.com/chromedp/chromedp v0.5.3
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/go-redis/redis v6.15.7+incompatible

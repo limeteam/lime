@@ -2,8 +2,8 @@ package db
 
 import (
 	"github.com/globalsign/mgo"
-	"github.com/spf13/viper"
 	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 var Session *mgo.Session

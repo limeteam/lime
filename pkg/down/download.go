@@ -1,13 +1,13 @@
 package down
 
 import (
-	"lime/pkg/down/store"
 	"fmt"
 	"github.com/go-yaml/yaml"
 	log "github.com/sirupsen/logrus"
 	processbar "gopkg.in/cheggaaa/pb.v1"
 	"io"
 	"io/ioutil"
+	"lime/pkg/down/store"
 	"os"
 	"os/signal"
 	"regexp"
@@ -22,12 +22,12 @@ func Download(bookurl string, driver string) error {
 		return err
 	}
 	//var err error
-	printChapterInfo(chapter)//打印小说信息
+	printChapterInfo(chapter) //打印小说信息
 	SyncStore := &SyncStore{
 		Store: chapter,
 	}
 	SyncStore.Init()
-	chCount,isDone := syncStoreChapter(chapter) //载入小说
+	chCount, isDone := syncStoreChapter(chapter) //载入小说
 	if isDone < chCount {
 		bar := processbar.StartNew(chCount)
 		bar.Set(isDone)
@@ -71,7 +71,7 @@ func Download(bookurl string, driver string) error {
 		}
 	}
 	chapter = replaceChapterString(chapter) //替换特殊内容
-	return writeFile(filename,chapter)
+	return writeFile(filename, chapter)
 }
 
 func printChapterInfo(chapter *store.Store) {
@@ -92,7 +92,7 @@ func printChapterInfo(chapter *store.Store) {
 	log.Printf("线程数: %d,预缓存中...\n", threadsNum)
 }
 
-func syncStoreChapter(chapter *store.Store) (chCount int,isDone int){
+func syncStoreChapter(chapter *store.Store) (chCount int, isDone int) {
 	chCount = 0
 	isDone = 0
 	for _, v := range chapter.Volumes {
@@ -126,7 +126,7 @@ func syncStoreChapter(chapter *store.Store) (chCount int,isDone int){
 }
 
 //写入文件
-func writeFile(filename string,chapter *store.Store) error {
+func writeFile(filename string, chapter *store.Store) error {
 	b, err := yaml.Marshal(chapter)
 	if err != nil {
 		return err
@@ -138,7 +138,7 @@ func writeFile(filename string,chapter *store.Store) error {
 }
 
 func replaceChapterString(chapter *store.Store) (chapters *store.Store) {
-	for k3,Volume  := range chapter.Volumes {
+	for k3, Volume := range chapter.Volumes {
 		for k4, ch2 := range Volume.Chapters {
 			newContent := []string{}
 			for _, v := range ch2.Text {

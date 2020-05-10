@@ -21,7 +21,7 @@ func TitleAlias(s string) (alias []string) {
 		}
 		for _, v1 := range find {
 			for _, v := range v1[1:] {
-				if v == "" ||  v == s || StringInSlice(v, alias){
+				if v == "" || v == s || StringInSlice(v, alias) {
 					continue
 				}
 				alias = append(alias, v)

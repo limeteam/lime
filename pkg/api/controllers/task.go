@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"github.com/gin-gonic/gin"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
-	"github.com/gin-gonic/gin"
 )
 
 var taskService = service.TaskService{}

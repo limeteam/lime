@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type SpiderDao struct {}
+type SpiderDao struct{}
 
 func (sd SpiderDao) Add(row map[int]interface{}) error {
 	var spider model.Spider

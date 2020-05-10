@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"lime/pkg/crawler/core"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"lime/pkg/crawler/core"
 )
 
 type RuleController struct {

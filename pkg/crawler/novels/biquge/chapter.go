@@ -1,11 +1,11 @@
 package biquge
 
 import (
+	"fmt"
+	"github.com/gocolly/colly"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
 	"lime/pkg/crawler/novels"
-	"fmt"
-	"github.com/gocolly/colly"
 )
 
 var ChapterService = service.ChapterService{}

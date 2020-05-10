@@ -1,8 +1,8 @@
 package output
 
 import (
-	"lime/pkg/down/store"
 	"html/template"
+	"lime/pkg/down/store"
 	"os"
 	"strings"
 )

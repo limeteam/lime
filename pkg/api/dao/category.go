@@ -43,7 +43,7 @@ func (c CategoryDao) Create(Category *model.Category) *gorm.DB {
 	return db.Save(Category)
 }
 
-// Update - update Domain
+// Update
 func (c CategoryDao) Update(Category *model.Category, ups map[string]interface{}) *gorm.DB {
 	db := db.GetGormDB()
 	return db.Model(Category).Update(ups)

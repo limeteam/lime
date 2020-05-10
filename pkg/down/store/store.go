@@ -13,8 +13,8 @@ type Volume struct {
 
 // Chapter 章节
 type Chapter struct {
-	Name    string   //名称
-	URL     string   //章节链接
+	Name    string //名称
+	URL     string //章节链接
 	Text    []string
 	Alias   []string   `yaml:"-"`
 	MuxLock sync.Mutex `yaml:"-"`
@@ -24,9 +24,9 @@ type Chapter struct {
 type Store struct {
 	BookURL     string
 	BookName    string
-	Author      string   // 作者
-	CoverURL    string   // 封面链接
-	Description string   // 介绍
+	Author      string // 作者
+	CoverURL    string // 封面链接
+	Description string // 介绍
 	Volumes     []Volume
 }
 
@@ -41,4 +41,3 @@ func (store Store) Total() (Done, AllChaper int) {
 	}
 	return
 }
-

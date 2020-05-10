@@ -1,11 +1,11 @@
 package down
 
 import (
-	"lime/pkg/down/site"
 	"fmt"
 	"github.com/go-yaml/yaml"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"lime/pkg/down/site"
 )
 
 func Search(keyword string, put bool, filename string, driver string) error {

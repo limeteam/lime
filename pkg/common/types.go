@@ -4,8 +4,8 @@ const (
 	OutputTypeMySQL = "mysql"
 	OutputTypeCSV   = "csv"
 	OutputDbBook    = "book"
-	OutputMongodb   =  "mongodb"
-	OutputYaml  =  "yaml"
+	OutputMongodb   = "mongodb"
+	OutputYaml      = "yaml"
 )
 
 type MTS struct {

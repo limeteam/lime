@@ -1,9 +1,9 @@
 package down
 
 import (
-	"lime/pkg/down/site"
 	log "github.com/sirupsen/logrus"
 	"io"
+	"lime/pkg/down/site"
 	"time"
 )
 

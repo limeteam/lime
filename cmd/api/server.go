@@ -1,9 +1,6 @@
 package api
 
 import (
-	"lime/pkg/api/router"
-	"lime/pkg/common/cache"
-	"lime/pkg/common/db"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
@@ -11,6 +8,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"io/ioutil"
+	"lime/pkg/api/router"
+	"lime/pkg/common/cache"
+	"lime/pkg/common/db"
 	"os"
 	"strings"
 )

@@ -1,13 +1,13 @@
 package download
 
 import (
-	"lime/pkg/down"
 	"fmt"
 	"github.com/rs/zerolog"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"io/ioutil"
+	"lime/pkg/down"
 	"os"
 	"strings"
 )
