@@ -13,7 +13,11 @@ func Init(e *gin.Engine) {
 	e.GET("/healthcheck", controllers.Healthy)
 
 	CategoryController := &controllers.CategoryController{}
-	e.GET("/category/list", CategoryController.List)
+	e.GET("/categories", CategoryController.List)
+	e.GET("/categories/:id", CategoryController.Get)
+	e.POST("/categories", CategoryController.Create)
+	e.PUT("/categories/:id", CategoryController.Edit)
+	e.DELETE("/categories/:id", CategoryController.Delete)
 
 	e.LoadHTMLGlob("./pkg/ui/dist/*.html")              // 添加入口index.html
 	e.LoadHTMLFiles("./pkg/ui/dist/static/*/*")         // 添加资源路径

@@ -33,7 +33,6 @@ func (c CategoryDao) List(listDto dto.CategoryListDto) ([]model.Category, int64)
 	//	db = db.Where("created_at >=?", listDto.Start_time)
 	//	db = db.Where("created_at <=?", listDto.End_time)
 	//}
-	//db.Where("deleted_at =?", 0)
 	db.Offset(listDto.Skip).Limit(listDto.Limit).Find(&Category)
 	db.Model(&model.Category{}).Count(&total)
 	return Category, total
@@ -44,9 +43,10 @@ func (c CategoryDao) Create(Category *model.Category) *gorm.DB {
 	return db.Save(Category)
 }
 
-func (c CategoryDao) Update(Category *model.Category) *gorm.DB {
+// Update - update Domain
+func (c CategoryDao) Update(Category *model.Category, ups map[string]interface{}) *gorm.DB {
 	db := db.GetGormDB()
-	return db.Save(Category)
+	return db.Model(Category).Update(ups)
 }
 
 func (c CategoryDao) Delete(Category *model.Category) *gorm.DB {

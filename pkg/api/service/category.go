@@ -1,11 +1,11 @@
 package service
 
 import (
+	log "github.com/sirupsen/logrus"
 	"lime/pkg/api/dao"
-	//"lime/pkg/api/domain/category"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/model"
-	//log "github.com/sirupsen/logrus"
+	"time"
 )
 
 var CategoryDao = dao.CategoryDao{}
@@ -15,48 +15,60 @@ type CategoryService struct {
 }
 
 // InfoOfId
-func (c CategoryService) InfoOfId(dto dto.GeneralGetDto) model.Category {
+func (cs CategoryService) InfoOfId(dto dto.GeneralGetDto) model.Category {
 	return CategoryDao.Get(dto.Id)
 }
 
-func (c CategoryService) GetAll() []model.Category {
+func (cs CategoryService) GetAll() []model.Category {
 	return CategoryDao.GetAll()
 }
 
 // List
-func (c CategoryService) List(dto dto.CategoryListDto) ([]model.Category, int64) {
+func (cs CategoryService) List(dto dto.CategoryListDto) ([]model.Category, int64) {
 	return CategoryDao.List(dto)
 }
 
 // Create
-//func (c CategoryService) Create(dto dto.CategoryCreateDto) (model.Category, error) {
-//	CategoryModel := model.Category{
-//		Name:          dto.Name,
-//		ChannelId:  dto.ChannelId,
-//		NovelNum: dto.NovelNum,
-//		Sort: dto.Sort,
-//		CreatedAt: dto.CreatedAt,
-//		UpdatedAt: dto.UpdatedAt,
-//		DeletedAt: dto.DeletedAt,
-//	}
-//	c := CategoryDao.Create(&CategoryModel)
-//	if c.Error != nil {
-//		log.Error(c.Error.Error())
-//	}
-//
-//	return CategoryModel, nil
-//}
-
-// Update
-func (c CategoryService) Update(dto dto.TaskEditDto) error {
-	return nil
+func (cs CategoryService) Create(dto dto.CategoryCreateDto) (model.Category, error) {
+	CategoryModel := model.Category{
+		Name:      dto.Name,
+		ChannelId: dto.ChannelId,
+		NovelNum:  dto.NovelNum,
+		Sort:      dto.Sort,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	c := CategoryDao.Create(&CategoryModel)
+	if c.Error != nil {
+		log.Error(c.Error.Error())
+	}
+	return CategoryModel, nil
 }
 
-// Delete
-//func (c CategoryService) Delete(dto dto.GeneralDelDto) int64 {
-//	CategoryModel := model.Category{
-//		Id: dto.Id,
-//	}
-//	c := CategoryDao.Delete(&CategoryModel)
-//	return c.RowsAffected
-//}
+// Update
+func (cs CategoryService) Update(dto dto.CategoryEditDto) int64 {
+	categoryModel := model.Category{
+		Id:        dto.Id,
+		Name:      dto.Name,
+		ChannelId: dto.ChannelId,
+		Sort:      dto.Sort,
+		NovelNum:  dto.NovelNum,
+	}
+	c := CategoryDao.Update(&categoryModel, map[string]interface{}{
+		"name":       dto.Name,
+		"channel_id": dto.ChannelId,
+		"sort":       dto.Sort,
+		"novel_num":  dto.NovelNum,
+		"updated_at": time.Now(),
+	})
+	return c.RowsAffected
+}
+
+//Delete
+func (cs CategoryService) Delete(dto dto.GeneralDelDto) int64 {
+	CategoryModel := model.Category{
+		Id: dto.Id,
+	}
+	c := CategoryDao.Delete(&CategoryModel)
+	return c.RowsAffected
+}

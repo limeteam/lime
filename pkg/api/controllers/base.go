@@ -43,6 +43,13 @@ func resp(c *gin.Context, data map[string]interface{}) {
 	})
 }
 
+func ok(c *gin.Context, msg string) {
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  msg,
+	})
+}
+
 func fail(c *gin.Context, errs *ControllerError) {
 	c.JSON(http.StatusOK, gin.H{
 		"code":     errs.Code,
