@@ -95,11 +95,25 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: '/category/list',
+        path: '/categorys',
         component: () => import('@/views/category/list'),
         name: 'CategoryList',
         hidden: false,
         meta: { title: '分类列表', icon: 'list' }
+      },
+      {
+        path: '/novel/books',
+        component: () => import('@/views/books/list'),
+        name: 'BooksList',
+        hidden: false,
+        meta: { title: '小说列表', icon: 'list' }
+      },
+      {
+        path: '/novel/create',
+        component: () => import('@/views/books/create'),
+        name: 'CreateBook',
+        hidden: true,
+        meta: { title: '新建小说', icon: 'create' }
       }
     ]
   },

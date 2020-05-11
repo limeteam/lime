@@ -26,10 +26,10 @@ func Init(e *gin.Engine) {
 	e.PUT("/books/:id", BooksController.Edit)
 	e.DELETE("/books/:id", BooksController.Delete)
 
-	CommentsController := &controllers.CommentsController{}
-	e.GET("/comments", CommentsController.List)
-	e.GET("/comments/:id", CommentsController.Get)
-	e.DELETE("/comments/:id", CommentsController.Delete)
+	//CommentsController := &controllers.CommentsController{}
+	//e.GET("/comments", CommentsController.List)
+	//e.GET("/comments/:id", CommentsController.Get)
+	//e.DELETE("/comments/:id", CommentsController.Delete)
 
 	e.LoadHTMLGlob("./pkg/ui/dist/*.html")              // 添加入口index.html
 	e.LoadHTMLFiles("./pkg/ui/dist/static/*/*")         // 添加资源路径
