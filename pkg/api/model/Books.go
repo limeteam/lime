@@ -6,7 +6,7 @@ import (
 )
 
 type Books struct {
-	Id                        int        `gorm:"primary_key" json:" - "`    //分类ID
+	Id                        int        `gorm:"primary_key" json:"id"`    //分类ID
 	Name                      string     `json:"name"`                      //分类名称
 	Old_name                  string     `json:"old_name"`                  //原名
 	Channel_id                int        `json:"channel_id"`                //所属频道

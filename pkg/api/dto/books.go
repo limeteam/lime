@@ -3,6 +3,7 @@ package dto
 import "time"
 
 type BooksListDto struct {
+	Id                        int        `form:"id" json:"id"`
 	Name                      string     `form:"name" json:"name"`
 	Old_name                  string     `form:"old_name" json:"old_name"`
 	Channel_id                int        `form:"channel_id" json:"channel_id"`

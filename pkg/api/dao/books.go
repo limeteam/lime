@@ -18,10 +18,10 @@ func (c BooksDao) Get(id int) model.Books {
 }
 
 func (c BooksDao) GetAll() []model.Books {
-	var Category []model.Books
+	var Books []model.Books
 	db := db.GetGormDB()
-	db.Model(&model.Category{}).Find(&Category)
-	return Category
+	db.Model(&model.Books{}).Find(&Books)
+	return Books
 }
 
 func (c BooksDao) List(listDto dto.BooksListDto) ([]model.Books, int64) {
@@ -38,9 +38,9 @@ func (c BooksDao) List(listDto dto.BooksListDto) ([]model.Books, int64) {
 	return Books, total
 }
 
-func (c BooksDao) Create(Category *model.Books) *gorm.DB {
+func (c BooksDao) Create(Books *model.Books) *gorm.DB {
 	db := db.GetGormDB()
-	return db.Save(Category)
+	return db.Save(Books)
 }
 
 // Update

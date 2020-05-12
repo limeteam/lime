@@ -87,6 +87,7 @@ export const asyncRoutes = [
   {
     path: '/category',
     component: Layout,
+    alwaysShow: true,
     // redirect: '/category/list',
     name: 'Category',
     meta: {
@@ -114,6 +115,13 @@ export const asyncRoutes = [
         name: 'CreateBook',
         hidden: true,
         meta: { title: '新建小说', icon: 'create' }
+      },
+      {
+        path: '/novel/update',
+        component: () => import('@/views/books/update'),
+        name: 'UpdateBook',
+        hidden: true,
+        meta: { title: '修改小说', icon: 'create' }
       }
     ]
   },

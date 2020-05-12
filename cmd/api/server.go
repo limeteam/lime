@@ -18,6 +18,7 @@ import (
 var (
 	config   string
 	port     string
+	cors     bool
 	loglevel uint8
 	//StartCmd : set up restful api server
 	StartCmd = &cobra.Command{
@@ -38,6 +39,7 @@ func init() {
 	StartCmd.PersistentFlags().StringVarP(&config, "config", "c", "config/in-local.yaml", "Start server with provided configuration file")
 	StartCmd.PersistentFlags().StringVarP(&port, "port", "p", "8080", "Tcp port server listening on")
 	StartCmd.PersistentFlags().Uint8VarP(&loglevel, "loglevel", "l", 0, "Log level")
+	StartCmd.PersistentFlags().BoolVarP(&cors, "cors", "x", false, "Enable cors headers")
 }
 
 func usage() {
@@ -82,6 +84,6 @@ func setup() {
 
 func run() error {
 	engine := gin.Default()
-	router.Init(engine)
+	router.Init(engine, cors)
 	return engine.Run(":" + port)
 }

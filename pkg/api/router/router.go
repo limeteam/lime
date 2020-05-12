@@ -3,13 +3,16 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/controllers"
+	"lime/pkg/api/middleware"
 )
 
-func Init(e *gin.Engine) {
+func Init(e *gin.Engine, cors bool) {
 	e.Use(
 		gin.Recovery(),
 	)
-	//e.Use(cors.Default()) // CORS
+	if cors {
+		e.Use(middleware.Cors())
+	}
 	e.GET("/healthcheck", controllers.Healthy)
 
 	CategoryController := &controllers.CategoryController{}

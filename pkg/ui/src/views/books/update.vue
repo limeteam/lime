@@ -9,7 +9,7 @@
           <a href="/#/novel/books" class="el-button el-button--primary">小说列表</a>
         </el-col>
       </el-row>
-      <el-divider>新增小说</el-divider>
+      <el-divider>修改小说</el-divider>
     </div>
     <el-form
       ref="dataForm"
@@ -110,7 +110,7 @@
         <div class="help-block">敏感小说不会出现在书库和搜索结果中，只能通过推荐位和推送等形式触达用户</div>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="createData">立即创建</el-button>
+        <el-button type="primary" @click="updateData">修改</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -118,7 +118,7 @@
 </template>
 <script>
 import { categoryList } from "@/api/lime-admin/category";
-import { createBook } from "@/api/lime-admin/book";
+import { createBook, getBook, updateBook } from "@/api/lime-admin/book";
 import {
   CATEGORY_CHANNEL,
   BOOK_ATTRS,
@@ -127,10 +127,11 @@ import {
   BOOK_IS_SENSITIVITYS
 } from "./emun/index.js";
 export default {
-  name: "CreateBook",
+  name: "UpdateBook",
   data() {
     return {
       form: {
+        id: undefined,
         name: "",
         old_name: "",
         channel_id: 0,
@@ -165,6 +166,7 @@ export default {
   },
   mounted() {
     this.getCategorys();
+    this.getNovels();
   },
   methods: {
     resetForm() {
@@ -174,10 +176,10 @@ export default {
       this.formData.name = "";
       this.formData.sort = 0;
     },
-    createData() {
+    updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          createBook(this.form).then(() => {
+          updateBook(this.form.id, this.form).then(() => {
             this.dialogFormVisible = false;
             this.$notify({
               title: "成功",
@@ -195,6 +197,17 @@ export default {
       try {
         const list = await categoryList([]);
         this.categorys  = list.data.list;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getNovels() {
+      // 获取列表
+      this.loading = true;
+      try {
+        var id = this.$route.query.id;
+        const list = await getBook(id);
+        this.form  = list.data.result;
       } finally {
         this.loading = false;
       }

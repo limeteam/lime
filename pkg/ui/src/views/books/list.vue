@@ -23,14 +23,23 @@
       <!-- 过滤条件 -->
       <!--列表-->
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
-        <el-table-column label="ID" prop="id" width="80px" />
-        <el-table-column label="分类名" prop="name" width="100px" />
-        <el-table-column label="小说数" prop="novel_num" width="80px" />
-        <el-table-column label="所属频道" prop="channel_id" width="100px" />
-        <el-table-column label="分类展示排序" prop="sort" width="123px" />
+        <el-table-column label="封面" prop="id" width="80px" />
+        <el-table-column label="类型/名称" prop="name" width="100px" />
+        <el-table-column label="所属频道" prop="novel_num" width="80px" />
+        <el-table-column label="来源" prop="channel_id" width="100px" />
+        <el-table-column label="千字价格" prop="sort" width="123px" />
+        <el-table-column label="每章价格" prop="sort" width="80px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
+            <el-button
+              v-if="row.status!='published'"
+              icon="el-icon-notebook-2"
+              size="mini"
+              type="success"
+              @click="handleModifyStatus(row,'published')"
+            >章节管理</el-button>
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
+            <el-button icon="el-icon-close" type="primary" size="mini" @click="handleDown(row)">下架</el-button>
             <el-button
               v-if="row.status!='deleted'"
               icon="el-icon-delete"
@@ -38,13 +47,6 @@
               type="danger"
               @click="handleDelete(row)"
             >删除</el-button>
-            <el-button
-              v-if="row.status!='published'"
-              icon="el-icon-view"
-              size="mini"
-              type="success"
-              @click="handleModifyStatus(row,'published')"
-            >分类小说</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,20 +55,22 @@
         :total="items.total_items"
         :page.sync="formData.page"
         :limit.sync="formData.page_size"
-        @pagination="getCategoryList"
+        @pagination="getBookList"
       />
       <!--列表 -->
     </el-card>
   </div>
 </template>
-
 <script>
 import {
-  categoryList,
-  createCategory,
-  updateCategory,
-  deleteCategory
+  categoryList
 } from "@/api/lime-admin/category";
+import {
+  BookList,
+  createBook,
+  updateBook,
+  deleteBook
+} from "@/api/lime-admin/book";
 import Pagination from "@/components/Pagination";
 import { CATEGORY_CHANNEL } from "./emun/index.js";
 import selectedpanel from './components/selectedpanel';
@@ -82,19 +86,32 @@ export default {
   data() {
     return {
       formData: {
-        name: "",
-        channel_id: 0,
-        novel_num: 0,
-        sort: 0,
-        page: 1,
-        page_size: 10
-      },
-      temp: {
         id: undefined,
         name: "",
-        channel_id: 1,
-        novel_num: 0,
-        sort: 0
+        old_name: "",
+        channel_id: 0,
+        category_id: 0,
+        desc: "",
+        cover: "",
+        author: "",
+        source: "",
+        split_rule: "",
+        upload_file: "",
+        status: 0,
+        attribute: 0,
+        chapter_price: 0,
+        thousand_characters_price: 0,
+        score: 0,
+        text_num: 0,
+        chapter_num: 0,
+        chapter_id: 0,
+        chapter_title: "",
+        views: 0,
+        collect_num: 0,
+        online_status: 0,
+        is_sensitivity: 0,
+        page: 1,
+        page_size: 10
       },
       loading: false,
       items: {
@@ -102,55 +119,27 @@ export default {
         total_items: 2,
         list: []
       },
-      channels: ["全部", "男生", "女生"],
-      category_channels: CATEGORY_CHANNEL,
-      textMap: {
-        update: "编辑",
-        create: "新增"
-      },
-      rules: {
-        type: [
-          { required: true, message: "type is required", trigger: "change" }
-        ],
-        timestamp: [
-          {
-            type: "date",
-            required: true,
-            message: "timestamp is required",
-            trigger: "change"
-          }
-        ],
-        title: [
-          { required: true, message: "title is required", trigger: "blur" }
-        ]
-      }
     };
   },
   computed: {},
   created() {},
   mounted() {
-    this.getCategoryList();
+    this.getBookList();
   },
   methods: {
     onSubmit() {
       // 查询按钮
       this.formData.page = 1;
-      this.getCategoryList();
+      this.getBookList();
     },
     on_refresh() {
-      this.getCategoryList();
-    },
-    timeChange(val) {
-      // 时间选择
-      if (val === null) {
-        this.formData.start_time = "";
-        this.formData.end_time = "";
-      } else {
-        this.formData.start_time = val[0];
-        this.formData.end_time = val[1];
-      }
+      this.getBookList();
     },
     handleClick(row) {
+    },
+    handleUpdate(row) {
+      console.log(row)
+      this.$router.push({path: '/novel/update?id=' + row.id})
     },
     handleDelete(row) {
       this.$confirm("此操作将永久删除数据, 是否继续?", "提示", {
@@ -167,7 +156,7 @@ export default {
                 type: "success",
                 duration: 2000
               });
-              this.getCategoryList();
+              this.getBookList();
             })
             .catch(res => {
               this.$message.error(res.msg);
@@ -178,26 +167,15 @@ export default {
     currentChange(index) {
       // 分页
       this.formData.page = index;
-      this.getCategoryList();
+      this.getBookList();
     },
-    async getCategoryList() {
+    async getBookList() {
       // 获取列表
       this.loading = true;
       try {
-        const list = await categoryList(this.formData);
+        const list = await BookList(this.formData);
         this.items.list = list.data.list;
-        for (const v of this.items.list) {
-          switch (v.channel_id) {
-            case 1:
-              v.channel_id = "男生";
-              break;
-            case 2:
-              v.channel_id = "女生";
-              break;
-            default:
-              v.channel_id = "全部";
-          }
-        }
+        console.log(this.items.list);
         this.items.total_items = list.data.total;
       } finally {
         this.loading = false;
@@ -208,9 +186,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.category_list {
-  margin: 20px;
-}
 .pagination-block {
   padding: 20px 0;
   text-align: center;

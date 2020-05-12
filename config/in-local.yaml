@@ -18,3 +18,17 @@ mongo:
   username: ${LIME_MONGO_USERNAME}
   password: ${LIME_MONGO_PASSWORD}
   authSource: ${LIME_MONGO_AUTHSOURCE}
+cors:
+  allow_credentials: false
+  allow_headers:
+    - '*'
+  allow_methods:
+    - GET
+    - POST
+    - OPTIONS
+    - PUT
+    - DELETE
+  allow_origins:
+    - '*'
+  enable: false
+  max_age: 7200

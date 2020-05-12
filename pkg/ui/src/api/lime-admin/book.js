@@ -1,6 +1,13 @@
 import request from './request'
 import qs from 'qs'
 
+export function getBook(id) {
+  return request({
+    url: 'books/' + id,
+    method: 'GET'
+  })
+}
+
 export function BookList() {
   return request({
     url: 'books',
