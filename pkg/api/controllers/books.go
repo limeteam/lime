@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
@@ -75,4 +76,22 @@ func (Book *BooksController) Delete(c *gin.Context) {
 		}
 		ok(c, "删除成功")
 	}
+}
+
+func (Book *BooksController) UploadBookCover(c *gin.Context) {
+	file, header, err := c.Request.FormFile("file")
+	if err != nil {
+		fail(c, ErrUploadCover)
+		return
+	}
+	filename := header.Filename
+	result, err := BooksService.UploadCover(file, filename)
+	fmt.Println(result,err)
+	if err != nil {
+		fail(c, ErrUploadCover)
+		return
+	}
+	resp(c, map[string]interface{}{
+		"result": result,
+	})
 }

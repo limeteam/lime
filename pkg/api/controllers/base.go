@@ -23,6 +23,7 @@ var (
 	ErrInvalidParams = &ControllerError{11003, "验证失败", ""}
 	ErrIdData        = &ControllerError{10016, "此ID无数据记录", ""}
 	OtherTaskRunning = &ControllerError{12000, "有其他任务在执行", ""}
+	ErrUploadCover   = &ControllerError{12001, "上传封面失败", ""}
 )
 
 type BaseController struct {

@@ -38,3 +38,11 @@ export function deleteBook(id,data) {
     data: data
   })
 }
+
+export function uploadcover(id,data) {
+  return request({
+    url: 'books/' + id,
+    method: 'delete',
+    data: data
+  })
+}

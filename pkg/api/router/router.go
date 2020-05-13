@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/controllers"
 	"lime/pkg/api/middleware"
+	"lime/pkg/api/utils/upload"
+	"net/http"
 )
 
 func Init(e *gin.Engine, cors bool) {
@@ -28,6 +30,7 @@ func Init(e *gin.Engine, cors bool) {
 	e.POST("/books", BooksController.Create)
 	e.PUT("/books/:id", BooksController.Edit)
 	e.DELETE("/books/:id", BooksController.Delete)
+	e.POST("/books/uploadcover", BooksController.UploadBookCover)
 
 	//CommentsController := &controllers.CommentsController{}
 	//e.GET("/comments", CommentsController.List)
@@ -38,4 +41,5 @@ func Init(e *gin.Engine, cors bool) {
 	e.LoadHTMLFiles("./pkg/ui/dist/static/*/*")         // 添加资源路径
 	e.Static("/static", "./pkg/ui/dist/static")         // 添加资源路径
 	e.StaticFile("/admin/", "./pkg/ui/dist/index.html") //前端接口
+	e.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 }

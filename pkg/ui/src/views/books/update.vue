@@ -67,6 +67,22 @@
       <el-form-item label="收藏数" prop="collect_num">
         <el-input-number v-model="form.collect_num" :step="1" step-strictly></el-input-number>
       </el-form-item>
+      <el-form-item label="封面" prop="cover">
+        <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
+          list-type="picture-card"
+          :class="{hide:counts[scope.$index]>1}"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          :limit="1"
+        >
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt />
+        </el-dialog>
+        <div class="help-block">建议大小225*300</div>
+      </el-form-item>
       <el-form-item label="属性" prop="attribute">
         <el-checkbox-group v-model="form.attribute">
           <el-checkbox
@@ -161,12 +177,19 @@ export default {
       book_online_status: BOOK_ONLINE_STATUS,
       book_status: BOOK_STATUS,
       book_is_sensitivity: BOOK_IS_SENSITIVITYS,
-      categorys: []
+      categorys: [],
+      dialogImageUrl: "",
+      dialogVisible: false
     };
   },
   mounted() {
     this.getCategorys();
     this.getNovels();
+  },
+  computed: {
+    uploadDisabled: function() {
+      return this.imagelist.length > 0;
+    }
   },
   methods: {
     resetForm() {
@@ -196,7 +219,7 @@ export default {
       this.loading = true;
       try {
         const list = await categoryList([]);
-        this.categorys  = list.data.list;
+        this.categorys = list.data.list;
       } finally {
         this.loading = false;
       }
@@ -207,10 +230,17 @@ export default {
       try {
         var id = this.$route.query.id;
         const list = await getBook(id);
-        this.form  = list.data.result;
+        this.form = list.data.result;
       } finally {
         this.loading = false;
       }
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     }
   }
 };

@@ -2,9 +2,14 @@ package service
 
 import (
 	log "github.com/sirupsen/logrus"
+	"github.com/nfnt/resize"
+	"image/jpeg"
 	"lime/pkg/api/dao"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/model"
+	"mime/multipart"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -132,4 +137,26 @@ func (bs BooksService) Delete(dto dto.GeneralDelDto) int64 {
 	}
 	c := BooksDao.Delete(&Model)
 	return c.RowsAffected
+}
+
+//上传封面
+func (bs BooksService)  UploadCover(file multipart.File, filename string) (filepath string, err error) {
+	img, err := jpeg.Decode(file)
+	if err != nil {
+		return "", err
+	}
+	file.Close()
+	width := 225
+	height := 300
+	m := resize.Resize(uint(width), uint(height), img, resize.Lanczos3)
+	timenow := time.Now().Unix()
+	filename = strconv.FormatInt(timenow, 10) + ".jpg"
+	out, err := os.Create("./data/images/" + filename)
+	if err != nil {
+		return "", err
+	}
+	defer out.Close()
+	jpeg.Encode(out, m, nil)
+	filepath = "/upload/images/" + filename
+	return filepath, nil
 }
