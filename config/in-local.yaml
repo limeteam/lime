@@ -34,7 +34,7 @@ cors:
   max_age: 7200
 upload:
   image_prefix_url: "http://127.0.0.1:8000"
-  image_save_path: "upload/images/"
+  image_save_path: "data/images/"
   image_max_size: 5
   image_allow_exts:
     - .jpg

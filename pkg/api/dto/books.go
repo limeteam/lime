@@ -93,3 +93,9 @@ type BooksEditDto struct {
 	Is_sensitivity            int       `form:"is_sensitivity" json:"is_sensitivity"`
 	UpdatedAt                 time.Time `form:"updated_at" json:"updated_at" sql:"-"`
 }
+
+type BooksUpdateStatusDto struct {
+	Id                        int       `uri:"id" json:"id" binding:"required"`
+	Status                    int       `form:"status" json:"status"`
+	UpdatedAt                 time.Time `form:"updated_at" json:"updated_at" sql:"-"`
+}

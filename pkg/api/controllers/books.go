@@ -52,6 +52,19 @@ func (Book *BooksController) Edit(c *gin.Context) {
 	}
 }
 
+func (Book *BooksController) UpdateStatus(c *gin.Context) {
+	var Dto dto.BooksUpdateStatusDto
+	if Book.BindAndValidate(c, &Dto) {
+		affected := BooksService.UpdateStatus(Dto)
+		if affected > 0 {
+			ok(c, "更新成功")
+			return
+		}
+		fail(c, ErrEditFail)
+		return
+	}
+}
+
 func (Book *BooksController) Get(c *gin.Context) {
 	var Dto dto.GeneralGetDto
 	if Book.BindAndValidate(c, &Dto) {

@@ -69,18 +69,17 @@
       </el-form-item>
       <el-form-item label="封面" prop="cover">
         <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
-          list-type="picture-card"
-          :class="{hide:counts[scope.$index]>1}"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          :limit="1"
+          class="cover-uploader"
+          action=""
+          :auto-upload=false
+          :on-change="handleImgSuccess"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
         >
-          <i class="el-icon-plus"></i>
+          <img v-if="imageUrl" :src="imageUrl" class="cover" />
+          <i v-else class="el-icon-plus cover-uploader-icon"></i>
         </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt />
-        </el-dialog>
         <div class="help-block">建议大小225*300</div>
       </el-form-item>
       <el-form-item label="属性" prop="attribute">
@@ -134,7 +133,12 @@
 </template>
 <script>
 import { categoryList } from "@/api/lime-admin/category";
-import { createBook, getBook, updateBook } from "@/api/lime-admin/book";
+import {
+  createBook,
+  getBook,
+  updateBook,
+  uploadcover
+} from "@/api/lime-admin/book";
 import {
   CATEGORY_CHANNEL,
   BOOK_ATTRS,
@@ -178,26 +182,18 @@ export default {
       book_status: BOOK_STATUS,
       book_is_sensitivity: BOOK_IS_SENSITIVITYS,
       categorys: [],
-      dialogImageUrl: "",
-      dialogVisible: false
+      fileList: [],
+      imageUrl: ''
     };
   },
   mounted() {
     this.getCategorys();
     this.getNovels();
   },
-  computed: {
-    uploadDisabled: function() {
-      return this.imagelist.length > 0;
-    }
-  },
   methods: {
     resetForm() {
       // 重置
       this.$refs["dataForm"].resetFields();
-      this.formData.channel_id = 0;
-      this.formData.name = "";
-      this.formData.sort = 0;
     },
     updateData() {
       this.$refs["dataForm"].validate(valid => {
@@ -213,6 +209,38 @@ export default {
           });
         }
       });
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(this.imageUrl);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 10;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    async handleImgSuccess(file, fileList) {
+      if (!file) return;
+      let formData = new FormData();
+      formData.append("file", file.raw);
+      uploadcover(formData).then(res => {
+        this.form.cover = res.data.result;
+        this.dialogFormVisible = false;
+        this.$notify({
+          title: "成功",
+          message: "上传成功",
+          type: "success",
+          duration: 2000
+        });
+      });
+      this.imageUrl = URL.createObjectURL(file.raw);
     },
     async getCategorys() {
       // 获取列表
@@ -231,21 +259,17 @@ export default {
         var id = this.$route.query.id;
         const list = await getBook(id);
         this.form = list.data.result;
+        this.fileList = [
+          { name: "cover.jpg", url: "http://127.0.0.1:8080" + this.form.cover }
+        ];
       } finally {
         this.loading = false;
       }
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    }
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .book_title {
   font-weight: 700 !important;
   font-size: 16px;
@@ -256,5 +280,32 @@ export default {
   margin-top: 5px;
   margin-bottom: 10px;
   color: #737373;
+}
+.hide .el-upload--picture-card {
+  display: none;
+}
+
+.cover-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.cover-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.cover-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 255px;
+  height: 300px;
+  line-height: 255px;
+  text-align: center;
+}
+.cover {
+  width: 255px;
+  height: 300px;
+  display: block;
 }
 </style>

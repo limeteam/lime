@@ -23,6 +23,14 @@ export function updateBook(id, data) {
   })
 }
 
+export function updatestatus(id, data) {
+  return request({
+    url: '/books/' + id + '/status',
+    method: 'post',
+    data: data
+  })
+}
+
 export function createBook(data) {
   return request({
     url: 'books',
@@ -39,10 +47,14 @@ export function deleteBook(id,data) {
   })
 }
 
-export function uploadcover(id,data) {
+export function uploadcover(formData) {
   return request({
-    url: 'books/' + id,
-    method: 'delete',
-    data: data
+    url: 'update/uploadcover',
+    method: 'post',
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+     }
+    // data: data
   })
 }

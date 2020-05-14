@@ -11,24 +11,54 @@
           class="demo-form-inline"
         >
           <el-form-item label="搜索" prop="name">
-            <el-input v-model="formData.name" placeholder="书名/作者/来源" />
+            <el-input v-model="formData.name" placeholder="书名/作者/来源" class="filter-item" />
           </el-form-item>
           <el-form-item>
-            <el-button :loading="loading" type="primary" @click="onSubmit">搜索</el-button>
-            <a href="/#/novel/create" class="el-button el-button--primary">新增小说</a>
+            <el-button
+              :loading="loading"
+              type="primary"
+              icon="el-icon-search"
+              @click="onSubmit"
+              class="filter-item"
+            >搜索</el-button>
           </el-form-item>
-          <selectedpanel/>
+          <el-form-item style="text-align: right;width: 60%;">
+            <a href="/#/novel/create" class="el-button el-button--primary filter-item">新增小说</a>
+          </el-form-item>
+          <selectedpanel />
         </el-form>
       </div>
       <!-- 过滤条件 -->
       <!--列表-->
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
-        <el-table-column label="封面" prop="id" width="80px" />
-        <el-table-column label="类型/名称" prop="name" width="100px" />
-        <el-table-column label="所属频道" prop="novel_num" width="80px" />
-        <el-table-column label="来源" prop="channel_id" width="100px" />
-        <el-table-column label="千字价格" prop="sort" width="123px" />
-        <el-table-column label="每章价格" prop="sort" width="80px" />
+        <el-table-column prop="cover" label="封面" width="100px" align="center">
+          <template slot-scope="scope">
+            <img
+              :src="'http://127.0.0.1:8080' + scope.row.cover"
+              style="width: 75px;height:100px"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="name" label="类型/名称" width="230px" align="left">
+          <template slot-scope="scope">
+            <span class="basic-info">
+              <a v-bind:href="scope.row.url">[都市现实] {{scope.row.name}}</a>&nbsp;
+              <small>[连载中]</small>
+            </span>
+            <br />
+            <small
+              class="author"
+            >作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：{{scope.row.author}}</small>
+            <br />
+            <small class="last-chapter">最新章节：第二章 星星之火</small>
+            <br />
+            <small class="update-time">更新时间：{{ scope.row.chapter_updated_at}}</small>
+          </template>
+        </el-table-column>
+        <el-table-column label="所属频道" prop="channel_id" width="80px" />
+        <el-table-column label="来源" prop="source" width="100px" />
+        <el-table-column label="千字价格" prop="thousand_characters_price" width="123px" />
+        <el-table-column label="每章价格" prop="chapter_price" width="80px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
             <el-button
@@ -36,10 +66,23 @@
               icon="el-icon-notebook-2"
               size="mini"
               type="success"
-              @click="handleModifyStatus(row,'published')"
+              @click="handleJumpChapater(row.id)"
             >章节管理</el-button>
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-            <el-button icon="el-icon-close" type="primary" size="mini" @click="handleDown(row)">下架</el-button>
+            <el-button
+              v-if="row.status ==0"
+              icon="el-icon-close"
+              type="primary"
+              size="mini"
+              @click="handleModifyStatus(row,1)"
+            >下架</el-button>
+            <el-button
+              v-if="row.status==1"
+              icon="el-icon-close"
+              type="primary"
+              size="mini"
+              @click="handleModifyStatus(row,0)"
+            >上架</el-button>
             <el-button
               v-if="row.status!='deleted'"
               icon="el-icon-delete"
@@ -62,18 +105,17 @@
   </div>
 </template>
 <script>
-import {
-  categoryList
-} from "@/api/lime-admin/category";
+import { categoryList } from "@/api/lime-admin/category";
 import {
   BookList,
   createBook,
   updateBook,
-  deleteBook
+  deleteBook,
+  updatestatus
 } from "@/api/lime-admin/book";
 import Pagination from "@/components/Pagination";
 import { CATEGORY_CHANNEL } from "./emun/index.js";
-import selectedpanel from './components/selectedpanel';
+import selectedpanel from "./components/selectedpanel";
 export default {
   name: "BooksList",
   filters: {
@@ -82,7 +124,7 @@ export default {
       return CATEGORY_CHANNEL[value];
     }
   },
-  components: { Pagination,selectedpanel},
+  components: { Pagination, selectedpanel },
   data() {
     return {
       formData: {
@@ -111,14 +153,15 @@ export default {
         online_status: 0,
         is_sensitivity: 0,
         page: 1,
-        page_size: 10
+        page_size: 10,
+        url: ""
       },
       loading: false,
       items: {
         cur_page: 1,
         total_items: 2,
         list: []
-      },
+      }
     };
   },
   computed: {},
@@ -135,11 +178,27 @@ export default {
     on_refresh() {
       this.getBookList();
     },
-    handleClick(row) {
+    handleJumpChapater(id){
+      this.$router.push({ path: "/novel/chapters?book_id=" + id });
     },
     handleUpdate(row) {
-      console.log(row)
-      this.$router.push({path: '/novel/update?id=' + row.id})
+      console.log(row);
+      this.$router.push({ path: "/novel/update?id=" + row.id });
+    },
+    handleModifyStatus(row, status) {
+      updatestatus(row.id, { status: status })
+            .then(() => {
+              this.$notify({
+                title: "成功",
+                message: "操作成功",
+                type: "success",
+                duration: 2000
+              });
+              this.getBookList();
+            })
+            .catch(res => {
+              this.$message.error(res.msg);
+            });
     },
     handleDelete(row) {
       this.$confirm("此操作将永久删除数据, 是否继续?", "提示", {
@@ -148,7 +207,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          deleteCategory(row.id, { id: row.id })
+          deleteBook(row.id, { id: row.id })
             .then(() => {
               this.$notify({
                 title: "成功",
@@ -175,7 +234,19 @@ export default {
       try {
         const list = await BookList(this.formData);
         this.items.list = list.data.list;
-        console.log(this.items.list);
+        for (const v of this.items.list) {
+          switch (v.channel_id) {
+            case 1:
+              v.channel_id = "男生";
+              break;
+            case 2:
+              v.channel_id = "女生";
+              break;
+            default:
+              v.channel_id = "全部";
+          }
+          v.url = "/#/novel/view?id="+v.id
+        }
         this.items.total_items = list.data.total;
       } finally {
         this.loading = false;

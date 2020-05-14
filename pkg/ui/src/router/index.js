@@ -122,7 +122,35 @@ export const asyncRoutes = [
         name: 'UpdateBook',
         hidden: true,
         meta: { title: '修改小说', icon: 'create' }
-      }
+      },
+      {
+        path: '/novel/view',
+        component: () => import('@/views/books/view'),
+        name: 'getBook',
+        hidden: true,
+        meta: { title: '查看小说', icon: 'create' }
+      },
+      {
+        path: '/novel/chapters',
+        component: () => import('@/views/chapters/list'),
+        name: 'ChaptersList',
+        hidden: true,
+        meta: { title: '章节列表', icon: 'list' }
+      },
+      {
+        path: '/novel/chapters/create',
+        component: () => import('@/views/chapters/create'),
+        name: 'CreateChapters',
+        hidden: true,
+        meta: { title: '新建章节', icon: 'create' }
+      },
+      {
+        path: '/novel/chapters/update',
+        component: () => import('@/views/chapters/update'),
+        name: 'UpdateChapters',
+        hidden: true,
+        meta: { title: '修改章节', icon: 'create' }
+      },
     ]
   },
 
