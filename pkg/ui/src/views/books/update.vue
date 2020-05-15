@@ -6,7 +6,7 @@
           <span class="book_title"></span>
         </el-col>
         <el-col :span="2">
-          <a href="/#/novel/books" class="el-button el-button--primary">小说列表</a>
+          <el-button type="primary" @click="onNovelList">小说列表</el-button>
         </el-col>
       </el-row>
       <el-divider>修改小说</el-divider>
@@ -191,6 +191,9 @@ export default {
     this.getNovels();
   },
   methods: {
+    onNovelList() {
+      this.$router.push({ path: "/novel/books"});
+    },
     resetForm() {
       // 重置
       this.$refs["dataForm"].resetFields();

@@ -23,7 +23,7 @@
             >搜索</el-button>
           </el-form-item>
           <el-form-item style="text-align: right;width: 60%;">
-            <a href="/#/novel/create" class="el-button el-button--primary filter-item">新增小说</a>
+            <el-button type="primary" @click="onCreateNovel">新增小说</el-button>
           </el-form-item>
           <selectedpanel />
         </el-form>
@@ -39,7 +39,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="类型/名称" width="230px" align="left">
+        <el-table-column prop="name" label="类型/名称" width="220px" align="left">
           <template slot-scope="scope">
             <span class="basic-info">
               <a v-bind:href="scope.row.url">[都市现实] {{scope.row.name}}</a>&nbsp;
@@ -57,7 +57,7 @@
         </el-table-column>
         <el-table-column label="所属频道" prop="channel_id" width="80px" />
         <el-table-column label="来源" prop="source" width="100px" />
-        <el-table-column label="千字价格" prop="thousand_characters_price" width="123px" />
+        <el-table-column label="千字价格" prop="thousand_characters_price" width="80px" />
         <el-table-column label="每章价格" prop="chapter_price" width="80px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
@@ -174,6 +174,9 @@ export default {
       // 查询按钮
       this.formData.page = 1;
       this.getBookList();
+    },
+    onCreateNovel() {
+      this.$router.push({ path: "/novel/create"});
     },
     on_refresh() {
       this.getBookList();
