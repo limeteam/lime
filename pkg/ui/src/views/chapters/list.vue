@@ -97,6 +97,15 @@ export default {
   components: { Pagination },
   data() {
     return {
+      listQuery: {
+        page: 1,
+        skip: 0,
+        limit: 20,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      },
       formData: {
         title: "",
         is_vip: 0,
@@ -251,8 +260,11 @@ export default {
       // 获取列表
       this.loading = true;
       try {
-        const list = await ChapterList(this.formData);
-        this.items.list = list.data.list;
+        // this.listQuery.novel_id = this.$route.query.book_id
+        this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit
+        this.listQuery.q = 'novel_id=' + this.$route.query.book_id
+        const list = await ChapterList(this.listQuery);
+        this.items.list = list.data.result;
         for (const v of this.items.list) {
           switch (v.channel_id) {
             case 1:

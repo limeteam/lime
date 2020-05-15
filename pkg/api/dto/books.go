@@ -2,6 +2,17 @@ package dto
 
 import "time"
 
+var BookListSearchMapping = map[string]string{
+	"channel_id": "channel_id",
+	"cid": "category_id",
+	"status": "status",
+	"online_status": "online_status",
+	"is_sensitivity": "is_sensitivity",
+	"flag": "attribute",
+	"word": "text_num",
+	//"sort": "sort",
+}
+
 type BooksListDto struct {
 	Id                        int        `form:"id" json:"id"`
 	Name                      string     `form:"name" json:"name"`

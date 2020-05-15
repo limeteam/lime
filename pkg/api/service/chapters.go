@@ -30,7 +30,7 @@ func (bs ChaptersService) GetAll() []model.Chapters {
 }
 
 // List
-func (bs ChaptersService) List(dto dto.ChaptersListDto) ([]model.Chapters, int64) {
+func (bs ChaptersService) List(dto dto.GeneralListDto) ([]model.Chapters, int64) {
 	return ChaptersDao.List(dto)
 }
 

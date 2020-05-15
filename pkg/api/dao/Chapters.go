@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/model"
@@ -24,15 +25,13 @@ func (c ChaptersDao) GetAll() []model.Chapters {
 	return Chapters
 }
 
-func (c ChaptersDao) List(listDto dto.ChaptersListDto) ([]model.Chapters, int64) {
+func (c ChaptersDao) List(listDto dto.GeneralListDto) ([]model.Chapters, int64) {
 	var Chapters []model.Chapters
 	var total int64
-	//ChannelId, err := strconv.Atoi(listDto.ChannelId)
 	db := db.GetGormDB()
-	//if err == nil && ChannelId == 1 {
-	//	db = db.Where("created_at >=?", listDto.Start_time)
-	//	db = db.Where("created_at <=?", listDto.End_time)
-	//}
+	for sk, sv := range dto.TransformSearch(listDto.Q, dto.ChaptersListSearchMapping) {
+		db = db.Where(fmt.Sprintf("%s = ?", sk), sv)
+	}
 	db.Offset(listDto.Skip).Limit(listDto.Limit).Find(&Chapters)
 	db.Model(&model.Chapters{}).Count(&total)
 	return Chapters, total

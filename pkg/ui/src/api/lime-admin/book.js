@@ -8,10 +8,11 @@ export function getBook(id) {
   })
 }
 
-export function BookList() {
+export function BookList(query) {
   return request({
     url: 'books',
-    method: 'GET'
+    method: 'GET',
+    params: query
   })
 }
 

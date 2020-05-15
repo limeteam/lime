@@ -34,7 +34,7 @@
         <el-table-column prop="cover" label="封面" width="100px" align="center">
           <template slot-scope="scope">
             <img
-              :src="'http://127.0.0.1:8080' + scope.row.cover"
+              :src="base_url + scope.row.cover"
               style="width: 75px;height:100px"
             />
           </template>
@@ -127,6 +127,15 @@ export default {
   components: { Pagination, selectedpanel },
   data() {
     return {
+      listQuery: {
+        page: 1,
+        skip: 0,
+        limit: 20,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      },
       formData: {
         id: undefined,
         name: "",
@@ -156,6 +165,7 @@ export default {
         page_size: 10,
         url: ""
       },
+      base_url: process.env.VUE_APP_CONFIG_API,
       loading: false,
       items: {
         cur_page: 1,
@@ -166,6 +176,11 @@ export default {
   },
   computed: {},
   created() {},
+  watch: {
+    $route() {
+      this.getBookList();
+    }
+  },
   mounted() {
     this.getBookList();
   },
@@ -235,8 +250,36 @@ export default {
       // 获取列表
       this.loading = true;
       try {
-        const list = await BookList(this.formData);
-        this.items.list = list.data.list;
+        var qStr = "";
+        if (this.$route.query.channel_id > 0){
+          qStr = 'channel_id=' + this.$route.query.channel_id + ','
+        }
+        if (this.$route.query.cid > 0){
+           qStr += 'cid=' + this.$route.query.cid + ','
+        }
+        if (this.$route.query.status > 0){
+          qStr += 'status=' + this.$route.query.status + ','
+        }
+        if (this.$route.query.online_status > 0){
+          qStr += 'online_status=' + this.$route.query.online_status + ','
+        }
+        if (this.$route.query.is_sensitivity > 0){
+          qStr += 'is_sensitivity=' + this.$route.query.is_sensitivity + ','
+        }
+        if (this.$route.query.flag > 0){
+          qStr += 'flag=' + this.$route.query.flag + ','
+        }
+        if (this.$route.query.word > 0){
+          qStr += 'word=' + this.$route.query.word + ','
+        }
+        if (this.$route.query.sort > 0){
+          qStr += 'sort=' + this.$route.query.sort + ','
+        }
+        
+        this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit
+        this.listQuery.q = qStr.slice(0,-1)
+        const list = await BookList(this.listQuery);
+        this.items.list = list.data.result;
         for (const v of this.items.list) {
           switch (v.channel_id) {
             case 1:

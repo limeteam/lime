@@ -263,7 +263,7 @@ export default {
         const list = await getBook(id);
         this.form = list.data.result;
         this.fileList = [
-          { name: "cover.jpg", url: "http://127.0.0.1:8080" + this.form.cover }
+          { name: "cover.jpg", url: process.env.VUE_APP_CONFIG_API + this.form.cover }
         ];
       } finally {
         this.loading = false;

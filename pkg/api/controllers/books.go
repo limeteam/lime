@@ -14,14 +14,12 @@ type BooksController struct {
 }
 
 func (Book *BooksController) List(c *gin.Context) {
-	var Dto dto.BooksListDto
+	var Dto dto.GeneralListDto
 	if Book.BindAndValidate(c, &Dto) {
 		data, total := BooksService.List(Dto)
 		resp(c, map[string]interface{}{
-			"list":      data,
-			"total":     total,
-			"page":      Dto.Page,
-			"page_size": Dto.Limit,
+			"result": data,
+			"total":  total,
 		})
 	}
 }

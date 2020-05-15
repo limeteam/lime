@@ -12,14 +12,12 @@ type ChaptersController struct {
 }
 
 func (Chapter *ChaptersController) List(c *gin.Context) {
-	var Dto dto.ChaptersListDto
+	var Dto dto.GeneralListDto
 	if Chapter.BindAndValidate(c, &Dto) {
 		data, total := ChaptersService.List(Dto)
 		resp(c, map[string]interface{}{
-			"list":      data,
-			"total":     total,
-			"page":      Dto.Page,
-			"page_size": Dto.Limit,
+			"result": data,
+			"total":  total,
 		})
 	}
 }

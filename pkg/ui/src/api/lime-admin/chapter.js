@@ -8,10 +8,11 @@ export function getChapter(id) {
   })
 }
 
-export function ChapterList() {
+export function ChapterList(query) {
   return request({
     url: 'chapters',
-    method: 'GET'
+    method: 'GET',
+    params: query
   })
 }
 
