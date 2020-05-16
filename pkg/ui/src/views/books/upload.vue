@@ -13,7 +13,7 @@
         <aside>
           温馨提示
           <br />上传作品时，程序会后台上传并拆分章节，异步上传处理章节会根据文本大小有一定的时间延迟，可稍后在
-          <a href="/#/novel/books">小说管理</a>中查看章节是否完整，上传文件只支持上传txt文本。
+          <a href="/#/novel/books">小说管理</a> 中查看章节是否完整，上传文件只支持上传txt文本。
           章节拆分支持三种模式： 固定字数分章是按照2000字/章对文本进行拆分成章；
           标签分章需要上传固定格式的小说文本，章节文本之间用 ####lime#### 标识符分隔，可点击下载查看模板；
           智能分章程序会自动根据小说内容自动进行分章，建议选择智能分章模式；智能分章可能会出现分章不准确，可手动去章节管理进行修正。
@@ -113,14 +113,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="拆分规则" prop="split_rule">
-          <el-checkbox-group v-model="form.split_rule">
-          <el-checkbox
+          <el-radio-group v-model="form.split_rule">
+          <el-radio
             v-for="item in rules"
             :key="item.key"
             :label="item.display_name"
             :value="item.key"
           />
-        </el-checkbox-group>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="上传文件" prop="upload_file">
         <el-upload
@@ -130,7 +130,6 @@
           :file-list="fileList"
         >
           <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="是否敏感作品" prop="is_sensitivity">
@@ -153,7 +152,7 @@
 </template>
 <script>
 import { categoryList } from "@/api/lime-admin/category";
-import { uploadbookfile } from "@/api/lime-admin/book";
+import { createBook, uploadcover, uploadbookfile } from "@/api/lime-admin/book";
 import {
   CATEGORY_CHANNEL,
   BOOK_ATTRS,
@@ -267,7 +266,7 @@ export default {
       let formData = new FormData();
       formData.append("file", file.raw);
       uploadbookfile(formData).then(res => {
-        this.form.cover = res.result;
+        this.form.upload_file = res.result;
         // this.dialogFormVisible = false;
         this.$notify({
           title: "成功",

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
@@ -97,7 +96,24 @@ func (Book *BooksController) UploadBookCover(c *gin.Context) {
 	}
 	filename := header.Filename
 	result, err := BooksService.UploadCover(file, filename)
-	fmt.Println(result,err)
+	if err != nil {
+		fail(c, ErrUploadCover)
+		return
+	}
+	resp(c, map[string]interface{}{
+		"result": result,
+	})
+}
+
+
+func (Book *BooksController) UploadBookFile(c *gin.Context) {
+	file, header, err := c.Request.FormFile("file")
+	if err != nil {
+		fail(c, ErrUploadCover)
+		return
+	}
+	filename := header.Filename
+	result, err := BooksService.UploadBookFile(file, filename)
 	if err != nil {
 		fail(c, ErrUploadCover)
 		return

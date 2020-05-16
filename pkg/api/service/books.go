@@ -4,11 +4,13 @@ import (
 	"github.com/nfnt/resize"
 	log "github.com/sirupsen/logrus"
 	"image/jpeg"
+	"io"
 	"lime/pkg/api/dao"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/model"
 	"mime/multipart"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -180,5 +182,27 @@ func (bs BooksService) UploadCover(file multipart.File, filename string) (filepa
 	jpeg.Encode(outSmall, mSmall, nil)
 
 	filepath = "/upload/images/" + filename
+	return filepath, nil
+}
+
+//上传封面
+func (bs BooksService) UploadBookFile(file multipart.File, filename string) (filepath string, err error) {
+	defer file.Close()
+	filenameWithSuffix := path.Base(filename)
+	fileSuffix := path.Ext(filenameWithSuffix)
+	filename = strconv.FormatInt(time.Now().Unix(), 10) + fileSuffix
+	destFile, err := os.Create("./data/books/" + filename)
+	if err != nil {
+		log.Printf("Create failed: %s\n", err)
+		return
+	}
+	defer destFile.Close()
+
+	_, err = io.Copy(destFile, file)
+	if err != nil {
+		log.Printf("Write file failed: %s\n", err)
+		return
+	}
+	filepath = "/upload/books/" + filename
 	return filepath, nil
 }

@@ -32,8 +32,8 @@ func Init(e *gin.Engine, cors bool) {
 	e.DELETE("/books/:id", BooksController.Delete)
 	e.POST("/books/:id/status", BooksController.UpdateStatus)
 
-	e.POST("/upload/cover", BooksController.UploadBookCover)
-	e.POST("/upload/book_file", BooksController.UploadBookCover)
+	e.POST("/upload/cover", BooksController.UploadBookCover) // 上传封面图片
+	e.POST("/upload/book_file", BooksController.UploadBookFile) // 上传书本
 
 	ChaptersController := &controllers.ChaptersController{}
 	e.GET("/chapters", ChaptersController.List)
@@ -52,4 +52,5 @@ func Init(e *gin.Engine, cors bool) {
 	e.Static("/static", "./pkg/ui/dist/static")         // 添加资源路径
 	e.StaticFile("/admin/", "./pkg/ui/dist/index.html") //前端接口
 	e.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	e.StaticFS("/upload/books", http.Dir("data/books/"))
 }
