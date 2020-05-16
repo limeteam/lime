@@ -50,12 +50,23 @@ export function deleteBook(id,data) {
 
 export function uploadcover(formData) {
   return request({
-    url: 'update/uploadcover',
+    url: 'upload/cover',
     method: 'post',
     data: formData,
     headers: {
       'Content-Type': 'multipart/form-data'
      }
     // data: data
+  })
+}
+
+export function uploadbookfile(formData) {
+  return request({
+    url: 'upload/book_file',
+    method: 'post',
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+     }
   })
 }

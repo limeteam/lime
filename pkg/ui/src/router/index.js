@@ -152,6 +152,13 @@ export const asyncRoutes = [
         meta: { title: '修改章节', icon: 'create' }
       },
       {
+        path: '/novel/uploadnovel/create',
+        component: () => import('@/views/books/upload'),
+        name: 'uploadNovel',
+        hidden: false,
+        meta: { title: '上传小说', icon: 'list' }
+      },
+      {
         path: '/novel/comments/lists',
         component: () => import('@/views/comments/list'),
         name: 'commentsList',

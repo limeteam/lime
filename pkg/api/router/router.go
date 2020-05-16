@@ -32,7 +32,8 @@ func Init(e *gin.Engine, cors bool) {
 	e.DELETE("/books/:id", BooksController.Delete)
 	e.POST("/books/:id/status", BooksController.UpdateStatus)
 
-	e.POST("/update/uploadcover", BooksController.UploadBookCover)
+	e.POST("/upload/cover", BooksController.UploadBookCover)
+	e.POST("/upload/book_file", BooksController.UploadBookCover)
 
 	ChaptersController := &controllers.ChaptersController{}
 	e.GET("/chapters", ChaptersController.List)
