@@ -70,8 +70,8 @@
       <el-form-item label="封面" prop="cover">
         <el-upload
           class="cover-uploader"
-          action=""
-          :auto-upload=false
+          action
+          :auto-upload="false"
           :on-change="handleImgSuccess"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
@@ -82,8 +82,8 @@
         </el-upload>
         <div class="help-block">建议大小225*300</div>
       </el-form-item>
-      <el-form-item label="属性" prop="attribute">
-        <el-checkbox-group v-model="form.attribute">
+      <el-form-item label="属性" prop="flag">
+        <el-checkbox-group v-model="form.flag">
           <el-checkbox
             v-for="item in book_atts"
             :key="item.key"
@@ -126,7 +126,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="updateData">修改</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="onNovelList">取消</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -163,7 +163,7 @@ export default {
         split_rule: "",
         upload_file: "",
         status: 0,
-        attribute: [],
+        flag: [],
         chapter_price: 0,
         thousand_characters_price: 0,
         score: 0,
@@ -183,7 +183,7 @@ export default {
       book_is_sensitivity: BOOK_IS_SENSITIVITYS,
       categorys: [],
       fileList: [],
-      imageUrl: ''
+      imageUrl: ""
     };
   },
   mounted() {
@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     onNovelList() {
-      this.$router.push({ path: "/novel/books"});
+      this.$router.push({ path: "/novel/books" });
     },
     resetForm() {
       // 重置
@@ -201,6 +201,8 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
+          this.form.flag = this.form.flag.join();
+          console.log(this.form.flag);
           updateBook(this.form.id, this.form).then(() => {
             this.dialogFormVisible = false;
             this.$notify({
@@ -209,13 +211,14 @@ export default {
               type: "success",
               duration: 2000
             });
+            this.$store.dispatch('tagsView/delView', this.$route)
+            this.$router.push({ path: "/novel/books" });
           });
         }
       });
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(this.imageUrl);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -262,13 +265,12 @@ export default {
         var id = this.$route.query.id;
         const list = await getBook(id);
         this.form = list.data.result;
-        this.fileList = [
-          { name: "cover.jpg", url: process.env.VUE_APP_CONFIG_API + this.form.cover }
-        ];
+        this.imageUrl = process.env.VUE_APP_CONFIG_API + list.data.result.cover;
+        this.form.flag = this.form.flag.split(",");
       } finally {
         this.loading = false;
       }
-    },
+    }
   }
 };
 </script>

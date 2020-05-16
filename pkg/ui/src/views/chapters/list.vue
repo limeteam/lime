@@ -260,7 +260,6 @@ export default {
       // 获取列表
       this.loading = true;
       try {
-        // this.listQuery.novel_id = this.$route.query.book_id
         this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit
         this.listQuery.q = 'novel_id=' + this.$route.query.book_id
         const list = await ChapterList(this.listQuery);

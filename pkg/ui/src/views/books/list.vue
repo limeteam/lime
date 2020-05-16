@@ -33,17 +33,14 @@
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column prop="cover" label="封面" width="100px" align="center">
           <template slot-scope="scope">
-            <img
-              :src="base_url + scope.row.cover"
-              style="width: 75px;height:100px"
-            />
+            <img :src="base_url + scope.row.cover" style="width: 75px;height:100px" />
           </template>
         </el-table-column>
         <el-table-column prop="name" label="类型/名称" width="220px" align="left">
           <template slot-scope="scope">
             <span class="basic-info">
               <a v-bind:href="scope.row.url">[{{ scope.row.category_name }}] {{scope.row.name}}</a>&nbsp;
-              <small>[{{ scope.row.status}}]</small>
+              <small>[{{ scope.row.status_name}}]</small>
             </span>
             <br />
             <small
@@ -72,24 +69,18 @@
             <el-button
               v-if="row.status ==0"
               icon="el-icon-close"
-              type="primary"
+              type="warning"
               size="mini"
               @click="handleModifyStatus(row,1)"
             >下架</el-button>
             <el-button
               v-if="row.status==1"
-              icon="el-icon-close"
+              icon="el-icon-plus"
               type="primary"
               size="mini"
               @click="handleModifyStatus(row,0)"
             >上架</el-button>
-            <el-button
-              v-if="row.status!='deleted'"
-              icon="el-icon-delete"
-              size="mini"
-              type="danger"
-              @click="handleDelete(row)"
-            >删除</el-button>
+            <el-button icon="el-icon-delete" size="mini" type="danger" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -134,7 +125,7 @@ export default {
         importance: undefined,
         title: undefined,
         type: undefined,
-        sort: '+id'
+        sort: "+id"
       },
       formData: {
         id: undefined,
@@ -173,9 +164,19 @@ export default {
         list: []
       },
       statusMap: {
-        0 : "连载中",
-        1 : "已完结",
-        2 : "太监"
+        0: "连载中",
+        1: "已完结",
+        2: "太监"
+      },
+      flagMap: {
+        0: "全部",
+        1: "免费",
+        2: "新书",
+        3: "热门",
+        4: "会员",
+        5: "爽文",
+        6: "精选",
+        7: "大神"
       }
     };
   },
@@ -196,12 +197,12 @@ export default {
       this.getBookList();
     },
     onCreateNovel() {
-      this.$router.push({ path: "/novel/create"});
+      this.$router.push({ path: "/novel/create" });
     },
     on_refresh() {
       this.getBookList();
     },
-    handleJumpChapater(id){
+    handleJumpChapater(id) {
       this.$router.push({ path: "/novel/chapters?book_id=" + id });
     },
     handleUpdate(row) {
@@ -209,18 +210,18 @@ export default {
     },
     handleModifyStatus(row, status) {
       updatestatus(row.id, { status: status })
-            .then(() => {
-              this.$notify({
-                title: "成功",
-                message: "操作成功",
-                type: "success",
-                duration: 2000
-              });
-              this.getBookList();
-            })
-            .catch(res => {
-              this.$message.error(res.msg);
-            });
+        .then(() => {
+          this.$notify({
+            title: "成功",
+            message: "操作成功",
+            type: "success",
+            duration: 2000
+          });
+          this.getBookList();
+        })
+        .catch(res => {
+          this.$message.error(res.msg);
+        });
     },
     handleDelete(row) {
       this.$confirm("此操作将永久删除数据, 是否继续?", "提示", {
@@ -255,41 +256,41 @@ export default {
       this.loading = true;
       try {
         var qStr = "";
-        if (this.$route.query.channel_id > 0){
-          qStr = 'channel_id=' + this.$route.query.channel_id + ','
+        if (this.$route.query.channel_id > 0) {
+          qStr = "channel_id=" + this.$route.query.channel_id + ",";
         }
-        if (this.$route.query.cid > 0){
-           qStr += 'cid=' + this.$route.query.cid + ','
+        if (this.$route.query.cid > 0) {
+          qStr += "cid=" + this.$route.query.cid + ",";
         }
-        if (this.$route.query.status > 0){
-          qStr += 'status=' + this.$route.query.status + ','
+        if (this.$route.query.status > 0) {
+          qStr += "status=" + this.$route.query.status + ",";
         }
-        if (this.$route.query.online_status > 0){
-          qStr += 'online_status=' + this.$route.query.online_status + ','
+        if (this.$route.query.online_status > 0) {
+          qStr += "online_status=" + this.$route.query.online_status + ",";
         }
-        if (this.$route.query.is_sensitivity > 0){
-          qStr += 'is_sensitivity=' + this.$route.query.is_sensitivity + ','
+        if (this.$route.query.is_sensitivity > 0) {
+          qStr += "is_sensitivity=" + this.$route.query.is_sensitivity + ",";
         }
-        if (this.$route.query.flag > 0){
-          qStr += 'flag=' + this.$route.query.flag + ','
+        if (this.$route.query.flag > 0) {
+          qStr += "flag=" + this.flagMap[this.$route.query.flag] + ",";
         }
-        if (this.$route.query.word > 0){
-          qStr += 'word=' + this.$route.query.word + ','
+        if (this.$route.query.word > 0) {
+          qStr += "word=" + this.$route.query.word + ",";
         }
-        if (this.$route.query.sort > 0){
-          qStr += 'sort=' + this.$route.query.sort + ','
+        if (this.$route.query.sort > 0) {
+          qStr += "sort=" + this.$route.query.sort + ",";
         }
-        if (this.formData.name != null) {
-          qStr += 'name=' + this.formData.name + ','
+        if (this.formData.name != null && this.formData.name !== "") {
+          qStr += "name=" + this.formData.name + ",";
         }
-        this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit
-        this.listQuery.q = qStr.slice(0,-1)
+        this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit;
+        this.listQuery.q = qStr.slice(0, -1);
         const categorys = await categoryList();
-        var categories = new Object()
-        
+        var categories = new Object();
+
         for (var i = 0; i < categorys.data.list.length; i++) {
-          var id = categorys.data.list[i].id
-          categories[id] = categorys.data.list[i].name
+          var id = categorys.data.list[i].id;
+          categories[id] = categorys.data.list[i].name;
         }
         const list = await BookList(this.listQuery);
         this.items.list = list.data.result;
@@ -305,9 +306,11 @@ export default {
               v.channel_id = "全部";
           }
           v.category_name = categories[v.category_id];
-          v.status = this.statusMap[v.status];
-          v.chapter_updated_at = this.$moment(v.chapter_updated_at).format('YYYY-MM-DD HH:mm:ss');
-          v.url = "/#/novel/view?id="+v.id
+          v.status_name = this.statusMap[v.status];
+          v.chapter_updated_at = this.$moment(v.chapter_updated_at).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          v.url = "/#/novel/view?id=" + v.id;
         }
         this.items.total_items = list.data.total;
       } finally {

@@ -34,22 +34,27 @@
         </el-select>
       </el-form-item>
       <el-form-item label="小说名" prop="name">
-        <el-input v-model="form.name" :disabled="true"/>
+        <el-input v-model="form.name" :disabled="true" />
       </el-form-item>
       <el-form-item label="原名" prop="old_name">
-        <el-input v-model="form.old_name" :disabled="true"/>
+        <el-input v-model="form.old_name" :disabled="true" />
       </el-form-item>
       <el-form-item label="来源" prop="source">
-        <el-input v-model="form.source" :disabled="true"/>
+        <el-input v-model="form.source" :disabled="true" />
       </el-form-item>
       <el-form-item label="作者" prop="author">
-        <el-input v-model="form.author" :disabled="true"/>
+        <el-input v-model="form.author" :disabled="true" />
       </el-form-item>
       <el-form-item label="简介" prop="desc">
         <el-input type="textarea" v-model="form.desc" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="千字价格" prop="thousand_characters_price">
-        <el-input-number v-model="form.thousand_characters_price" :step="1" step-strictly :disabled="true"></el-input-number>
+        <el-input-number
+          v-model="form.thousand_characters_price"
+          :step="1"
+          step-strictly
+          :disabled="true"
+        ></el-input-number>
         <div class="help-block">免费小说设置成0</div>
       </el-form-item>
       <el-form-item label="每章价格" prop="chapter_price">
@@ -70,8 +75,8 @@
       <el-form-item label="封面" prop="cover">
         <el-upload
           class="cover-uploader"
-          action=""
-          :auto-upload=false
+          action
+          :auto-upload="false"
           :on-change="handleImgSuccess"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
@@ -83,8 +88,8 @@
         </el-upload>
         <div class="help-block">建议大小225*300</div>
       </el-form-item>
-      <el-form-item label="属性" prop="attribute">
-        <el-checkbox-group v-model="form.attribute" disabled>
+      <el-form-item label="属性" prop="flag">
+        <el-checkbox-group v-model="form.flag" disabled>
           <el-checkbox
             v-for="item in book_atts"
             :key="item.key"
@@ -160,7 +165,7 @@ export default {
         split_rule: "",
         upload_file: "",
         status: 0,
-        attribute: [],
+        flag: [],
         chapter_price: 0,
         thousand_characters_price: 0,
         score: 0,
@@ -180,7 +185,7 @@ export default {
       book_is_sensitivity: BOOK_IS_SENSITIVITYS,
       categorys: [],
       fileList: [],
-      imageUrl: ''
+      imageUrl: ""
     };
   },
   mounted() {
@@ -256,13 +261,11 @@ export default {
         var id = this.$route.query.id;
         const list = await getBook(id);
         this.form = list.data.result;
-        this.fileList = [
-          { name: "cover.jpg", url: "http://127.0.0.1:8080" + this.form.cover }
-        ];
+        this.imageUrl = process.env.VUE_APP_CONFIG_API + list.data.result.cover;
       } finally {
         this.loading = false;
       }
-    },
+    }
   }
 };
 </script>

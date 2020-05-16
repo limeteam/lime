@@ -1,6 +1,8 @@
 package dto
 
-import "time"
+import (
+	"time"
+)
 
 var BookListSearchMapping = map[string]string{
 	"channel_id":     "channel_id",
@@ -8,7 +10,7 @@ var BookListSearchMapping = map[string]string{
 	"status":         "status",
 	"online_status":  "online_status",
 	"is_sensitivity": "is_sensitivity",
-	"flag":           "attribute",
+	"flag":           "flag",
 	"word":           "text_num",
 	"name":           "name",
 	//"sort": "sort",
@@ -27,7 +29,7 @@ type BooksListDto struct {
 	Split_rule                int        `form:"split_rule" json:"split_rule"`
 	Upload_file               string     `form:"upload_file" json:"upload_file"`
 	Status                    int        `form:"status" json:"status"`
-	Attribute                 int        `form:"attribute" json:"attribute"`
+	Flag                      string     `form:"flag" json:"flag"`
 	Chapter_price             int        `form:"chapter_price" json:"chapter_price"`
 	Thousand_characters_price int        `form:"thousand_characters_price" json:"thousand_characters_price"`
 	Score                     int        `form:"score" json:"score"`
@@ -60,7 +62,7 @@ type BooksCreateDto struct {
 	Split_rule                int        `form:"split_rule" json:"split_rule"`
 	Upload_file               string     `form:"upload_file" json:"upload_file"`
 	Status                    int        `form:"status" json:"status"`
-	Attribute                 int        `form:"attribute" json:"attribute"`
+	Flag                      string     `form:"flag" json:"flag"`
 	Chapter_price             int        `form:"chapter_price" json:"chapter_price"`
 	Thousand_characters_price int        `form:"thousand_characters_price" json:"thousand_characters_price"`
 	Score                     int        `form:"score" json:"score"`
@@ -90,7 +92,7 @@ type BooksEditDto struct {
 	Split_rule                int        `form:"split_rule" json:"split_rule"`
 	Upload_file               string     `form:"upload_file" json:"upload_file"`
 	Status                    int        `form:"status" json:"status"`
-	Attribute                 int        `form:"attribute" json:"attribute"`
+	Flag                      string     `form:"flag" json:"flag"`
 	Chapter_price             int        `form:"chapter_price" json:"chapter_price"`
 	Thousand_characters_price int        `form:"thousand_characters_price" json:"thousand_characters_price"`
 	Score                     int        `form:"score" json:"score"`

@@ -31,8 +31,10 @@ func (c BooksDao) List(listDto dto.GeneralListDto) ([]model.Books, int64) {
 	db := db.GetGormDB()
 	for sk, sv := range dto.TransformSearch(listDto.Q, dto.BookListSearchMapping) {
 		if sk == "name" {
-			db = db.Where("name like ?", "%"+sv+"%").Or("author = ?",sv).Or("source = ?", sv)
-		}else{
+			db = db.Where("name like ?", "%"+sv+"%").Or("author = ?", sv).Or("source = ?", sv)
+		} else if  sk == "flag"{
+			db = db.Where("FIND_IN_SET(?, "+sk+")", sv)
+		}	else{
 			db = db.Where(fmt.Sprintf("%s = ?", sk), sv)
 		}
 	}

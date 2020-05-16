@@ -11,7 +11,7 @@
  Target Server Version : 50628
  File Encoding         : 65001
 
- Date: 10/05/2020 21:37:07
+ Date: 16/05/2020 12:00:32
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `novel_book`;
 CREATE TABLE `novel_book`  (
-  `id` int(11) NOT NULL COMMENT '分类ID',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类ID',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分类名称',
   `old_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '原名',
   `channel_id` tinyint(2) NULL DEFAULT NULL COMMENT '所属频道',
@@ -40,7 +40,7 @@ CREATE TABLE `novel_book`  (
   `score` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评分',
   `text_num` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '小说字数',
   `chapter_num` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '小说章节数',
-  `chapter_updated_at` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最新章节时间',
+  `chapter_updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '最新章节时间',
   `chapter_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最新章节id',
   `chapter_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '最新章节标题',
   `views` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '浏览次数',
@@ -51,7 +51,13 @@ CREATE TABLE `novel_book`  (
   `updated_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `deleted_at` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of novel_book
+-- ----------------------------
+INSERT INTO `novel_book` VALUES (1, '生生不息 ', '生生不息2 ', 2, 2, 'werwerwer', '/upload/images/1589430526.jpg', '张真人', '网络', 0, '', 1, 0, 2, 4, 2, 0, 0, '2020-05-16 10:13:55', 0, '', 0, 0, 0, 0, '2020-05-12 17:20:59', '2020-05-16 11:54:39', NULL);
+INSERT INTO `novel_book` VALUES (2, '生生不息2', '', 1, 1, 'werwerwe', '/upload/images/1589549130.jpg', '张真人', '网络', 0, '', 1, 0, 0, 0, 0, 0, 0, '2020-05-16 10:14:07', 0, '', 0, 0, 0, 0, '2020-05-12 17:24:13', '2020-05-15 21:27:06', NULL);
 
 -- ----------------------------
 -- Table structure for novel_book_links
@@ -140,10 +146,16 @@ CREATE TABLE `novel_chapter_0000`  (
   `try_views` tinyint(2) UNSIGNED NOT NULL DEFAULT 0 COMMENT '采集重试次数',
   `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `deleted_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `deleted_at` timestamp(0) NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `udx_novid_no`(`novel_id`, `chapter_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of novel_chapter_0000
+-- ----------------------------
+INSERT INTO `novel_chapter_0000` VALUES (1, 1, 1, '第一章 自强不息', '<p>第一章 自强不息</p>', '', 1, '', 0, 0, 0, 0, '2020-05-14 23:08:35', '2020-05-14 23:19:49', NULL);
+INSERT INTO `novel_chapter_0000` VALUES (2, 1, 1, '第二章 星星之火', '<p>第二章 星星之火</p>', '', 1, '', 0, 0, 0, 0, '2020-05-14 23:17:06', '2020-05-14 23:17:06', NULL);
 
 -- ----------------------------
 -- Table structure for novel_comment

@@ -48,7 +48,7 @@ func (bs BooksService) Create(dto dto.BooksCreateDto) (model.Books, error) {
 		Split_rule:                dto.Split_rule,
 		Upload_file:               dto.Upload_file,
 		Status:                    dto.Status,
-		Attribute:                 dto.Attribute,
+		Flag:                      dto.Flag,
 		Chapter_price:             dto.Chapter_price,
 		Thousand_characters_price: dto.Thousand_characters_price,
 		Score:                     dto.Score,
@@ -86,7 +86,7 @@ func (bs BooksService) Update(dto dto.BooksEditDto) int64 {
 		Split_rule:                dto.Split_rule,
 		Upload_file:               dto.Upload_file,
 		Status:                    dto.Status,
-		Attribute:                 dto.Attribute,
+		Flag:                      dto.Flag,
 		Chapter_price:             dto.Chapter_price,
 		Thousand_characters_price: dto.Thousand_characters_price,
 		Score:                     dto.Score,
@@ -112,8 +112,8 @@ func (bs BooksService) Update(dto dto.BooksEditDto) int64 {
 		"source":                    dto.Source,
 		"split_rule":                dto.Split_rule,
 		"upload_file":               dto.Upload_file,
-		"status":                     dto.Status,
-		"attribute":                 dto.Attribute,
+		"status":                    dto.Status,
+		"flag":                      dto.Flag,
 		"chapter_price":             dto.Chapter_price,
 		"thousand_characters_price": dto.Thousand_characters_price,
 		"score":                     dto.Score,
@@ -134,11 +134,11 @@ func (bs BooksService) Update(dto dto.BooksEditDto) int64 {
 // Update
 func (bs BooksService) UpdateStatus(dto dto.BooksUpdateStatusDto) int64 {
 	Model := model.Books{
-		Id:                        dto.Id,
+		Id: dto.Id,
 	}
 	c := BooksDao.Update(&Model, map[string]interface{}{
-		"status":                     dto.Status,
-		"updated_at":                time.Now(),
+		"status":     dto.Status,
+		"updated_at": time.Now(),
 	})
 	return c.RowsAffected
 }
@@ -170,7 +170,7 @@ func (bs BooksService) UploadCover(file multipart.File, filename string) (filepa
 	jpeg.Encode(out, m, nil)
 
 	//缩略图
-	dst := "./data/images/"+ strings.Replace(filename, ".jpg", "_small.jpg", 1)
+	dst := "./data/images/" + strings.Replace(filename, ".jpg", "_small.jpg", 1)
 	mSmall := resize.Resize(75, 100, img, resize.Lanczos3)
 	outSmall, errSmall := os.Create(dst)
 	if errSmall != nil {

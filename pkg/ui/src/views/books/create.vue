@@ -82,8 +82,8 @@
         </el-upload>
         <div class="help-block">建议大小225*300</div>
       </el-form-item>
-      <el-form-item label="属性" prop="attribute">
-        <el-checkbox-group v-model="form.attribute">
+      <el-form-item label="属性" prop="flag">
+        <el-checkbox-group v-model="form.flag">
           <el-checkbox
             v-for="item in book_atts"
             :key="item.key"
@@ -157,7 +157,7 @@ export default {
         split_rule: "",
         upload_file: "",
         status: 0,
-        attribute: [],
+        flag: [],
         chapter_price: 0,
         thousand_characters_price: 0,
         score: 0,
@@ -202,6 +202,8 @@ export default {
               type: "success",
               duration: 2000
             });
+            this.$store.dispatch('tagsView/delView', this.$route)
+            this.$router.push({ path: "/novel/books" });
           });
         }
       });
@@ -213,7 +215,6 @@ export default {
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 10;
-
       if (!isJPG) {
         this.$message.error("上传头像图片只能是 JPG 格式!");
       }

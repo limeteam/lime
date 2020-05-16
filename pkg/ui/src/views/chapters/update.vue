@@ -107,7 +107,7 @@ export default {
             this.dialogFormVisible = false;
             this.$notify({
               title: "成功",
-              message: "新增成功",
+              message: "保存成功",
               type: "success",
               duration: 2000
             });
