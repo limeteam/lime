@@ -27,12 +27,7 @@ func (c CategoryDao) GetAll() []model.Category {
 func (c CategoryDao) List(listDto dto.CategoryListDto) ([]model.Category, int64) {
 	var Category []model.Category
 	var total int64
-	//ChannelId, err := strconv.Atoi(listDto.ChannelId)
 	db := db.GetGormDB()
-	//if err == nil && ChannelId == 1 {
-	//	db = db.Where("created_at >=?", listDto.Start_time)
-	//	db = db.Where("created_at <=?", listDto.End_time)
-	//}
 	db.Offset(listDto.Skip).Limit(listDto.Limit).Find(&Category)
 	db.Model(&model.Category{}).Count(&total)
 	return Category, total

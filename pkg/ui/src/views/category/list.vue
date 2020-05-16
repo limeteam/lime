@@ -57,7 +57,7 @@
               icon="el-icon-view"
               size="mini"
               type="success"
-              @click="handleModifyStatus(row,'published')"
+              @click="handleClick(row)"
             >分类小说</el-button>
           </template>
         </el-table-column>
@@ -213,12 +213,8 @@ export default {
       this.formData.sort = 0;
     },
     handleClick(row) {
-      // 详情
-      console.log(row.id);
-      this.$router.push({
-        path: "/taskmanage/details/" + row.id
-        // query: { id: row.id }
-      });
+      this.$store.dispatch('tagsView/delView', this.$route)
+      this.$router.push({ path: "/novel/books/?cid" + row.id });
     },
     handleCreate() {
       this.resetTemp();

@@ -6,7 +6,7 @@ import (
 )
 
 type Comments struct {
-	Id        int        `gorm:"primary_key" json:" - "` //分类ID
+	Id        int        `gorm:"primary_key" json:"id"` //分类ID
 	Novel_id  int        `json:"novel_id"`               //小说ID
 	Username  string     `json:"username"`               //章节标题
 	Content   string     `json:"content"`                //内容

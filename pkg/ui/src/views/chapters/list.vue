@@ -54,19 +54,11 @@
           <template slot-scope="{row}">
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
             <el-button
-              v-if="row.status!='deleted'"
               icon="el-icon-delete"
               size="mini"
               type="danger"
               @click="handleDelete(row)"
             >删除</el-button>
-            <el-button
-              v-if="row.status!='published'"
-              icon="el-icon-view"
-              size="mini"
-              type="success"
-              @click="handleModifyStatus(row,'published')"
-            >分类小说</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -173,14 +165,6 @@ export default {
       this.formData.channel_id = 0;
       this.formData.name = "";
       this.formData.sort = 0;
-    },
-    handleClick(row) {
-      // 详情
-      console.log(row.id);
-      this.$router.push({
-        path: "/taskmanage/details/" + row.id
-        // query: { id: row.id }
-      });
     },
     handleCreate() {
       this.resetTemp();

@@ -151,6 +151,13 @@ export const asyncRoutes = [
         hidden: true,
         meta: { title: '修改章节', icon: 'create' }
       },
+      {
+        path: '/novel/comments/lists',
+        component: () => import('@/views/comments/list'),
+        name: 'commentsList',
+        hidden: false,
+        meta: { title: '评论列表', icon: 'list' }
+      },
     ]
   },
 
