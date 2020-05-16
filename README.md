@@ -1,5 +1,22 @@
-# lime
-青橙软件平台，专注于正版小说、漫画数字类产品网络分销开源软件
+<p align="center">
+    <img src="https://gitee.com/bullteam/lime/raw/master/docs/image/logo.png" height="145">
+</p>
+
+
+# Lime Soft
+青橙软件平台，专注于正版小说、漫画数字类产品网络分销开源免费软件
+该软件居于 `golang + vue + zeus(宙斯)`
+
+
+## 项目介绍
+> - `Lime Soft` 定位为数字阅读营销平台，为推动文化产业更加繁荣而提供网络软件支持。
+> - 居于 `Zeus 宙斯`权限系统开发。
+> - 该软件定位为开源免费，任何个人和团队都可以在此基础之上开发使用。
+> - `Lime` 支持多国语言，多终端展示，为全球健康文化产业传播提供全新途径。
+> - 计划支持平台包括PC 桌面软件、WEB 站、Android、IOS、小程序、H5移动端等。
+> - 该软件支持分销功能，让数字阅读类作者得到更多的收益。
+> - 严禁使用该软件用于非法盗版版权用途，如果采用该软件用于非法用途，一切后果自负。
+
 
 ## 部署文档
 ```
@@ -23,7 +40,23 @@ export LIME_MYSQL_PORT=3306
 export LIME_REDIS_HOST=127.0.0.1
 export LIME_REDIS_PORT=6379
 export LIME_REDIS_PASSWORD=""
-
-#修改in-local.yamln内部的project.merge为false,然后再启动
 ./lime server -c ./config/in-local.yaml --cors=true
 ```
+
+## 相关截图
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/books.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/chapters.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/category.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/upload.png"></img>
+
+## 贡献代码
+
+非常欢迎优秀的开发者来贡献Lime。在提Pull Request之前，请首先阅读源码，了解原理和架构。如果不懂的可以加他的微信 `cosohuang` 注明 `Lime`。
+
+## 社区
+
+如果您觉得 Lime 对您有帮助或者想使用该软件，请扫描下方群二维码，请加微信 `cosohuang` 并注明`lime 开源交流`，他会将你拉入群一起学习讨论。
+
+<p align="center">
+    <img src="https://gitee.com/bullteam/lime/raw/master/docs/images/wx.jpg" height="360">
+</p>
