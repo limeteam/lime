@@ -44,10 +44,10 @@ export LIME_REDIS_PASSWORD=""
 ```
 
 ## 相关截图
-<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/books.png"></img>
-<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/chapters.png"></img>
-<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/category.png"></img>
-<img src="https://gitee.com/bullteam/lime/raw/master/docs/images/upload.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/image/books.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/image/chapters.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/image/category.png"></img>
+<img src="https://gitee.com/bullteam/lime/raw/master/docs/image/upload.png"></img>
 
 ## 贡献代码
 
@@ -58,5 +58,5 @@ export LIME_REDIS_PASSWORD=""
 如果您觉得 Lime 对您有帮助或者想使用该软件，请扫描下方群二维码，请加微信 `cosohuang` 并注明`lime 开源交流`，他会将你拉入群一起学习讨论。
 
 <p align="center">
-    <img src="https://gitee.com/bullteam/lime/raw/master/docs/images/wx.jpg" height="360">
+    <img src="https://gitee.com/bullteam/lime/raw/master/docs/image/wx.jpg" height="360">
 </p>
