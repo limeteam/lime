@@ -266,16 +266,8 @@ export default {
         const list = await ChapterList(this.listQuery);
         this.items.list = list.data.result;
         for (const v of this.items.list) {
-          switch (v.channel_id) {
-            case 1:
-              v.channel_id = "男生";
-              break;
-            case 2:
-              v.channel_id = "女生";
-              break;
-            default:
-              v.channel_id = "全部";
-          }
+          v.created_at = this.$moment(v.created_at).format('YYYY-MM-DD HH:mm:ss');
+          v.updated_at = this.$moment(v.updated_at).format('YYYY-MM-DD HH:mm:ss');
         }
         this.items.total_items = list.data.total;
       } finally {

@@ -30,7 +30,11 @@ func (c BooksDao) List(listDto dto.GeneralListDto) ([]model.Books, int64) {
 	var total int64
 	db := db.GetGormDB()
 	for sk, sv := range dto.TransformSearch(listDto.Q, dto.BookListSearchMapping) {
-		db = db.Where(fmt.Sprintf("%s = ?", sk), sv)
+		if sk == "name" {
+			db = db.Where("name like ?", "%"+sv+"%").Or("author = ?",sv).Or("source = ?", sv)
+		}else{
+			db = db.Where(fmt.Sprintf("%s = ?", sk), sv)
+		}
 	}
 	db.Offset(listDto.Skip).Limit(listDto.Limit).Find(&Books)
 	db.Model(&model.Books{}).Count(&total)

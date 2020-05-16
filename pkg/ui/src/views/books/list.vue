@@ -42,8 +42,8 @@
         <el-table-column prop="name" label="类型/名称" width="220px" align="left">
           <template slot-scope="scope">
             <span class="basic-info">
-              <a v-bind:href="scope.row.url">[都市现实] {{scope.row.name}}</a>&nbsp;
-              <small>[连载中]</small>
+              <a v-bind:href="scope.row.url">[{{ scope.row.category_name }}] {{scope.row.name}}</a>&nbsp;
+              <small>[{{ scope.row.status}}]</small>
             </span>
             <br />
             <small
@@ -171,6 +171,11 @@ export default {
         cur_page: 1,
         total_items: 2,
         list: []
+      },
+      statusMap: {
+        0 : "连载中",
+        1 : "已完结",
+        2 : "太监"
       }
     };
   },
@@ -200,7 +205,6 @@ export default {
       this.$router.push({ path: "/novel/chapters?book_id=" + id });
     },
     handleUpdate(row) {
-      console.log(row);
       this.$router.push({ path: "/novel/update?id=" + row.id });
     },
     handleModifyStatus(row, status) {
@@ -275,9 +279,18 @@ export default {
         if (this.$route.query.sort > 0){
           qStr += 'sort=' + this.$route.query.sort + ','
         }
-        
+        if (this.formData.name != null) {
+          qStr += 'name=' + this.formData.name + ','
+        }
         this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit
         this.listQuery.q = qStr.slice(0,-1)
+        const categorys = await categoryList();
+        var categories = new Object()
+        
+        for (var i = 0; i < categorys.data.list.length; i++) {
+          var id = categorys.data.list[i].id
+          categories[id] = categorys.data.list[i].name
+        }
         const list = await BookList(this.listQuery);
         this.items.list = list.data.result;
         for (const v of this.items.list) {
@@ -291,6 +304,9 @@ export default {
             default:
               v.channel_id = "全部";
           }
+          v.category_name = categories[v.category_id];
+          v.status = this.statusMap[v.status];
+          v.chapter_updated_at = this.$moment(v.chapter_updated_at).format('YYYY-MM-DD HH:mm:ss');
           v.url = "/#/novel/view?id="+v.id
         }
         this.items.total_items = list.data.total;

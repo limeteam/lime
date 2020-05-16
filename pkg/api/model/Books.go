@@ -24,7 +24,7 @@ type Books struct {
 	Score                     int        `json:"score"`                     //评分
 	Text_num                  int        `json:"text_num"`                  //小说字数
 	Chapter_num               int        `json:"chapter_num"`               //小说章节数
-	Chapter_updated_at        int        `json:"chapter_updated_at"`        //最新章节时间
+	Chapter_updated_at        *time.Time        `json:"chapter_updated_at"`        //最新章节时间
 	Chapter_id                int        `json:"chapter_id"`                //最新章节id
 	Chapter_title             string     `json:"chapter_title"`             //最新章节标题
 	Views                     int        `json:"views"`                     //浏览次数
