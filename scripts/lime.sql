@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 19/05/2020 22:59:56
+ Date: 19/05/2020 23:26:17
 */
 
 SET NAMES utf8mb4;
@@ -74,12 +74,41 @@ CREATE TABLE `comic_comment`  (
 INSERT INTO `comic_comment` VALUES (3, 1, '春天的女孩', '发发发', '网络', '2020-05-19 22:57:32', '2020-05-19 22:57:32', NULL);
 
 -- ----------------------------
+-- Table structure for comics
+-- ----------------------------
+DROP TABLE IF EXISTS `comics`;
+CREATE TABLE `comics`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '漫画名',
+  `old_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '原名',
+  `channel_id` tinyint(2) NULL DEFAULT NULL COMMENT '所属频道',
+  `category_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '漫画分类',
+  `desc` varchar(2555) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '漫画简介',
+  `horizontal_cover` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '横版封面',
+  `vertical_cover` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '竖版封面',
+  `author` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '漫画作者',
+  `source` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '来源',
+  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '小说状态，0连载中，1已完结',
+  `flag` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '属性，0 免费 1 热门 2 会员 3 推荐',
+  `chapter_price` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '章节定价',
+  `chapter_updated_at` timestamp(0) NULL DEFAULT NULL COMMENT '最新章节时间',
+  `views` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '浏览次数',
+  `collect_num` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收藏数',
+  `online_status` tinyint(2) NOT NULL COMMENT '上架状态：0 已上架 1 已下架',
+  `is_sensitivity` tinyint(2) NOT NULL COMMENT '是否敏感： 0 不敏感 1 敏感',
+  `created_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+  `deleted_at` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for novel_book
 -- ----------------------------
 DROP TABLE IF EXISTS `novel_book`;
 CREATE TABLE `novel_book`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类ID',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分类名称',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '小说名称',
   `old_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '原名',
   `channel_id` tinyint(2) NULL DEFAULT NULL COMMENT '所属频道',
   `category_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '小说分类',

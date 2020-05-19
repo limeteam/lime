@@ -184,34 +184,34 @@ export const asyncRoutes = [
         hidden: false,
         meta: { title: '分类列表', icon: 'list' }
       },
-      // {
-      //   path: '/novel/books',
-      //   component: () => import('@/views/books/list'),
-      //   name: 'BooksList',
-      //   hidden: false,
-      //   meta: { title: '小说列表', icon: 'list' }
-      // },
-      // {
-      //   path: '/novel/create',
-      //   component: () => import('@/views/books/create'),
-      //   name: 'CreateBook',
-      //   hidden: true,
-      //   meta: { title: '新建小说', icon: 'create' }
-      // },
-      // {
-      //   path: '/novel/update',
-      //   component: () => import('@/views/books/update'),
-      //   name: 'UpdateBook',
-      //   hidden: true,
-      //   meta: { title: '修改小说', icon: 'create' }
-      // },
-      // {
-      //   path: '/novel/view',
-      //   component: () => import('@/views/books/view'),
-      //   name: 'getBook',
-      //   hidden: true,
-      //   meta: { title: '查看小说', icon: 'create' }
-      // },
+      {
+        path: '/comics/comic',
+        component: () => import('@/views/comics/list'),
+        name: 'BooksList',
+        hidden: false,
+        meta: { title: '漫画列表', icon: 'list' }
+      },
+      {
+        path: '/comics/create',
+        component: () => import('@/views/comics/create'),
+        name: 'CreateBook',
+        hidden: true,
+        meta: { title: '新建漫画', icon: 'comics' }
+      },
+      {
+        path: '/comics/update',
+        component: () => import('@/views/comics/update'),
+        name: 'UpdateComics',
+        hidden: true,
+        meta: { title: '修改漫画', icon: 'create' }
+      },
+       {
+         path: '/comics/view',
+         component: () => import('@/views/comics/view'),
+         name: 'getComics',
+         hidden: true,
+         meta: { title: '查看漫画', icon: 'create' }
+       },
       // {
       //   path: '/novel/chapters',
       //   component: () => import('@/views/chapters/list'),

@@ -11,7 +11,7 @@
           class="demo-form-inline"
         >
           <el-form-item label="搜索" prop="name">
-            <el-input v-model="formData.name" placeholder="漫画名/作者/来源" class="filter-item" />
+            <el-input v-model="formData.name" placeholder="书名/作者/来源" class="filter-item" />
           </el-form-item>
           <el-form-item>
             <el-button
@@ -23,7 +23,7 @@
             >搜索</el-button>
           </el-form-item>
           <el-form-item style="text-align: right;width: 60%;">
-            <el-button type="primary" @click="onCreateNovel">新增漫画</el-button>
+            <el-button type="primary" @click="onCreateNovel">新增小说</el-button>
           </el-form-item>
           <selectedpanel />
         </el-form>

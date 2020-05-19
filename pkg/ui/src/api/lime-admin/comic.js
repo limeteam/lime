@@ -2,14 +2,14 @@ import request from './request'
 
 export function getBook(id) {
   return request({
-    url: '/novels/books/' + id,
+    url: '/comics/comic/' + id,
     method: 'GET'
   })
 }
 
 export function BookList(query) {
   return request({
-    url: '/novels/books',
+    url: '/comics/comic',
     method: 'GET',
     params: query
   })
@@ -17,7 +17,7 @@ export function BookList(query) {
 
 export function updateBook(id, data) {
   return request({
-    url: '/novels/books/' + id,
+    url: '/comics/comic/' + id,
     method: 'put',
     data: data
   })
@@ -25,7 +25,7 @@ export function updateBook(id, data) {
 
 export function updatestatus(id, data) {
   return request({
-    url: '/novels/books/' + id + '/status',
+    url: '/comics/comic/' + id + '/status',
     method: 'post',
     data: data
   })
@@ -33,7 +33,7 @@ export function updatestatus(id, data) {
 
 export function createBook(data) {
   return request({
-    url: '/novels/books',
+    url: '/comics/comic',
     method: 'post',
     data: data
   })
@@ -41,7 +41,7 @@ export function createBook(data) {
 
 export function deleteBook(id,data) {
   return request({
-    url: '/novels/books/' + id,
+    url: '/comics/comic/' + id,
     method: 'delete',
     data: data
   })
@@ -55,7 +55,6 @@ export function uploadcover(formData) {
     headers: {
       'Content-Type': 'multipart/form-data'
      }
-    // data: data
   })
 }
 
