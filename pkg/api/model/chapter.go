@@ -1,7 +1,6 @@
 package model
 
 import (
-	"lime/pkg/common/db"
 	"time"
 )
 
@@ -21,5 +20,5 @@ func (d *Chapter) TableName() string {
 }
 
 func init() {
-	db.Register(&Chapter{})
+	//db.Register(&Chapter{})
 }

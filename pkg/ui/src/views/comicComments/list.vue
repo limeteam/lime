@@ -10,8 +10,8 @@
           size="small"
           class="demo-form-inline"
         >
-          <el-form-item label="书名" prop="novel_id">
-            <el-input v-model="formData.novel_id" placeholder />
+          <el-form-item label="漫画名" prop="comic_id">
+            <el-input v-model="formData.comic_id" placeholder />
           </el-form-item>
           <el-form-item label="来源" prop="source">
             <el-select v-model="formData.source" placeholder="状态" style="width: 100px">
@@ -33,9 +33,8 @@
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column label="ID" prop="id" width="80px" />
         <el-table-column label="用户" prop="username" width="100px" />
-        <el-table-column label="作品" prop="novel_id" width="80px" />
+        <el-table-column label="作品" prop="comic_id" width="80px" />
         <el-table-column label="内容" prop="content" width="123px" />
-        <el-table-column label="点赞数" prop="likes" width="80px" />
         <el-table-column label="来源" prop="source" width="123px" />
         <el-table-column label="评论时间" prop="created_at" width="123px" />
         <el-table-column label="操作" prop="operation" fixed="right">
@@ -71,29 +70,27 @@
 import {
   CommentList,
   deleteComment
-} from "@/api/lime-admin/comment";
+} from "@/api/lime-admin/comicComment";
 import Pagination from "@/components/Pagination";
 export default {
-  name: "CommentsList",
+  name: "ComicCommentsList",
   components: { Pagination },
   data() {
     return {
       formData: {
         id: 0,
-        novel_id: 0,
+        comic_id: 0,
         username: "",
         content: "",
-        likes: 0,
         source: "",
         page: 1,
         page_size: 10
       },
       temp: {
         id: undefined,
-        novel_id: 0,
+        comic_id: 0,
         username: "",
         content: "",
-        likes: 0,
         source: ""
       },
       loading: false,
@@ -142,7 +139,7 @@ export default {
     },
     handleClick(row) {
       this.$store.dispatch('tagsView/delView', this.$route)
-      this.$router.push({ path: "/novel/books/?cid" + row.id });
+      this.$router.push({ path: "/comic/books/?cid" + row.id });
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj

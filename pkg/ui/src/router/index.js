@@ -240,13 +240,13 @@ export const asyncRoutes = [
       //   hidden: false,
       //   meta: { title: '上传小说', icon: 'list' }
       // },
-      // {
-      //   path: '/novel/comments/lists',
-      //   component: () => import('@/views/comments/list'),
-      //   name: 'commentsList',
-      //   hidden: false,
-      //   meta: { title: '评论列表', icon: 'list' }
-      // },
+      {
+        path: '/comics/comments/lists',
+        component: () => import('@/views/comicComments/list'),
+        name: 'ComicCommentsList',
+        hidden: false,
+        meta: { title: '评论列表', icon: 'list' }
+      },
     ]
   },
 

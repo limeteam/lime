@@ -2,7 +2,6 @@ package model
 
 import (
 	"lime/pkg/common"
-	"lime/pkg/common/db"
 	"time"
 )
 
@@ -40,5 +39,5 @@ func (o *Task) TableName() string {
 }
 
 func init() {
-	db.Register(&Task{})
+	//db.Register(&Task{})
 }

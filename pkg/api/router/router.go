@@ -55,6 +55,12 @@ func Init(e *gin.Engine, cors bool) {
 	e.PUT("/comics/categories/:id", ComicCategoryController.Edit)
 	e.DELETE("/comics/categories/:id", ComicCategoryController.Delete)
 
+
+	ComicCommentsController := &controllers.ComicCommentsController{}
+	e.GET("/comics/comments", ComicCommentsController.List)
+	e.GET("/comics/comments/:id", ComicCommentsController.Get)
+	e.DELETE("/comics/comments/:id", ComicCommentsController.Delete)
+
 	//ComicChaptersController := &controllers.ComicChaptersController{}
 	//e.GET("/comics/chapters", ComicChaptersController.List)
 	//e.GET("/comics/chapters/:id", ComicChaptersController.Get)
