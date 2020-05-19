@@ -3,14 +3,14 @@ import qs from 'qs'
 
 export function getChapter(id) {
   return request({
-    url: 'chapters/' + id,
+    url: '/novels/chapters/' + id,
     method: 'GET'
   })
 }
 
 export function ChapterList(query) {
   return request({
-    url: 'chapters',
+    url: '/novels/chapters',
     method: 'GET',
     params: query
   })
@@ -18,7 +18,7 @@ export function ChapterList(query) {
 
 export function updateChapter(id, data) {
   return request({
-    url: 'chapters/' + id,
+    url: '/novels/chapters/' + id,
     method: 'put',
     data: data
   })
@@ -26,7 +26,7 @@ export function updateChapter(id, data) {
 
 export function updatestatus(id, data) {
   return request({
-    url: '/chapters/' + id + '/status',
+    url: '/novels//chapters/' + id + '/status',
     method: 'post',
     data: data
   })
@@ -34,7 +34,7 @@ export function updatestatus(id, data) {
 
 export function createChapter(data) {
   return request({
-    url: 'chapters',
+    url: '/novels/chapters',
     method: 'post',
     data: data
   })
@@ -42,7 +42,7 @@ export function createChapter(data) {
 
 export function deleteChapter(id,data) {
   return request({
-    url: 'chapters/' + id,
+    url: '/novels/chapters/' + id,
     method: 'delete',
     data: data
   })

@@ -10,16 +10,6 @@
           size="small"
           class="demo-form-inline"
         >
-          <el-form-item label="所属频道" prop="channel_id">
-            <el-select v-model="formData.channel_id" placeholder="状态" style="width: 100px">
-              <el-option
-                v-for="(item,index) in channels"
-                :key="index"
-                :label="item"
-                :value="index"
-              />
-            </el-select>
-          </el-form-item>
           <el-form-item label="分类名" prop="name">
             <el-input v-model="formData.name" placeholder />
           </el-form-item>
@@ -39,8 +29,7 @@
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column label="ID" prop="id" width="80px" />
         <el-table-column label="分类名" prop="name" width="100px" />
-        <el-table-column label="小说数" prop="novel_num" width="80px" />
-        <el-table-column label="所属频道" prop="channel_id" width="100px" />
+        <el-table-column label="漫画数" prop="comic_num" width="80px" />
         <el-table-column label="分类展示排序" prop="sort" width="123px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
@@ -78,16 +67,6 @@
         label-width="100px"
         style="width: 300px; margin-left:50px;"
       >
-        <el-form-item label="所属频道" prop="channel_id">
-          <el-select v-model="temp.channel_id" class="filter-item" placeholder="请选择">
-            <el-option
-              v-for="item in category_channels"
-              :key="item.key"
-              :label="item.display_name"
-              :value="item.key"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item label="分类名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
@@ -109,18 +88,11 @@ import {
   createCategory,
   updateCategory,
   deleteCategory
-} from "@/api/lime-admin/category";
+} from "@/api/lime-admin/comicCategory";
 import Pagination from "@/components/Pagination";
-import { CATEGORY_CHANNEL } from "./emun/index.js";
 
 export default {
   name: "CategoryList",
-  filters: {
-    statuss: function(value) {
-      Number(value);
-      return CATEGORY_CHANNEL[value];
-    }
-  },
   components: { Pagination },
   data() {
     return {
@@ -146,7 +118,6 @@ export default {
         list: []
       },
       channels: ["全部", "男生", "女生"],
-      category_channels: CATEGORY_CHANNEL,
       dialogFormVisible: false,
       dialogStatus: "",
       textMap: {

@@ -85,13 +85,13 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/category',
+    path: '/novels',
     component: Layout,
     alwaysShow: true,
     // redirect: '/category/list',
-    name: 'Category',
+    name: 'Novels',
     meta: {
-      title: '内容管理',
+      title: '小说管理',
       icon: 'list'
     },
     children: [
@@ -165,6 +165,88 @@ export const asyncRoutes = [
         hidden: false,
         meta: { title: '评论列表', icon: 'list' }
       },
+    ]
+  },
+  {
+    path: '/comics',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Comics',
+    meta: {
+      title: '漫画管理',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: '/comics/categorys',
+        component: () => import('@/views/comicCategory/list'),
+        name: '/comics/CategoryList',
+        hidden: false,
+        meta: { title: '分类列表', icon: 'list' }
+      },
+      // {
+      //   path: '/novel/books',
+      //   component: () => import('@/views/books/list'),
+      //   name: 'BooksList',
+      //   hidden: false,
+      //   meta: { title: '小说列表', icon: 'list' }
+      // },
+      // {
+      //   path: '/novel/create',
+      //   component: () => import('@/views/books/create'),
+      //   name: 'CreateBook',
+      //   hidden: true,
+      //   meta: { title: '新建小说', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/update',
+      //   component: () => import('@/views/books/update'),
+      //   name: 'UpdateBook',
+      //   hidden: true,
+      //   meta: { title: '修改小说', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/view',
+      //   component: () => import('@/views/books/view'),
+      //   name: 'getBook',
+      //   hidden: true,
+      //   meta: { title: '查看小说', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/chapters',
+      //   component: () => import('@/views/chapters/list'),
+      //   name: 'ChaptersList',
+      //   hidden: true,
+      //   meta: { title: '章节列表', icon: 'list' }
+      // },
+      // {
+      //   path: '/novel/chapters/create',
+      //   component: () => import('@/views/chapters/create'),
+      //   name: 'CreateChapters',
+      //   hidden: true,
+      //   meta: { title: '新建章节', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/chapters/update',
+      //   component: () => import('@/views/chapters/update'),
+      //   name: 'UpdateChapters',
+      //   hidden: true,
+      //   meta: { title: '修改章节', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/uploadnovel/create',
+      //   component: () => import('@/views/books/upload'),
+      //   name: 'uploadNovel',
+      //   hidden: false,
+      //   meta: { title: '上传小说', icon: 'list' }
+      // },
+      // {
+      //   path: '/novel/comments/lists',
+      //   component: () => import('@/views/comments/list'),
+      //   name: 'commentsList',
+      //   hidden: false,
+      //   meta: { title: '评论列表', icon: 'list' }
+      // },
     ]
   },
 

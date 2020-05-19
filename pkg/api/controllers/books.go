@@ -105,7 +105,6 @@ func (Book *BooksController) UploadBookCover(c *gin.Context) {
 	})
 }
 
-
 func (Book *BooksController) UploadBookFile(c *gin.Context) {
 	file, header, err := c.Request.FormFile("file")
 	if err != nil {
