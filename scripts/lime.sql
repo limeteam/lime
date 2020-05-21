@@ -3,15 +3,15 @@
 
  Source Server         : windows-dev
  Source Server Type    : MySQL
- Source Server Version : 50729
+ Source Server Version : 50726
  Source Host           : localhost:3306
  Source Schema         : lime
 
  Target Server Type    : MySQL
- Target Server Version : 50729
+ Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 19/05/2020 23:26:17
+ Date: 22/05/2020 00:37:45
 */
 
 SET NAMES utf8mb4;
@@ -249,5 +249,31 @@ CREATE TABLE `novel_comment`  (
 -- ----------------------------
 INSERT INTO `novel_comment` VALUES (1, 1, '梧桐', '你好啊', 1, '2', '2020-05-16 20:58:39', '2020-05-16 20:58:39', NULL);
 INSERT INTO `novel_comment` VALUES (2, 2, 'coso', '真好看', 34, '2', '2020-05-16 21:00:40', '2020-05-16 21:00:40', NULL);
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名称',
+  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '手机号',
+  `sex` int(11) NOT NULL DEFAULT 0 COMMENT '性别',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
+  `salt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '加密盐',
+  `faceicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '头像地址',
+  `wechat` json NULL COMMENT '微信绑定信息',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
+  `amount` decimal(10, 0) NULL DEFAULT NULL COMMENT '现金金额',
+  `coin` decimal(10, 0) NULL DEFAULT NULL COMMENT '金币',
+  `exempt_login` tinyint(2) NULL DEFAULT NULL COMMENT '是否免登： 0 否 1免登',
+  `source` tinyint(2) NULL DEFAULT NULL COMMENT '来源：0 PC 1 WAP 2 Android 3 IOS 4 公众号 5小程序 ',
+  `channel_id` int(11) NULL DEFAULT NULL COMMENT '渠道',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态 1=正常 2=禁用',
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `last_login_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `deleted_at` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

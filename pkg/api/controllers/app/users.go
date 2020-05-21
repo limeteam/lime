@@ -1,4 +1,4 @@
-package v1
+package app
 
 import (
 	"github.com/gin-gonic/gin"
@@ -10,13 +10,13 @@ type UsersController struct {
 	controllers.BaseController
 }
 
-func (U *UsersController) Login(c *gin.Context) {
+func (C *UsersController) Login(c *gin.Context) {
 	var Dto dto.GeneralListDto
-	if U.BindAndValidate(c, &Dto) {
+	if C.BindAndValidate(c, &Dto) {
 		//data, total := BooksService.List(Dto)
-		//Base.Resp(c, map[string]interface{}{
-		//	"result": data,
-		//	//"total":  total,
-		//})
+		C.Resp(c, map[string]interface{}{
+			"result": "data",
+			"total":  "total",
+		})
 	}
 }
