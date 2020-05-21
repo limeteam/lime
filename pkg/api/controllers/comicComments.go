@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
+	"lime/pkg/api/utils/e"
 )
 
 var ComicCommentsService = service.ComicCommentervice{}
@@ -16,7 +17,7 @@ func (C *ComicCommentsController) List(c *gin.Context) {
 	var Dto dto.ComicCommentListDto
 	if C.BindAndValidate(c, &Dto) {
 		data, total := ComicCommentsService.List(Dto)
-		resp(c, map[string]interface{}{
+		C.Resp(c, map[string]interface{}{
 			"list":      data,
 			"total":     total,
 			"page":      Dto.Page,
@@ -30,10 +31,10 @@ func (C *ComicCommentsController) Get(c *gin.Context) {
 	if C.BindAndValidate(c, &Dto) {
 		data := ComicCommentsService.InfoOfId(Dto)
 		if data.Id < 1 {
-			fail(c, ErrIdData)
+			C.Fail(c, e.ErrIdData)
 			return
 		}
-		resp(c, map[string]interface{}{
+		C.Resp(c, map[string]interface{}{
 			"result": data,
 		})
 	}
@@ -44,9 +45,9 @@ func (C *ComicCommentsController) Delete(c *gin.Context) {
 	if C.BindAndValidate(c, &Dto) {
 		affected := ComicCommentsService.Delete(Dto)
 		if affected <= 0 {
-			fail(c, ErrDelFail)
+			C.Fail(c, e.ErrDelFail)
 			return
 		}
-		ok(c, "删除成功")
+		C.Ok(c, "删除成功")
 	}
 }

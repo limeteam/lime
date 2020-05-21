@@ -7,10 +7,12 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/antchfx/htmlquery v1.2.3
 	github.com/antchfx/xmlquery v1.2.4 // indirect
+	github.com/astaxie/beego v1.12.1
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
 	github.com/benbjohnson/phantomjs v0.0.0-20181211182228-6499a20f5cd6
 	github.com/bmaupin/go-epub v0.5.3
 	github.com/chromedp/chromedp v0.5.3
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.6.3
