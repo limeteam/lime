@@ -31,9 +31,14 @@
       <!-- 过滤条件 -->
       <!--列表-->
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
-        <el-table-column prop="cover" label="封面" width="100px" align="center">
+        <el-table-column prop="vertical_cover" label="竖版封面" width="100px" align="center">
           <template slot-scope="scope">
-            <img :src="base_url + scope.row.cover" style="width: 75px;height:100px" />
+            <img :src="base_url + scope.row.vertical_cover" style="width: 75px;height:100px" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="horizontal_cover" label="横版封面" width="100px" align="center">
+          <template slot-scope="scope">
+            <img :src="base_url + scope.row.horizontal_cover" style="width: 150px;height:100px" />
           </template>
         </el-table-column>
         <el-table-column prop="name" label="类型/名称" width="220px" align="left">
@@ -47,15 +52,12 @@
               class="author"
             >作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：{{scope.row.author}}</small>
             <br />
-            <small class="last-chapter">最新章节：第二章 星星之火</small>
-            <br />
             <small class="update-time">更新时间：{{ scope.row.chapter_updated_at}}</small>
           </template>
         </el-table-column>
-        <el-table-column label="所属频道" prop="channel_id" width="80px" />
-        <el-table-column label="来源" prop="source" width="100px" />
-        <el-table-column label="千字价格" prop="thousand_characters_price" width="80px" />
-        <el-table-column label="每章价格" prop="chapter_price" width="80px" />
+        <el-table-column label="频道" prop="channel_id" width="80px" />
+        <el-table-column label="漫画来源" prop="source" width="100px" />
+        <el-table-column label="章节定价" prop="chapter_price" width="80px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
             <el-button
@@ -108,7 +110,7 @@ import Pagination from "@/components/Pagination";
 import { CATEGORY_CHANNEL } from "./emun/index.js";
 import selectedpanel from "./components/selectedpanel";
 export default {
-  name: "BooksList",
+  name: "ComicsList",
   filters: {
     statuss: function(value) {
       Number(value);
@@ -165,18 +167,14 @@ export default {
       },
       statusMap: {
         0: "连载中",
-        1: "已完结",
-        2: "太监"
+        1: "全完结",
       },
       flagMap: {
         0: "全部",
         1: "免费",
-        2: "新书",
-        3: "热门",
-        4: "会员",
-        5: "爽文",
-        6: "精选",
-        7: "大神"
+        2: "热门",
+        3: "会员",
+        4: "推荐"
       }
     };
   },

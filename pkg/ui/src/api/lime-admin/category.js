@@ -2,14 +2,14 @@ import request from './request'
 
 export function categoryList() {
   return request({
-    url: '/novels/categories',
+    url: '/admin/novels/categories',
     method: 'GET'
   })
 }
 
 export function updateCategory(id, data) {
   return request({
-    url: '/novels/categories/' + id,
+    url: '/admin/novels/categories/' + id,
     method: 'put',
     data: data
   })
@@ -17,7 +17,7 @@ export function updateCategory(id, data) {
 
 export function createCategory(data) {
   return request({
-    url: '/novels/categories',
+    url: '/admin/novels/categories',
     method: 'post',
     data: data
   })

@@ -85,10 +85,28 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/operation',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Operation',
+    meta: {
+      title: '运营管理',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: '/users',
+        component: () => import('@/views/users/list'),
+        name: 'UserList',
+        hidden: false,
+        meta: { title: '用户列表', icon: 'list' }
+      },
+    ]
+  },
+  {
     path: '/novels',
     component: Layout,
     alwaysShow: true,
-    // redirect: '/category/list',
     name: 'Novels',
     meta: {
       title: '小说管理',
@@ -194,7 +212,7 @@ export const asyncRoutes = [
       {
         path: '/comics/create',
         component: () => import('@/views/comics/create'),
-        name: 'CreateBook',
+        name: 'CreateComics',
         hidden: true,
         meta: { title: '新建漫画', icon: 'comics' }
       },

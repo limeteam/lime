@@ -33,6 +33,14 @@ func Init(e *gin.Engine, cors bool) {
 
 
 	admin := e.Group("/admin")
+
+	AdminUsersController := &controllers.AdminUsersController{}
+	admin.GET("/users", AdminUsersController.List)
+	admin.GET("/users/:id", AdminUsersController.Get)
+	admin.POST("/users", AdminUsersController.Create)
+	admin.PUT("/users/:id", AdminUsersController.Edit)
+
+
 	CategoryController := &controllers.CategoryController{}
 	admin.GET("/novels/categories", CategoryController.List)
 	admin.GET("/novels/categories/:id", CategoryController.Get)
