@@ -1,27 +1,34 @@
 <template>
-  <div class="dashboard-container">
-    <component :is="currentRole" />
+  <div class="app-container">
+  <el-card shadow="hover" class="box-card">
+    <div class="tips">
+      <aside>
+         Lime Soft 青橙软件
+      </aside>
+    </div>
+  </el-card>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import adminDashboard from './admin'
-
 export default {
   name: 'Dashboard',
-  components: { adminDashboard },
   data() {
     return {
-      currentRole: 'adminDashboard'
     }
   },
   computed: {
-    ...mapGetters([
-      'roles'
-    ])
   },
   created() {
   }
 }
 </script>
+<style>
+  .tips {
+    padding-top: 10px;
+  }
+  aside {
+    text-align:center;
+    font-size: 30px;
+  }
+</style>
