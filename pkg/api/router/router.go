@@ -19,21 +19,22 @@ func Init(e *gin.Engine, cors bool) {
 	ProbeController := &controllers.ProbeController{}
 	e.GET("/healthcheck", ProbeController.Healthy)
 
-	v1 := e.Group("/app")
+	//前台接口
+	v1 := e.Group("/v1")
 	UsersController := &app.UsersController{}
 	v1.POST("/users",UsersController.Login)
 
 	V1BooksController := &app.BooksController{}
-	v1.GET("/novels/books", V1BooksController.List)
-	v1.GET("/novels/books/:id", V1BooksController.Get)
+	v1.GET("/books", V1BooksController.List)
+	v1.GET("/books/:id", V1BooksController.Get)
 
 	V1ChaptersController := &app.ChaptersController{}
-	v1.GET("/novels/chapters", V1ChaptersController.List)
-	v1.GET("/novels/chapters/:id", V1ChaptersController.Get)
+	v1.GET("/chapters", V1ChaptersController.List)
+	v1.GET("/chapters/:id", V1ChaptersController.Get)
 
 
+	//后台接口
 	admin := e.Group("/admin")
-
 	AdminUsersController := &controllers.AdminUsersController{}
 	admin.GET("/users", AdminUsersController.List)
 	admin.GET("/users/:id", AdminUsersController.Get)

@@ -62,3 +62,4 @@ func (us ChapterService) Delete(dto dto.GeneralDelDto) int64 {
 	c := chapterDao.Delete(&ChapterModel)
 	return c.RowsAffected
 }
+

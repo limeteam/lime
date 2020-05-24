@@ -206,3 +206,66 @@ func (bs BooksService) UploadBookFile(file multipart.File, filename string) (fil
 	filepath = "/upload/books/" + filename
 	return filepath, nil
 }
+
+func (bs BooksService) GetBookInfoById(gdto dto.GeneralGetDto) dto.BookInfoDto {
+	var bookinfo = dto.BookInfoDto{
+		BookId: gdto.Id,
+		Name:   "test",
+		Cover: "http://beiwo-new.oss-cn-beijing.aliyuncs.com/cover/84/7757bb60adec76a2166f8af2cde68117.jpeg?x-oss-process=image%2Fresize%2Cw_300%2Ch_400%2Cm_lfit",
+		Author: "孤梦夕阳",
+		Description: "这是一个充满元素气息的世界—鸿界。各种元素游荡在世界的各个角落，在这环境下孕育而生的生命经过漫长时间的演化，生活，学习，争夺，繁衍下对于各种元素的掌握到达了一个巅峰，迎来一个大时代—三极天下。鸿界分为...",
+		DisplayLabel: "网游竞技·连载中·141万字",
+		Finished: "连载中",
+		Flag: "热门",
+		TotalWords: "141万字",
+		TotalComment: "45",
+		ChapterLabel: "共407章",
+		LastChapterTime: "更新于2020-02-02",
+		LastChapter: "第四百零七章 新的篇章",
+		IsFinished: 1,
+		Score: "",
+		Tags: []dto.BookInfoTag{
+			{Tab: "网游竞技", Color: "#71c5fb"},
+			{Tab: "已完结", Color: "#f98445"},
+		},
+		Attribute: dto.BookAttribute{
+			Popularity:      "###1.0###万人气",
+			PopularityTitle: "人气飙升中",
+			Reading:         "###1.0###万在读",
+			ReadingTitle:    "在读人数攀升中",
+			Score:           "###7.0###评分",
+			ScoreTitle:      "超过98%的同类书",
+		},
+		Labels: dto.BookInfoLabels{
+			RecommendId: 0,
+			Label:       "大家都在看",
+			Style:       2,
+			CanMore:     false,
+			CanRefresh:  false,
+			Total:       1,
+			List: []dto.BookInfoAllLookInfos{
+				{
+					BookId:      2,
+					Name:        "阴阳诡路",
+					Cover:       "http://beiwo-new.oss-cn-beijing.aliyuncs.com/cover/212/f73c9adb1f5e069cbeee5c7f600dfd1c.jpeg?x-oss-process=image%2Fresize%2Cw_300%2Ch_400%2Cm_lfit",
+					Author:      "牧雪",
+					Description: "有一种人，能去祸免灾、驱邪避凶、普怨度灵、识破天机、断人生死、游走于阴阳两界。一个接一个的邪灵恶煞会出现于他们的面前，一件又一件的奇异诡事会发生在他们的身边，于是这种人通常被称作：阴阳先生。我是阴阳女...",
+					Views:       10,
+					Tag: []dto.BookInfoTag{
+						{Tab: "网游竞技", Color: "#71c5fb"},
+						{Tab: "已完结", Color: "#f98445"},
+					},
+					Finished:   "已完结",
+					Flag:       "",
+					TotalWords: "55万字",
+					IsVip:      1,
+					IsBaoyue:   1,
+					IsFinished: 1,
+				},
+			},
+		},
+		IsCollect: 1,
+	}
+
+	return bookinfo
+}

@@ -5,7 +5,6 @@ import (
 	"lime/pkg/api/controllers"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/service"
-	"lime/pkg/api/utils/e"
 )
 
 type ChaptersController struct {
@@ -16,10 +15,9 @@ var ChaptersService = service.ChaptersService{}
 func (C *ChaptersController) List(c *gin.Context) {
 	var Dto dto.GeneralListDto
 	if C.BindAndValidate(c, &Dto) {
-		data, total := ChaptersService.List(Dto)
+		data := ChaptersService.FrontList(Dto)
 		C.Resp(c, map[string]interface{}{
 			"result": data,
-			"total":  total,
 		})
 	}
 }
@@ -27,11 +25,11 @@ func (C *ChaptersController) List(c *gin.Context) {
 func (C *ChaptersController) Get(c *gin.Context) {
 	var Dto dto.GeneralGetDto
 	if C.BindAndValidate(c, &Dto) {
-		data := ChaptersService.InfoOfId(Dto)
-		if data.Id < 1 {
-			C.Fail(c, e.ErrIdData)
-			return
-		}
+		data := ChaptersService.GetChapterInfoById(Dto)
+		//if data.Id < 1 {
+		//	C.Fail(c, e.ErrIdData)
+		//	return
+		//}
 		C.Resp(c, map[string]interface{}{
 			"result": data,
 		})
