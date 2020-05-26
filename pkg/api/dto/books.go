@@ -181,7 +181,7 @@ type BookInfoDto struct {
 	LastChapterTime string         `json:"last_chapter_time"`
 	LastChapter     string         `json:"last_chapter"`
 	IsFinished      int            `json:"is_finished"`
-	Score           string         `json:"score"`
+	Score           int         `json:"score"`
 	Attribute       BookAttribute  `json:"attribute"`
 	Comment         []BookComment  `json:"comment",omitempty`
 	Labels          BookInfoLabels `json:"labels"`

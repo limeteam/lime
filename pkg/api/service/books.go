@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/nfnt/resize"
 	log "github.com/sirupsen/logrus"
 	"image/jpeg"
@@ -8,6 +9,7 @@ import (
 	"lime/pkg/api/dao"
 	"lime/pkg/api/dto"
 	"lime/pkg/api/model"
+	"math"
 	"mime/multipart"
 	"os"
 	"path"
@@ -207,33 +209,51 @@ func (bs BooksService) UploadBookFile(file multipart.File, filename string) (fil
 	return filepath, nil
 }
 
-func (bs BooksService) GetBookInfoById(gdto dto.GeneralGetDto) dto.BookInfoDto {
-	var bookinfo = dto.BookInfoDto{
-		BookId: gdto.Id,
-		Name:   "test",
-		Cover: "http://beiwo-new.oss-cn-beijing.aliyuncs.com/cover/84/7757bb60adec76a2166f8af2cde68117.jpeg?x-oss-process=image%2Fresize%2Cw_300%2Ch_400%2Cm_lfit",
-		Author: "孤梦夕阳",
-		Description: "这是一个充满元素气息的世界—鸿界。各种元素游荡在世界的各个角落，在这环境下孕育而生的生命经过漫长时间的演化，生活，学习，争夺，繁衍下对于各种元素的掌握到达了一个巅峰，迎来一个大时代—三极天下。鸿界分为...",
-		DisplayLabel: "网游竞技·连载中·141万字",
-		Finished: "连载中",
-		Flag: "热门",
-		TotalWords: "141万字",
-		TotalComment: "45",
-		ChapterLabel: "共407章",
-		LastChapterTime: "更新于2020-02-02",
-		LastChapter: "第四百零七章 新的篇章",
-		IsFinished: 1,
-		Score: "",
+func (bs BooksService) GetBookInfoById(gdto dto.GeneralGetDto) (bookInfoDto dto.BookInfoDto, err error) {
+	data := BooksDao.Get(gdto.Id)
+	if data.Id < 1 {
+		return  bookInfoDto,nil
+	}
+	categories := CategoryDao.GetAll()
+	categoryName := ""
+	for categoryId,category := range categories {
+		if data.Category_id == categoryId {
+			categoryName = category.Name
+		}
+	}
+
+	statusArr := map[int]string{0: "连载中",1: "已完结",2: "已太监"}
+	statusName := statusArr[data.Status]
+	views, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", data.Views/10000), 64)
+	fmt.Println(data.Chapter_updated_at)
+	updateTime,_ := time.Parse("2006-01-02",data.Chapter_updated_at.String())
+	TextNum := int(math.Floor(float64(data.Text_num/10000)))
+	var bookInfo = dto.BookInfoDto{
+		BookId:          gdto.Id,
+		Name:            data.Name,
+		Cover:           data.Cover,
+		Author:          data.Author,
+		Description:     data.Desc,
+		DisplayLabel:    fmt.Sprintf("%s·%s·%d万字",categoryName,statusName,TextNum),
+		Finished:        statusName,
+		Flag:            "热门",
+		TotalWords:      fmt.Sprintf("%d万字",TextNum),
+		TotalComment:    "45",
+		ChapterLabel:    fmt.Sprintf("共%d章",data.Chapter_num),
+		LastChapterTime: fmt.Sprintf("更新于%s", updateTime),
+		LastChapter:     "第四百零七章 新的篇章",
+		IsFinished:      data.Status,
+		Score:           data.Score,
 		Tags: []dto.BookInfoTag{
-			{Tab: "网游竞技", Color: "#71c5fb"},
-			{Tab: "已完结", Color: "#f98445"},
+			{Tab: categoryName, Color: "#71c5fb"},
+			{Tab: statusName, Color: "#f98445"},
 		},
 		Attribute: dto.BookAttribute{
-			Popularity:      "###1.0###万人气",
+			Popularity:      fmt.Sprintf("###%f###万人气",views),
 			PopularityTitle: "人气飙升中",
-			Reading:         "###1.0###万在读",
+			Reading:         fmt.Sprintf("###%f###万在读",views),
 			ReadingTitle:    "在读人数攀升中",
-			Score:           "###7.0###评分",
+			Score:           fmt.Sprintf("###%f###评分",data.Score),
 			ScoreTitle:      "超过98%的同类书",
 		},
 		Labels: dto.BookInfoLabels{
@@ -266,6 +286,9 @@ func (bs BooksService) GetBookInfoById(gdto dto.GeneralGetDto) dto.BookInfoDto {
 		},
 		IsCollect: 1,
 	}
+	return bookInfo,nil
+}
 
-	return bookinfo
+func transformLable()  {
+	
 }
