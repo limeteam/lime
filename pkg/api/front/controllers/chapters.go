@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/admin/controllers"
-	"lime/pkg/api/admin/dto"
-	"lime/pkg/api/admin/service"
+	"lime/pkg/api/front/dto"
+	"lime/pkg/api/front/service"
 )
 
 type ChaptersController struct {

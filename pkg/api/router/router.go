@@ -23,7 +23,7 @@ func Init(e *gin.Engine, cors bool) {
 	v1.POST("/users",UsersController.Login)
 
 	V1BooksController := &controllersFront.BooksController{}
-	v1.GET("/books", V1BooksController.List)
+	//v1.GET("/books", V1BooksController.List)
 	v1.GET("/books/:id", V1BooksController.Get)
 
 	V1ChaptersController := &controllersFront.ChaptersController{}

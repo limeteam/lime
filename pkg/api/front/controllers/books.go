@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/admin/controllers"
-	"lime/pkg/api/admin/dto"
-	"lime/pkg/api/admin/service"
+	"lime/pkg/api/front/dto"
+	"lime/pkg/api/front/service"
 	"lime/pkg/api/utils/e"
 )
 
@@ -23,17 +23,6 @@ func (C *BooksController) Get(c *gin.Context) {
 		}
 		C.Resp(c, map[string]interface{}{
 			"result": data,
-		})
-	}
-}
-
-func (C *BooksController) List(c *gin.Context) {
-	var Dto dto.GeneralListDto
-	if C.BindAndValidate(c, &Dto) {
-		data, total := BooksService.List(Dto)
-		C.Resp(c, map[string]interface{}{
-			"result": data,
-			"total":  total,
 		})
 	}
 }
