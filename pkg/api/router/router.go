@@ -2,7 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"lime/pkg/api/controllers"
+	"lime/pkg/api/admin/controllers"
+	controllersFront "lime/pkg/api/front/controllers"
 	"lime/pkg/api/middleware"
 	"lime/pkg/api/utils/upload"
 	"net/http"
@@ -15,37 +16,89 @@ func Init(e *gin.Engine, cors bool) {
 	if cors {
 		e.Use(middleware.Cors())
 	}
-	e.GET("/healthcheck", controllers.Healthy)
+
+	//前台接口
+	v1 := e.Group("/v1")
+	UsersController := &controllersFront.UsersController{}
+	v1.POST("/users",UsersController.Login)
+
+	V1BooksController := &controllersFront.BooksController{}
+	//v1.GET("/books", V1BooksController.List)
+	v1.GET("/books/:id", V1BooksController.Get)
+
+	V1ChaptersController := &controllersFront.ChaptersController{}
+	v1.GET("/chapters", V1ChaptersController.List)
+	v1.GET("/chapters/:id", V1ChaptersController.Get)
+
+
+	//后台接口
+	admin := e.Group("/admin")
+	AdminUsersController := &controllers.AdminUsersController{}
+	admin.GET("/users", AdminUsersController.List)
+	admin.GET("/users/:id", AdminUsersController.Get)
+	admin.POST("/users", AdminUsersController.Create)
+	admin.PUT("/users/:id", AdminUsersController.Edit)
+
 
 	CategoryController := &controllers.CategoryController{}
-	e.GET("/categories", CategoryController.List)
-	e.GET("/categories/:id", CategoryController.Get)
-	e.POST("/categories", CategoryController.Create)
-	e.PUT("/categories/:id", CategoryController.Edit)
-	e.DELETE("/categories/:id", CategoryController.Delete)
+	admin.GET("/novels/categories", CategoryController.List)
+	admin.GET("/novels/categories/:id", CategoryController.Get)
+	admin.POST("/novels/categories", CategoryController.Create)
+	admin.PUT("/novels/categories/:id", CategoryController.Edit)
+	admin.DELETE("/novels/categories/:id", CategoryController.Delete)
 
 	BooksController := &controllers.BooksController{}
-	e.GET("/books", BooksController.List)
-	e.GET("/books/:id", BooksController.Get)
-	e.POST("/books", BooksController.Create)
-	e.PUT("/books/:id", BooksController.Edit)
-	e.DELETE("/books/:id", BooksController.Delete)
-	e.POST("/books/:id/status", BooksController.UpdateStatus)
+	admin.GET("/novels/books", BooksController.List)
+	admin.GET("/novels/books/:id", BooksController.Get)
+	admin.POST("/novels/books", BooksController.Create)
+	admin.PUT("/novels/books/:id", BooksController.Edit)
+	admin.DELETE("/novels/books/:id", BooksController.Delete)
+	admin.POST("/novels/books/:id/status", BooksController.UpdateStatus)
 
-	e.POST("/upload/cover", BooksController.UploadBookCover) // 上传封面图片
-	e.POST("/upload/book_file", BooksController.UploadBookFile) // 上传书本
+	admin.POST("/upload/cover", BooksController.UploadBookCover)    // 上传封面图片
+	admin.POST("/upload/book_file", BooksController.UploadBookFile) // 上传书本
 
 	ChaptersController := &controllers.ChaptersController{}
-	e.GET("/chapters", ChaptersController.List)
-	e.GET("/chapters/:id", ChaptersController.Get)
-	e.POST("/chapters", ChaptersController.Create)
-	e.PUT("/chapters/:id", ChaptersController.Edit)
-	e.DELETE("/chapters/:id", ChaptersController.Delete)
+	admin.GET("/novels/chapters", ChaptersController.List)
+	admin.GET("/novels/chapters/:id", ChaptersController.Get)
+	admin.POST("/novels/chapters/:id", ChaptersController.Edit)
+	admin.DELETE("/novels/chapters/:id", ChaptersController.Delete)
 
 	CommentsController := &controllers.CommentsController{}
-	e.GET("/comments", CommentsController.List)
-	e.GET("/comments/:id", CommentsController.Get)
-	e.DELETE("/comments/:id", CommentsController.Delete)
+	admin.GET("/novels/comments", CommentsController.List)
+	admin.GET("/novels/comments/:id", CommentsController.Get)
+	admin.DELETE("/novels/comments/:id", CommentsController.Delete)
+
+	// 漫画中心
+
+	ComicCategoryController := &controllers.ComicCategoryController{}
+	admin.GET("/comics/categories", ComicCategoryController.List)
+	admin.GET("/comics/categories/:id", ComicCategoryController.Get)
+	admin.POST("/comics/categories", ComicCategoryController.Create)
+	admin.PUT("/comics/categories/:id", ComicCategoryController.Edit)
+	admin.DELETE("/comics/categories/:id", ComicCategoryController.Delete)
+
+	ComicsController := &controllers.ComicsController{}
+	admin.GET("/comics/comic", ComicsController.List)
+	admin.GET("/comics/comic/:id", ComicsController.Get)
+	admin.POST("/comics/comic", ComicsController.Create)
+	admin.PUT("/comics/comic/:id", ComicsController.Edit)
+	admin.DELETE("/comics/comic/:id", ComicsController.Delete)
+	admin.POST("/comics/comic/:id/status", ComicsController.UpdateStatus)
+
+
+	ComicCommentsController := &controllers.ComicCommentsController{}
+	admin.GET("/comics/comments", ComicCommentsController.List)
+	admin.GET("/comics/comments/:id", ComicCommentsController.Get)
+	admin.DELETE("/comics/comments/:id", ComicCommentsController.Delete)
+
+	//ComicChaptersController := &controllers.ComicChaptersController{}
+	//e.GET("/comics/chapters", ComicChaptersController.List)
+	//e.GET("/comics/chapters/:id", ComicChaptersController.Get)
+	//e.POST("/comics/chapters", ComicChaptersController.Create)
+	//e.PUT("/comics/chapters/:id", ComicChaptersController.Edit)
+	//e.DELETE("/comics/chapters/:id", ComicChaptersController.Delete)
+
 
 	e.LoadHTMLGlob("./pkg/ui/dist/*.html")              // 添加入口index.html
 	e.LoadHTMLFiles("./pkg/ui/dist/static/*/*")         // 添加资源路径

@@ -8,8 +8,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"io/ioutil"
-	"lime/pkg/api/dto"
-	"lime/pkg/api/service"
+	"lime/pkg/api/admin/dto"
+	"lime/pkg/api/admin/service"
 	"lime/pkg/common/cache"
 	"lime/pkg/common/db"
 	_ "lime/pkg/crawler/novels/aoyuge"
@@ -23,7 +23,7 @@ var (
 	config   string
 	types    int
 	loglevel uint8
-	//StartCmd : set up restful api server
+	//StartCmd : set up restful admin server
 	StartCmd = &cobra.Command{
 		Use:     "task",
 		Short:   "task API server",
@@ -44,12 +44,14 @@ func init() {
 }
 
 func usage() {
-	usageStr := `       _                       _ 
-                       | |                     | |
-  ____  ____ ____ _ _ _| |____   ___ _   _ ____| |
- / ___)/ ___) _  | | | | |  _ \ / _ \ | | / _  ) |
-( (___| |  ( ( | | | | | | | | | |_| \ V ( (/ /| |
- \____)_|   \_||_|\____|_|_| |_|\___/ \_/ \____)_|
+	usageStr := `
+ ___      ___   __   __  _______ 
+|   |    |   | |  |_|  ||       |
+|   |    |   | |       ||    ___|
+|   |    |   | |       ||   |___ 
+|   |___ |   | |       ||    ___|
+|       ||   | | ||_|| ||   |___ 
+|_______||___| |_|   |_||_______|
 `
 	fmt.Printf("%s\n", usageStr)
 }

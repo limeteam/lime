@@ -2,22 +2,22 @@ package upload
 
 import (
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"lime/pkg/api/utils"
+	"lime/pkg/api/utils/file"
 	"mime/multipart"
 	"os"
 	"path"
 	"strings"
-	"lime/pkg/api/utils/file"
-	"lime/pkg/api/utils"
-	log "github.com/sirupsen/logrus"
 )
 
 type UploadSetting struct {
-	PrefixUrl string
+	PrefixUrl       string
 	RuntimeRootPath string
-	ImageSavePath  string
-	ImageMaxSize   int
-	ImageAllowExts []string
+	ImageSavePath   string
+	ImageMaxSize    int
+	ImageAllowExts  []string
 }
 
 var AppSetting = &UploadSetting{}

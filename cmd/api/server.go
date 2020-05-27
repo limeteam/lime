@@ -20,7 +20,7 @@ var (
 	port     string
 	cors     bool
 	loglevel uint8
-	//StartCmd : set up restful api server
+	//StartCmd : set up restful admin server
 	StartCmd = &cobra.Command{
 		Use:     "server",
 		Short:   "Start download API server",

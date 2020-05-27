@@ -1,16 +1,15 @@
 import request from './request'
-import qs from 'qs'
 
 export function categoryList() {
   return request({
-    url: 'categories',
+    url: '/admin/novels/categories',
     method: 'GET'
   })
 }
 
 export function updateCategory(id, data) {
   return request({
-    url: 'categories/' + id,
+    url: '/admin/novels/categories/' + id,
     method: 'put',
     data: data
   })
@@ -18,7 +17,7 @@ export function updateCategory(id, data) {
 
 export function createCategory(data) {
   return request({
-    url: 'categories',
+    url: '/admin/novels/categories',
     method: 'post',
     data: data
   })
@@ -26,7 +25,7 @@ export function createCategory(data) {
 
 export function deleteCategory(id,data) {
   return request({
-    url: 'categories/' + id,
+    url: '/novels/categories/' + id,
     method: 'delete',
     data: data
   })

@@ -73,7 +73,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   }
@@ -85,13 +85,31 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/category',
+    path: '/operation',
     component: Layout,
     alwaysShow: true,
-    // redirect: '/category/list',
-    name: 'Category',
+    name: 'Operation',
     meta: {
-      title: '内容管理',
+      title: '运营管理',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: '/users',
+        component: () => import('@/views/users/list'),
+        name: 'UserList',
+        hidden: false,
+        meta: { title: '用户列表', icon: 'list' }
+      },
+    ]
+  },
+  {
+    path: '/novels',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Novels',
+    meta: {
+      title: '小说管理',
       icon: 'list'
     },
     children: [
@@ -162,6 +180,88 @@ export const asyncRoutes = [
         path: '/novel/comments/lists',
         component: () => import('@/views/comments/list'),
         name: 'commentsList',
+        hidden: false,
+        meta: { title: '评论列表', icon: 'list' }
+      },
+    ]
+  },
+  {
+    path: '/comics',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Comics',
+    meta: {
+      title: '漫画管理',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: '/comics/categorys',
+        component: () => import('@/views/comicCategory/list'),
+        name: '/comics/CategoryList',
+        hidden: false,
+        meta: { title: '分类列表', icon: 'list' }
+      },
+      {
+        path: '/comics/comic',
+        component: () => import('@/views/comics/list'),
+        name: 'BooksList',
+        hidden: false,
+        meta: { title: '漫画列表', icon: 'list' }
+      },
+      {
+        path: '/comics/create',
+        component: () => import('@/views/comics/create'),
+        name: 'CreateComics',
+        hidden: true,
+        meta: { title: '新建漫画', icon: 'comics' }
+      },
+      {
+        path: '/comics/update',
+        component: () => import('@/views/comics/update'),
+        name: 'UpdateComics',
+        hidden: true,
+        meta: { title: '修改漫画', icon: 'create' }
+      },
+       {
+         path: '/comics/view',
+         component: () => import('@/views/comics/view'),
+         name: 'getComics',
+         hidden: true,
+         meta: { title: '查看漫画', icon: 'create' }
+       },
+      // {
+      //   path: '/novel/chapters',
+      //   component: () => import('@/views/chapters/list'),
+      //   name: 'ChaptersList',
+      //   hidden: true,
+      //   meta: { title: '章节列表', icon: 'list' }
+      // },
+      // {
+      //   path: '/novel/chapters/create',
+      //   component: () => import('@/views/chapters/create'),
+      //   name: 'CreateChapters',
+      //   hidden: true,
+      //   meta: { title: '新建章节', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/chapters/update',
+      //   component: () => import('@/views/chapters/update'),
+      //   name: 'UpdateChapters',
+      //   hidden: true,
+      //   meta: { title: '修改章节', icon: 'create' }
+      // },
+      // {
+      //   path: '/novel/uploadnovel/create',
+      //   component: () => import('@/views/books/upload'),
+      //   name: 'uploadNovel',
+      //   hidden: false,
+      //   meta: { title: '上传小说', icon: 'list' }
+      // },
+      {
+        path: '/comics/comments/lists',
+        component: () => import('@/views/comicComments/list'),
+        name: 'ComicCommentsList',
         hidden: false,
         meta: { title: '评论列表', icon: 'list' }
       },

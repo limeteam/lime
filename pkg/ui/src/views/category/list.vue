@@ -46,14 +46,12 @@
           <template slot-scope="{row}">
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
             <el-button
-              v-if="row.status!='deleted'"
               icon="el-icon-delete"
               size="mini"
               type="danger"
               @click="handleDelete(row)"
             >删除</el-button>
             <el-button
-              v-if="row.status!='published'"
               icon="el-icon-view"
               size="mini"
               type="success"

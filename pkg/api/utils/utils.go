@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"errors"
 	"github.com/nfnt/resize"
 	"golang.org/x/image/bmp"
 	"image"
@@ -11,7 +12,6 @@ import (
 	"image/png"
 	"io"
 	"reflect"
-	"errors"
 )
 
 func StringSliceRemove(s [][]string, i int) [][]string {

@@ -41,14 +41,12 @@
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
             <el-button
-              v-if="row.status!='deleted'"
               icon="el-icon-delete"
               size="mini"
               type="danger"
               @click="handleDelete(row)"
             >删除</el-button>
             <el-button
-              v-if="row.status!='published'"
               icon="el-icon-view"
               size="mini"
               type="success"

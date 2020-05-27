@@ -17,7 +17,7 @@ func (t *TXT) Conv(src store.Store, outpath string, opts Option) (err error) {
 	}
 	defer f.Close()
 
-	temp := template.New("txt_fiction")
+	temp := template.New("txt_lime")
 	temp = temp.Funcs(template.FuncMap{
 		"split": strings.Split,
 	})

@@ -129,7 +129,7 @@ export default {
             }
           }
         }, {
-          name: 'front',
+          name: 'v1',
           type: 'bar',
           data,
           xAxisIndex: 1,

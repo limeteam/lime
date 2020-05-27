@@ -5,7 +5,7 @@ import { param2Obj } from '../src/utils'
 const mocks = [
 ]
 
-// for front mock
+// for v1 mock
 // please use it cautiously, it will redefine XMLHttpRequest,
 // which will cause many of your third-party libraries to be invalidated(like progress event).
 export function mockXHR() {

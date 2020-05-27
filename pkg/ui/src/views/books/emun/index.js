@@ -28,9 +28,3 @@ export const BOOK_IS_SENSITIVITYS = [ //是否敏感
   { key: 0, display_name: '不敏感' },
   { key: 1, display_name: '敏感' }
 ]
-
-export const UPLOAD_RULES = [ //上传规则
-  { key: 0, display_name: '智能分章' },
-  { key: 1, display_name: '固定字数分章' },
-  { key: 2, display_name: '标签分章' }
-]

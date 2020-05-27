@@ -48,7 +48,7 @@
 import Tinymce from "@/components/Tinymce";
 import { createChapter } from "@/api/lime-admin/chapter";
 export default {
-  name: "CreateBook",
+  name: "CreateChapters",
   components: { Tinymce },
   data() {
     return {
