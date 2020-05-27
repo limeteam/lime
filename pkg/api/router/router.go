@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"lime/pkg/api/controllers"
-	"lime/pkg/api/controllers/app"
+	"lime/pkg/api/admin/controllers"
+	controllersFront "lime/pkg/api/front/controllers"
 	"lime/pkg/api/middleware"
 	"lime/pkg/api/utils/upload"
 	"net/http"
@@ -16,19 +16,17 @@ func Init(e *gin.Engine, cors bool) {
 	if cors {
 		e.Use(middleware.Cors())
 	}
-	ProbeController := &controllers.ProbeController{}
-	e.GET("/healthcheck", ProbeController.Healthy)
 
 	//前台接口
 	v1 := e.Group("/v1")
-	UsersController := &app.UsersController{}
+	UsersController := &controllersFront.UsersController{}
 	v1.POST("/users",UsersController.Login)
 
-	V1BooksController := &app.BooksController{}
+	V1BooksController := &controllersFront.BooksController{}
 	v1.GET("/books", V1BooksController.List)
 	v1.GET("/books/:id", V1BooksController.Get)
 
-	V1ChaptersController := &app.ChaptersController{}
+	V1ChaptersController := &controllersFront.ChaptersController{}
 	v1.GET("/chapters", V1ChaptersController.List)
 	v1.GET("/chapters/:id", V1ChaptersController.Get)
 

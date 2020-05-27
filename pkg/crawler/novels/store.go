@@ -3,7 +3,7 @@ package novels
 import (
 	"errors"
 	"fmt"
-	"lime/pkg/api/model"
+	"lime/pkg/api/admin/model"
 	"lime/pkg/common/db"
 	"time"
 )

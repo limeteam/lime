@@ -2,7 +2,7 @@ package core
 
 import (
 	log "github.com/sirupsen/logrus"
-	"lime/pkg/api/dao"
+	"lime/pkg/api/admin/dao"
 	"lime/pkg/common"
 	"lime/pkg/crawler/novels"
 )

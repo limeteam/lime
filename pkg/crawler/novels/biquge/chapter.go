@@ -3,8 +3,8 @@ package biquge
 import (
 	"fmt"
 	"github.com/gocolly/colly"
-	"lime/pkg/api/dto"
-	"lime/pkg/api/service"
+	"lime/pkg/api/admin/dto"
+	"lime/pkg/api/admin/service"
 	"lime/pkg/crawler/novels"
 )
 
