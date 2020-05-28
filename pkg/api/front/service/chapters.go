@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"lime/pkg/api/front/dao"
 	"lime/pkg/api/front/dto"
 )
@@ -10,9 +11,12 @@ var ChaptersDao = dao.ChaptersDao{}
 type ChaptersService struct {}
 
 
-func (bs ChaptersService) GetChapterInfoById(gdto dto.GeneralGetDto) dto.ChapterInfoDto {
+func (bs ChaptersService) GetChapterInfoById(gdto dto.GeneralGetDto) (chapterInfo dto.ChapterInfoDto,err error) {
 	chapterData := ChaptersDao.Get(gdto.Id)
 	data := BooksDao.Get(chapterData.Novel_id)
+	if data.Id < 1 {
+		return chapterInfo,errors.New("未找到ID")
+	}
 	return dto.ChapterInfoDto{
 		Book: dto.ChapterBookInfo{
 			BookId:     data.Id,
@@ -26,7 +30,7 @@ func (bs ChaptersService) GetChapterInfoById(gdto dto.GeneralGetDto) dto.Chapter
 		NextChapter:  "62759",
 		ChapterId:    chapterData.Id,
 		UpdateTime:   chapterData.UpdatedAt.String(),
-	}
+	},nil
 }
 
 // List

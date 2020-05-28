@@ -18,4 +18,5 @@ var (
 	ErrIdData        = &ControllerError{10016, "此ID无数据记录", ""}
 	OtherTaskRunning = &ControllerError{12000, "有其他任务在执行", ""}
 	ErrUploadCover   = &ControllerError{12001, "上传封面失败", ""}
+	ErrLogin         = &ControllerError{12002, "登陆失败,请输入正确的用户名和密码", ""}
 )
