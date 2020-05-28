@@ -1,5 +1,10 @@
 package dto
 
+type ChapterListDto struct {
+	GeneralListDto
+	BookId int `form:"book_id,default=0" json:"book_id"`
+}
+
 type ChapterBookInfo struct {
 	BookId     int    `json:"book_id"`
 	Name       string `json:"name"`

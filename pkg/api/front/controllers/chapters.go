@@ -13,9 +13,9 @@ type ChaptersController struct {
 var ChaptersService = service.ChaptersService{}
 
 func (C *ChaptersController) List(c *gin.Context) {
-	var Dto dto.GeneralListDto
+	var Dto dto.ChapterListDto
 	if C.BindAndValidate(c, &Dto) {
-		data := ChaptersService.FrontList(Dto)
+		data := ChaptersService.List(Dto)
 		C.Resp(c, map[string]interface{}{
 			"result": data,
 		})

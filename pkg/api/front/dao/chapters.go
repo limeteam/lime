@@ -15,6 +15,13 @@ func (c ChaptersDao) Get(id int) model.Chapters {
 	return Chapters
 }
 
+func (c ChaptersDao) GetListByBookId(bookId int) []model.Chapters {
+	var Chapters []model.Chapters
+	db := db.GetGormDB()
+	db.Model(&model.Chapters{}).Where("novel_id = ?",bookId).Find(&Chapters)
+	return Chapters
+}
+
 func (c ChaptersDao) GetAll() []model.Chapters {
 	var Chapters []model.Chapters
 	db := db.GetGormDB()
