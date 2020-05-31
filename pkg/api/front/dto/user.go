@@ -6,20 +6,20 @@ type LoginDto struct {
 }
 
 type RegisterDto struct {
-	Username        string `json:"username"`
-	Mobile          string `json:"mobile"`
-	Sex             int `json:"sex"`
-	Password        string `json:"password"`
-	Salt            string `json:"salt"`
-	Faceicon        string `json:"faceicon"`
-	Wechat          string `json:"wechat"`
-	Email           string `json:"email"`
-	Amount          int `json:"amount"`
-	Coin            int `json:"coin"`
-	Exempt_login    int `json:"exempt_login"`
-	Source          int `json:"source"`
-	Is_vip          int `json:"is_vip"`
-	Channel_id      int `json:"channel_id"`
+	Username    string `json:"username"`
+	Mobile      string `json:"mobile"`
+	Sex         int    `json:"sex"`
+	Password    string `json:"password"`
+	Salt        string `json:"salt"`
+	Faceicon    string `json:"faceicon"`
+	Wechat      string `json:"wechat"`
+	Email       string `json:"email"`
+	Amount      int    `json:"amount"`
+	Coin        int    `json:"coin"`
+	ExemptLogin int    `json:"exempt_login"`
+	Source      int    `json:"source"`
+	IsVip       int    `json:"is_vip"`
+	ChannelId   int    `json:"channel_id"`
 }
 
 type LoginInfoDto struct {

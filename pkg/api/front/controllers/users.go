@@ -3,14 +3,23 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/admin/controllers"
+	"lime/pkg/api/front/domain/auth"
 	"lime/pkg/api/front/dto"
 	"lime/pkg/api/front/service"
 	"lime/pkg/api/utils/e"
 )
 
+type Authenticate struct {
+	//us application.UserAppInterface
+	rd auth.AuthInterface
+	tk auth.TokenInterface
+}
+
+
 type UsersController struct {
 	controllers.BaseController
 }
+
 
 var UserService = service.UserService{}
 

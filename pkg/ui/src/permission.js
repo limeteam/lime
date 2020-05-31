@@ -69,13 +69,10 @@ router.beforeEach(async(to, from, next) => {
       const domainHost = getDomainHost()
       const currURL = encodeURIComponent(location.href)
       if (process.env.NODE_ENV === 'production') {
-        if (location.host.startsWith('stage.')) {
-          location.href = `//stage.auth.${domainHost.domain}/login?redirectURL=${currURL}`
-        } else {
-          location.href = `//auth.${domainHost.domain}/login?redirectURL=${currURL}`
-        }
+        location.href = `//admin.${domainHost.domain}/#/login?redirectURL=${currURL}`
       } else {
         next(`/login?redirect=${to.path}`)
+        // location.href = `//localhost:9527/#/login?redirectURL=${currURL}`
       }
       NProgress.done()
     }
