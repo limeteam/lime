@@ -40,3 +40,6 @@ upload:
     - .jpg
     - .jpeg
     - .png"
+auth:
+  access_secret: "23fhr54dw3"
+  refresh_secret: "awr235gw2325"

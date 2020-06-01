@@ -84,6 +84,8 @@ func setup() {
 
 func run() error {
 	engine := gin.Default()
-	router.Init(engine, cors)
+	router.Init(engine,cors)
+	router.Front(engine)
+	router.Admin(engine)
 	return engine.Run(":" + port)
 }
