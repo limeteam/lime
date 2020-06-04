@@ -24,7 +24,7 @@ func (C *ChaptersController) List(c *gin.Context) {
 }
 
 func (C *ChaptersController) Get(c *gin.Context) {
-	var Dto dto.GeneralGetDto
+	var Dto dto.ChaptersGetDto
 	if C.BindAndValidate(c, &Dto) {
 		data,err := ChaptersService.GetChapterInfoById(Dto)
 		if err != nil {

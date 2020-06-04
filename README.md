@@ -48,6 +48,8 @@ export LIME_REDIS_PASSWORD=""
 <img src="https://gitee.com/bullteam/lime/raw/master/docs/image/chapters.png"></img>
 <img src="https://gitee.com/bullteam/lime/raw/master/docs/image/category.png"></img>
 <img src="https://gitee.com/bullteam/lime/raw/master/docs/image/upload.png"></img>
+![](docs/image/1.png) ![](docs/image/2.png)
+![](docs/image/3.png) ![](docs/image/4.png)
 
 ## 贡献代码
 

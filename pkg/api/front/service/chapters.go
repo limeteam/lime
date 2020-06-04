@@ -11,8 +11,8 @@ var ChaptersDao = dao.ChaptersDao{}
 type ChaptersService struct {}
 
 
-func (bs ChaptersService) GetChapterInfoById(gdto dto.GeneralGetDto) (chapterInfo dto.ChapterInfoDto,err error) {
-	chapterData := ChaptersDao.Get(gdto.Id)
+func (bs ChaptersService) GetChapterInfoById(gdto dto.ChaptersGetDto) (chapterInfo dto.ChapterInfoDto,err error) {
+	chapterData := ChaptersDao.Get(gdto.BookId,gdto.Id)
 	data := BooksDao.Get(chapterData.Novel_id)
 	if data.Id < 1 {
 		return chapterInfo,errors.New("未找到ID")
