@@ -21,9 +21,9 @@ export function getTitleList(book_id) {
 // 获取书本
 export function getBookContent(book_id, chapter_id) {
     return request({
-        url: '/v1/chapters/' + book_id,
+        url: '/v1/chapters/' + chapter_id,
         method: 'GET',
-        // params: query
+        params: {"book_id": book_id}
     })
 }
 

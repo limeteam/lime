@@ -4,7 +4,7 @@
             <h5>章节目录</h5>
             <ul class="lists" @touchmove:prevent>
                 <li v-for="(item, index) in lists" @click="changeCurrentCpt(index)">
-                    <span>{{index+1}} {{item.chapter_title}}</span>
+                    <span>{{item.chapter_title}}</span>
                 </li>
             </ul>
         </div>
@@ -34,7 +34,6 @@
         },
         created() {
             getTitleList(this.bookId).then(res => {
-                console.log(res);
                 this.lists = res.data.result.chapter_list
             })
         }

@@ -8,10 +8,10 @@ import (
 type ChaptersDao struct {
 }
 
-func (c ChaptersDao) Get(id int) model.Chapters {
+func (c ChaptersDao) Get(bookId int,chapterId int) model.Chapters {
 	var Chapters model.Chapters
 	db := db.GetGormDB()
-	db.Where("id = ?", id).First(&Chapters)
+	db.Where("novel_id = ? and chapter_no = ?", bookId,chapterId).First(&Chapters)
 	return Chapters
 }
 
