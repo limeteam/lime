@@ -7,7 +7,7 @@
         <ul class="horizontal-list">
             <li v-for="item in list" :key="">
                 <router-link :to="{path:'book', query:{bookId:item.id}}">
-                    <img :src="item.images" :alt="item.name">
+                    <img :src="item.cover" :alt="item.name">
                     <h6>{{item.name}}</h6>
                     <p>{{item.author}}</p>
                 </router-link>

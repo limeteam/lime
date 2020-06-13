@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"lime/pkg/api/admin/model"
 	"lime/pkg/api/front/dao"
 	"lime/pkg/api/front/dto"
 	"math"
@@ -13,6 +14,13 @@ var BooksDao = dao.BooksDao{}
 var CategoryDao = dao.CategoryDao{}
 
 type BooksService struct{}
+
+
+// List
+func (bs BooksService) List(dto dto.GeneralListDto) ([]model.Books, int64) {
+	return BooksDao.List(dto)
+}
+
 
 func (bs BooksService) GetBookInfoById(gdto dto.GeneralGetDto) (bookInfoDto dto.BookInfoDto, err error) {
 	data := BooksDao.Get(gdto.Id)

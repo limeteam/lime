@@ -27,12 +27,10 @@ export function getBookContent(book_id, chapter_id) {
     })
 }
 
-
-
 // 获取书本列表
-export function getBookList() {
+export function getBookList(query) {
     return request({
-        url: '/v1/chapters/' + book_id,
+        url: '/v1/books',
         method: 'GET',
         params: query
     })
@@ -40,9 +38,9 @@ export function getBookList() {
 
 
 // 获取某一类
-export function getBookType() {
+export function getBookType(query) {
     return request({
-        url: '/v1/chapters/' + book_id,
+        url: '/v1/books',
         method: 'GET',
         params: query
     })
