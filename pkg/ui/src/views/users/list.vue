@@ -23,7 +23,7 @@
             >搜索</el-button>
           </el-form-item>
           <el-form-item style="text-align: right;width: 60%;">
-            <el-button type="primary" @click="onCreateNovel">新增用户</el-button>
+            <el-button type="primary" @click="onCreateUser">新增用户</el-button>
           </el-form-item>
           <selectedpanel />
         </el-form>
@@ -50,15 +50,7 @@
         <el-table-column label="好友" prop="friends" width="80px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
-            <el-button
-              icon="el-icon-present"
-              size="mini"
-              type="success"
-              @click="handleJumpChapater(row.id)"
-            >开通会员</el-button>
-            <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">充值</el-button>
-            <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">充值</el-button>
-            <el-button icon="el-icon-edit" size="mini" type="danger" @click="handleDelete(row)">编辑</el-button>
+            <el-button icon="el-icon-edit" size="mini" type="danger" @click="handleUpdate(row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,17 +128,14 @@
         this.formData.page = 1;
         this.getUsersList();
       },
-      onCreateNovel() {
-        this.$router.push({ path: "/novel/create" });
+      onCreateUser() {
+        this.$router.push({ path: "/users/create" });
       },
       on_refresh() {
         this.getUsersList();
       },
-      handleJumpChapater(id) {
-        this.$router.push({ path: "/novel/chapters?book_id=" + id });
-      },
       handleUpdate(row) {
-        this.$router.push({ path: "/novel/update?id=" + row.id });
+        this.$router.push({ path: "/users/update?id=" + row.id });
       },
       currentChange(index) {
         // 分页

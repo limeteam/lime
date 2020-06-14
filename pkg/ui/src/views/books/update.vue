@@ -265,7 +265,11 @@ export default {
         var id = this.$route.query.id;
         const list = await getBook(id);
         this.form = list.data.result;
-        this.imageUrl = process.env.VUE_APP_CONFIG_API + list.data.result.cover;
+        if (list.data.result.cover.indexOf("http") !== -1){
+            this.imageUrl = list.data.result.cover;
+        }else{
+            this.imageUrl = process.env.VUE_APP_CONFIG_API + list.data.result.cover;
+        }
         this.form.flag = this.form.flag.split(",");
       } finally {
         this.loading = false;

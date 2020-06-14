@@ -39,7 +39,7 @@ export function createUser(data) {
   })
 }
 
-export function uploadFace(formData) {
+export function uploadAvatar(formData) {
   return request({
     url: '/admin/upload/face',
     method: 'post',
