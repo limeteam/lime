@@ -26,11 +26,11 @@
         <el-input v-model="form.old_name" />
       </el-form-item>
       <el-form-item label="性别" prop="sex">
-        <el-select v-model="form.mobile" class="filter-item" placeholder="请选择">
-          <el-option v-for="item in categorys" :key="item.id" :label="item.name" :value="item.id" />
+        <el-select v-model="form.sex" class="filter-item" placeholder="请选择">
+          <el-option v-for="item in genders" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item label="头像" prop="cover">
+      <el-form-item label="头像" prop="faceicon">
         <el-upload
           class="cover-uploader"
           action=""
@@ -48,7 +48,7 @@
       <el-form-item label="状态" prop="status">
         <el-select v-model="form.status" class="filter-item" placeholder="请选择">
           <el-option
-            v-for="item in book_status"
+            v-for="item in users_status"
             :key="item.key"
             :label="item.display_name"
             :value="item.key"
