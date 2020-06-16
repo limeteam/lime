@@ -45,6 +45,11 @@
         },
         data() {
             return {
+                listQuery: {
+                    page: 1,
+                    skip: 0,
+                    limit: 20
+                },
                 bookList: [],
                 bookTypes: []
             }
@@ -122,9 +127,8 @@
         },
         created() {
             this.bookTypes = this.$store.state.types;
-            getBookList().then(res => {
-                console.log(res);
-                this.bookList = res;
+            getBookList(this.listQuery).then(res => {
+                this.bookList = res.data.result;
             })
         }
     }

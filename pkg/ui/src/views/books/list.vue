@@ -33,7 +33,9 @@
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column prop="cover" label="封面" width="100px" align="center">
           <template slot-scope="scope">
-            <img :src="base_url + scope.row.cover" style="width: 75px;height:100px" />
+
+            <img  v-if="scope.row.cover.indexOf('http') !== -1" :src="scope.row.cover" style="width: 75px;height:100px" />
+            <img  v-else :src="base_url + scope.row.cover" style="width: 75px;height:100px" />
           </template>
         </el-table-column>
         <el-table-column prop="name" label="类型/名称" width="220px" align="left">

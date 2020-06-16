@@ -14,6 +14,8 @@ func Admin(e *gin.Engine) {
 	admin.POST("/users", AdminUsersController.Create)
 	admin.PUT("/users/:id", AdminUsersController.Edit)
 
+	AdminUploadController := &controllers.UploadController{}
+	admin.GET("/upload/qiniuToken", AdminUploadController.QiniuToken) //七牛token
 
 	CategoryController := &controllers.CategoryController{}
 	admin.GET("/novels/categories", CategoryController.List)

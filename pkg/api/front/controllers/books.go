@@ -26,3 +26,14 @@ func (C *BooksController) Get(c *gin.Context) {
 		})
 	}
 }
+
+func (C *BooksController) List(c *gin.Context) {
+	var Dto dto.GeneralListDto
+	if C.BindAndValidate(c, &Dto) {
+		data, total := BooksService.List(Dto)
+		C.Resp(c, map[string]interface{}{
+			"result": data,
+			"total":  total,
+		})
+	}
+}

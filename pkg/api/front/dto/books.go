@@ -9,6 +9,10 @@ type BookInfoTag struct {
 	Color string `json:"color"`
 }
 
+var BookListSearchMapping = map[string]string{
+	"type":     "category_id",
+}
+
 type BookAttribute struct {
 	Popularity      string `json:"popularity"`
 	PopularityTitle string `json:"popularity_title"`

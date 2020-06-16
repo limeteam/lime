@@ -2,7 +2,7 @@ import request from './request'
 
 export function getUser(id) {
   return request({
-    url: '/users/' + id,
+    url: '/admin/users/' + id,
     method: 'GET'
   })
 }
@@ -39,7 +39,7 @@ export function createUser(data) {
   })
 }
 
-export function uploadFace(formData) {
+export function uploadAvatar(formData) {
   return request({
     url: '/admin/upload/face',
     method: 'post',

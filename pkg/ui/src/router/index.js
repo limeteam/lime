@@ -101,6 +101,20 @@ export const asyncRoutes = [
         hidden: false,
         meta: { title: '用户列表', icon: 'list' }
       },
+      {
+        path: '/users/create',
+        component: () => import('@/views/users/create'),
+        name: 'CreateUser',
+        hidden: true,
+        meta: { title: '添加用户', icon: 'create' }
+      },
+      {
+        path: '/users/update',
+        component: () => import('@/views/users/update'),
+        name: 'UpdateUser',
+        hidden: true,
+        meta: { title: '编辑用户', icon: 'create' }
+      },
     ]
   },
   {
@@ -205,7 +219,7 @@ export const asyncRoutes = [
       {
         path: '/comics/comic',
         component: () => import('@/views/comics/list'),
-        name: 'BooksList',
+        name: 'ComicsList',
         hidden: false,
         meta: { title: '漫画列表', icon: 'list' }
       },
