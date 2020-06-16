@@ -202,7 +202,6 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           this.form.flag = this.form.flag.join();
-          console.log(this.form.flag);
           updateBook(this.form.id, this.form).then(() => {
             this.dialogFormVisible = false;
             this.$notify({

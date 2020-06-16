@@ -2,7 +2,7 @@ import request from './request'
 
 export function getUser(id) {
   return request({
-    url: '/users/' + id,
+    url: '/admin/users/' + id,
     method: 'GET'
   })
 }

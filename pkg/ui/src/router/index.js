@@ -219,7 +219,7 @@ export const asyncRoutes = [
       {
         path: '/comics/comic',
         component: () => import('@/views/comics/list'),
-        name: 'BooksList',
+        name: 'ComicsList',
         hidden: false,
         meta: { title: '漫画列表', icon: 'list' }
       },

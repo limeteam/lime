@@ -19,14 +19,14 @@
       style="width: 500px; margin-left:50px;"
     >
       <el-form-item label="昵称" prop="username">
-        <el-input v-model="form.name" />
+        <el-input v-model="form.username" />
       </el-form-item>
       <el-form-item label="手机" prop="mobile">
-        <el-input v-model="form.old_name" />
+        <el-input v-model="form.mobile" />
       </el-form-item>
       <el-form-item label="性别" prop="sex">
         <el-select v-model="form.sex" class="filter-item" placeholder="请选择">
-          <el-option v-for="item in genders" :key="item.id" :label="item.name" :value="item.id" />
+          <el-option v-for="item in genders" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
       </el-form-item>
       <el-form-item label="头像" prop="faceicon">
@@ -34,7 +34,7 @@
           :data="dataObj"
           :multiple="true"
           :before-upload="beforeUpload"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
+          accept="image/jpeg, image/gif, image/png, image/bmp"
           :on-success="handleAvatarSuccess"
           action="https://upload-z2.qiniup.com"
           drag
@@ -45,7 +45,7 @@
             <em>点击上传</em>
           </div>
         </el-upload>
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="form.status" class="filter-item" placeholder="请选择">
@@ -57,7 +57,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="免验登录" prop="is_robot">
+      <!-- <el-form-item label="免验登录" prop="is_robot">
         <el-select v-model="form.is_robot" class="filter-item" placeholder="请选择">
           <el-option
             v-for="item in robots"
@@ -67,7 +67,7 @@
           />
         </el-select>
         <div class="help-block">免验登录的用户可以输入任意验证码登录,此功能只应用于手机号登录</div>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" @click="createData">保存</el-button>
         <el-button>返回</el-button>
@@ -76,7 +76,7 @@
   </el-card>
 </template>
 <script>
-import { createUser, uploadAvatar } from "@/api/lime-admin/users";
+import { createUser } from "@/api/lime-admin/users";
 import { getQiniuToken } from "@/api/lime-admin/upload";
 import { USERS_GENDER, USERS_STATUS, USERS_ROBOTS } from "./emun/index.js";
 export default {
@@ -96,7 +96,8 @@ export default {
       genders: USERS_GENDER,
       users_status: USERS_STATUS,
       dataObj: { token: "", key: "" },
-      imageUrl: ''
+      domain: "",
+      imageUrl: ""
     };
   },
   mounted() {},
@@ -132,7 +133,8 @@ export default {
           .then(response => {
             const token = response.data.token;
             _self._data.dataObj.token = token;
-            _self._data.dataObj.key = "faceicon/"+ file.name
+            _self._data.domain = response.data.domain;
+            _self._data.dataObj.key = "faceicon/" + file.name;
             resolve(true);
           })
           .catch(err => {
@@ -142,8 +144,9 @@ export default {
       });
     },
     handleAvatarSuccess(res, file) {
-        this.imageUrl = 'http://limeimg.bullteam.cn/'+ res.key
-      },
+      this.imageUrl = this.domain + res.key;
+      this.form.faceicon = this.imageUrl;
+    }
   }
 };
 </script>
@@ -159,27 +162,5 @@ export default {
   margin-bottom: 10px;
   color: #737373;
 }
-.cover-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.cover-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.cover-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 255px;
-  height: 300px;
-  line-height: 255px;
-  text-align: center;
-}
-.cover {
-  width: 255px;
-  height: 300px;
-  display: block;
-}
+
 </style>

@@ -2,3 +2,4 @@ lime
 .idea/
 data/
 go.sum
+config/in-local.yaml
