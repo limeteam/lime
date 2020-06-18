@@ -9,17 +9,11 @@ import (
 	"lime/pkg/api/utils/e"
 )
 
-type Authenticate struct {
-	//us application.UserAppInterface
-	rd auth.AuthInterface
-	tk auth.TokenInterface
-}
-
-
 type UsersController struct {
 	controllers.BaseController
+	tk auth.TokenInterface
+	rd auth.AuthInterface
 }
-
 
 var UserService = service.UserService{}
 
@@ -37,19 +31,37 @@ func (C *UsersController) Login(c *gin.Context) {
 	}
 }
 
-/**
- 注册用户
- */
 func (C *UsersController) Register(c *gin.Context) {
-	var Dto dto.LoginDto
+	var Dto dto.RegisterDto
 	if C.BindAndValidate(c, &Dto) {
-		data, err := UserService.Login(Dto)
+		err := UserService.Register(Dto)
 		if err != nil {
-			C.Fail(c, e.ErrLogin)
+			C.Fail(c, e.ErrReg)
 			return
 		}
 		C.Resp(c, map[string]interface{}{
-			"result": data,
+			"result": true,
 		})
 	}
+}
+
+	func (C *UsersController) Info(c *gin.Context) {
+		metadata, err := C.tk.ExtractTokenMetadata(c.Request)
+		if err != nil {
+			C.Fail(c, e.ErrUnauthorized)
+			return
+		}
+		//lookup the metadata in redis:
+	userId, err := C.rd.FetchAuth(metadata.TokenUuid)
+	if err != nil {
+		C.Fail(c, e.ErrUnauthorized)
+		return
+	}
+	if err != nil {
+		C.Fail(c, e.ErrLogin)
+		return
+	}
+	C.Resp(c, map[string]interface{}{
+		"result": userId,
+	})
 }

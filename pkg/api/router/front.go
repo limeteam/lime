@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	controllersFront "lime/pkg/api/front/controllers"
+	"lime/pkg/api/middleware"
 )
 
 func Front(e *gin.Engine) {
@@ -10,6 +11,7 @@ func Front(e *gin.Engine) {
 	v1 := e.Group("/v1")
 	UsersController := &controllersFront.UsersController{}
 	v1.POST("/users",UsersController.Login)
+	v1.POST("/user/info",middleware.AuthMiddleware(),UsersController.Info)
 
 	V1BooksController := &controllersFront.BooksController{}
 	v1.GET("/books", V1BooksController.List)

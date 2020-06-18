@@ -102,19 +102,19 @@ func (t *Token) ExtractTokenMetadata(r *http.Request) (*AccessDetails, error) {
 		return nil, err
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
-	if ok && token.Valid {
-		accessUuid, ok := claims["access_uuid"].(string)
-		if !ok {
-			return nil, err
-		}
-		userId, err := strconv.ParseUint(fmt.Sprintf("%.f", claims["user_id"]), 10, 64)
-		if err != nil {
-			return nil, err
-		}
-		return &AccessDetails{
-			TokenUuid: accessUuid,
-			UserId:    userId,
-		}, nil
+		if ok && token.Valid {
+			accessUuid, ok := claims["access_uuid"].(string)
+			if !ok {
+				return nil, err
+			}
+			userId, err := strconv.ParseUint(fmt.Sprintf("%.f", claims["user_id"]), 10, 64)
+			if err != nil {
+				return nil, err
+			}
+			return &AccessDetails{
+				TokenUuid: accessUuid,
+				UserId:    userId,
+			}, nil
 	}
 	return nil, err
 }
