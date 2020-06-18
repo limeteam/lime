@@ -9,8 +9,8 @@ import (
 )
 
 type AuthInterface interface {
-	CreateAuth(uint64, *TokenDetails) error
-	FetchAuth(string) (uint64, error)
+	CreateAuth(int, *TokenDetails) error
+	FetchAuth(string) (int, error)
 	DeleteRefresh(string) error
 	DeleteTokens(*AccessDetails) error
 }
@@ -21,7 +21,7 @@ type ClientData struct {
 
 type AccessDetails struct {
 	TokenUuid string
-	UserId    uint64
+	UserId    int
 }
 
 type TokenDetails struct {
@@ -34,7 +34,7 @@ type TokenDetails struct {
 }
 
 //Save token metadata to Redis
-func CreateAuth(userid uint64, td *TokenDetails) error {
+func CreateAuth(userid int, td *TokenDetails) error {
 	at := time.Unix(td.AtExpires, 0) //converting Unix to UTC(to Time object)
 	rt := time.Unix(td.RtExpires, 0)
 	now := time.Now()
@@ -51,12 +51,12 @@ func CreateAuth(userid uint64, td *TokenDetails) error {
 }
 
 //Check the metadata saved
-func FetchAuth(tokenUuid string) (uint64, error) {
+func FetchAuth(tokenUuid string) (int, error) {
 	userid, err := cache.Get(tokenUuid)
 	if err != nil {
 		return 0, err
 	}
-	userID, _ := strconv.ParseUint(userid, 10, 64)
+	userID, _ := strconv.Atoi(userid)
 	return userID, nil
 }
 

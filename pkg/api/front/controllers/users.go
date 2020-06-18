@@ -45,13 +45,13 @@ func (C *UsersController) Register(c *gin.Context) {
 	}
 }
 
-	func (C *UsersController) Info(c *gin.Context) {
-		metadata, err := C.tk.ExtractTokenMetadata(c.Request)
-		if err != nil {
-			C.Fail(c, e.ErrUnauthorized)
-			return
-		}
-		//lookup the metadata in redis:
+func (C *UsersController) Info(c *gin.Context) {
+	metadata, err := C.tk.ExtractTokenMetadata(c.Request)
+	if err != nil {
+		C.Fail(c, e.ErrUnauthorized)
+		return
+	}
+	//lookup the metadata in redis:
 	userId, err := C.rd.FetchAuth(metadata.TokenUuid)
 	if err != nil {
 		C.Fail(c, e.ErrUnauthorized)

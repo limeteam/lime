@@ -3,23 +3,47 @@ package service
 import (
 	"errors"
 	"lime/pkg/api/front/dao"
+	"lime/pkg/api/front/domain/auth"
 	"lime/pkg/api/front/dto"
-	"lime/pkg/api/utils"
 )
 
-type UserService struct{}
+type UserService struct{
+	tk auth.TokenInterface
+	rd auth.AuthInterface
+}
 
 var UserDao = dao.UsersDao{}
 
 func (U UserService) Login(gDto dto.LoginDto) (loginInfo dto.LoginInfoDto, err error) {
-	data := UserDao.GetUserByUsername(gDto.Username)
-	if data.Password != utils.EncodeMD5(gDto.Password+data.Salt) {
-		return loginInfo, err
+	var tokenErr = map[string]string{}
+	u, userErr := UserDao.GetUserByEmailAndPassword(gDto.Username,gDto.Password)
+	if userErr != nil {
+		//c.JSON(http.StatusInternalServerError, userErr)
+		return loginInfo , errors.New("no user")
 	}
-	//token, _ := utils.GenerateToken(gDto.Username, gDto.Password)
+	ts, tErr := U.tk.CreateToken(u.Id)
+	if tErr != nil {
+		tokenErr["token_error"] = tErr.Error()
+		//c.JSON(http.StatusUnprocessableEntity, tErr.Error())
+		return loginInfo ,tErr
+	}
+	saveErr := U.rd.CreateAuth(u.Id, ts)
+	if saveErr != nil {
+		//c.JSON(http.StatusInternalServerError, saveErr.Error())
+		return loginInfo ,saveErr
+	}
+	//userData := make(map[string]interface{})
+	//userData["access_token"] = ts.AccessToken
+	//userData["refresh_token"] = ts.RefreshToken
+	//userData["id"] = u.ID
+	//userData["first_name"] = u.FirstName
+	//userData["last_name"] = u.LastName
 	return dto.LoginInfoDto{
-
-	}, nil
+		AccessToken:  ts.AccessToken,
+		RefreshToken: ts.RefreshToken,
+		AtExpires:    0,
+		RtExpires:    0,
+	},nil
 }
 
 func (U UserService) Register(gDto dto.RegisterDto) (err error) {
