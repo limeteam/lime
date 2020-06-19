@@ -1,8 +1,13 @@
 package dto
 
+import (
+	"github.com/go-playground/validator/v10"
+	"regexp"
+)
+
 type LoginDto struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `form:"username" json:"username"`
+	Password string `form:"password" json:"password"`
 }
 
 type RegisterDto struct {
@@ -23,30 +28,10 @@ type RegisterDto struct {
 }
 
 type LoginInfoDto struct {
-	Uid               int        `json:"uid"`
-	Nickname          string     `json:"nickname"`
-	Mobile            string     `json:"mobile"`
-	UserToken         string     `json:"user_token"`
-	IsVip             int        `json:"is_vip"`
-	Gender            int        `json:"gender"`
-	Avatar            string     `json:"avatar"`
-	Remain            string     `json:"remain"`
-	GoldRemain        string     `json:"gold_remain"`
-	SilverRemain      string     `json:"silver_remain"`
-	CoinToday         int        `json:"coin_today"`
-	InviteCode        string     `json:"invite_code"`
-	TodayReadDuration int        `json:"today_read_duration"`
-	IsNewUser         int        `json:"is_new_user"`
-	CoinTipTitle      string     `json:"coin_tip_title"`
-	MessageNoreadNum  int        `json:"message_noread_num"`
-	Amount            int        `json:"amount"`
-	Coin              int        `json:"coin"`
-	Level             int        `json:"level"`
-	SignDays          int        `json:"sign_days"`
-	AutoSub           string     `json:"auto_sub"`
-	BindList          []BindList `json:"bind_list"`
-	Status            int        `json:"status"`
-	CreatedAt         string     `json:"created_at"`
+	AccessToken string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+	AtExpires int `json:"at_expires"`
+	RtExpires int `json:"rt_expires"`
 }
 
 type BindList struct {
@@ -54,4 +39,18 @@ type BindList struct {
 	Action  string `json:"action"`
 	Status  int    `json:"status"`
 	Display string `json:"display"`
+}
+
+type UserEditPasswordDto struct {
+	Password string `form:"new_password" json:"password" binding:"required,pwdValidate"`
+	//RePassword string `form:"re_password" json:"re_password" binding:"required,pwdValidate"`
+}
+
+func pwdValidate(fl validator.FieldLevel) bool {
+	reg := regexp.MustCompile(`^[a-zA-Z0-9!@#$%^&*]{6,}$`)
+	val := fl.Field().String()
+	if !reg.Match([]byte(val)) {
+		return false
+	}
+	return true
 }

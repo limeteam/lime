@@ -19,4 +19,6 @@ var (
 	OtherTaskRunning = &ControllerError{12000, "有其他任务在执行", ""}
 	ErrUploadCover   = &ControllerError{12001, "上传封面失败", ""}
 	ErrLogin         = &ControllerError{12002, "登陆失败,请输入正确的用户名和密码", ""}
+	ErrReg           = &ControllerError{12003, "注册失败", ""}
+	ErrUnauthorized  = &ControllerError{12004, "校验身份失败，请重新登陆", ""}
 )

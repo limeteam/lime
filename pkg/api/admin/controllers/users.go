@@ -63,3 +63,16 @@ func (C *AdminUsersController) Get(c *gin.Context) {
 		})
 	}
 }
+
+func (C *AdminUsersController) UpdateStatus(c *gin.Context) {
+	var Dto dto.UsersUpdateStatusDto
+	if C.BindAndValidate(c, &Dto) {
+		affected := UsersService.UpdateStatus(Dto)
+		if affected > 0 {
+			C.Ok(c, "更新成功")
+			return
+		}
+		C.Fail(c, e.ErrEditFail)
+		return
+	}
+}

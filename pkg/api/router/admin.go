@@ -13,6 +13,7 @@ func Admin(e *gin.Engine) {
 	admin.GET("/users/:id", AdminUsersController.Get)
 	admin.POST("/users", AdminUsersController.Create)
 	admin.PUT("/users/:id", AdminUsersController.Edit)
+	admin.POST("/users/:id/status", AdminUsersController.UpdateStatus)
 
 	AdminUploadController := &controllers.UploadController{}
 	admin.GET("/upload/qiniuToken", AdminUploadController.QiniuToken) //七牛token

@@ -76,7 +76,7 @@
               @click="handleModifyStatus(row,1)"
             >下架</el-button>
             <el-button
-              v-if="row.status==1"
+              v-else
               icon="el-icon-plus"
               type="primary"
               size="mini"

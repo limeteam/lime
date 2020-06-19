@@ -59,7 +59,12 @@
         <el-table-column label="注册时间" prop="create_time" width="80px" />
         <el-table-column label="今日阅读时长" prop="today_reading_time" width="80px" />
         <el-table-column label="累计阅读时长" prop="total_reading_time" width="80px" />
-        <el-table-column label="状态" prop="status" width="80px" />
+        <el-table-column label="状态" prop="status" width="80px">
+          <template slot-scope="{row}">
+            <el-button v-if = "row.status == 1" size="mini" type="success" @click="handleModifyStatus(row,0)">正常</el-button>
+            <el-button v-else size="mini" type="danger" @click="handleModifyStatus(row,1)">封禁</el-button>
+          </template>
+        </el-table-column>
         <el-table-column label="好友" prop="friends" width="80px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
@@ -93,7 +98,7 @@
   </div>
 </template>
 <script>
-import { userList, createUser, updateUser } from "@/api/lime-admin/users";
+import { userList, createUser, updateUser,updatestatus } from "@/api/lime-admin/users";
 import Pagination from "@/components/Pagination";
 import selectedpanel from "./components/selectedpanel";
 import { USERS_GENDER, USERS_STATUS, USERS_ROBOTS } from "./emun/index.js";
@@ -168,6 +173,22 @@ export default {
     handleUpdate(row) {
       this.$router.push({ path: "/users/update?id=" + row.id });
     },
+
+    handleModifyStatus(row, status) {
+      updatestatus(row.id, { status: status })
+        .then(() => {
+          this.$notify({
+            title: "成功",
+            message: "操作成功",
+            type: "success",
+            duration: 2000
+          });
+          this.getUsersList();
+        })
+        .catch(res => {
+          this.$message.error(res.msg);
+        });
+    },
     currentChange(index) {
       // 分页
       this.formData.page = index;
@@ -207,7 +228,6 @@ export default {
         for (const v of this.items.list) {
           v.is_vip = this.vipMap[v.is_vip];
           v.sex = this.genderMap[v.sex];
-          v.status_name = this.statusMap[v.status];
           v.create_time = this.$moment(v.create_time).format(
             "YYYY-MM-DD HH:mm:ss"
           );

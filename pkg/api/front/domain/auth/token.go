@@ -19,14 +19,14 @@ func NewToken() *Token {
 }
 
 type TokenInterface interface {
-	CreateToken(userid uint64) (*TokenDetails, error)
+	CreateToken(userid int) (*TokenDetails, error)
 	ExtractTokenMetadata(*http.Request) (*AccessDetails, error)
 }
 
 //Token implements the TokenInterface
 var _ TokenInterface = &Token{}
 
-func (t *Token) CreateToken(userid uint64) (*TokenDetails, error) {
+func (t *Token) CreateToken(userid int) (*TokenDetails, error) {
 	td := &TokenDetails{}
 	td.AtExpires = time.Now().Add(time.Minute * 15).Unix()
 	td.TokenUuid = uuid.NewV4().String()
@@ -102,19 +102,19 @@ func (t *Token) ExtractTokenMetadata(r *http.Request) (*AccessDetails, error) {
 		return nil, err
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
-	if ok && token.Valid {
-		accessUuid, ok := claims["access_uuid"].(string)
-		if !ok {
-			return nil, err
-		}
-		userId, err := strconv.ParseUint(fmt.Sprintf("%.f", claims["user_id"]), 10, 64)
-		if err != nil {
-			return nil, err
-		}
-		return &AccessDetails{
-			TokenUuid: accessUuid,
-			UserId:    userId,
-		}, nil
+		if ok && token.Valid {
+			accessUuid, ok := claims["access_uuid"].(string)
+			if !ok {
+				return nil, err
+			}
+			userId, err := strconv.Atoi(fmt.Sprintf("%.f", claims["user_id"]))
+			if err != nil {
+				return nil, err
+			}
+			return &AccessDetails{
+				TokenUuid: accessUuid,
+				UserId:    userId,
+			}, nil
 	}
 	return nil, err
 }
