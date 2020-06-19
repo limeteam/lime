@@ -2,8 +2,8 @@ package dao
 
 import (
 	"github.com/jinzhu/gorm"
-	"golang.org/x/crypto/bcrypt"
 	"lime/pkg/api/admin/model"
+	"lime/pkg/api/front/domain/auth/login"
 	"lime/pkg/common/db"
 )
 
@@ -16,7 +16,7 @@ func (c UsersDao) GetUserByUsername(username string) model.Users {
 	return Users
 }
 
-func (c UsersDao) GetUserByEmailAndPassword(username string, password string) (*model.Users, map[string]string) {
+func (c UsersDao) GetUserByUsernameAndPassword(username string, password string) (*model.Users, map[string]string) {
 	var user model.Users
 	db := db.GetGormDB()
 	dbErr := map[string]string{}
@@ -30,16 +30,28 @@ func (c UsersDao) GetUserByEmailAndPassword(username string, password string) (*
 		return nil, dbErr
 	}
 	//Verify the password
-	err = VerifyPassword(user.Password, password)
-	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
+	if !login.VerifyPassword(password, user) {
 		dbErr["incorrect_password"] = "incorrect password"
 		return nil, dbErr
 	}
 	return &user, nil
 }
 
-func VerifyPassword(hashedPassword, password string) error {
+//Get - get single user info
+func (u UsersDao) Get(id int) model.Users {
+	var user model.Users
+	db := db.GetGormDB()
+	db.Where("id = ?", id).First(&user)
+	return user
+}
 
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+func (u UsersDao) Create(Users *model.Users) *gorm.DB {
+	db := db.GetGormDB()
+	return db.Save(Users)
+}
 
+// Update - update user
+func (u UsersDao) Update(user *model.Users, ups map[string]interface{}) *gorm.DB {
+	db := db.GetGormDB()
+	return db.Model(user).Update(ups)
 }

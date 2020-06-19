@@ -1,8 +1,13 @@
 package dto
 
+import (
+	"github.com/go-playground/validator/v10"
+	"regexp"
+)
+
 type LoginDto struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `form:"username" json:"username"`
+	Password string `form:"password" json:"password"`
 }
 
 type RegisterDto struct {
@@ -34,4 +39,18 @@ type BindList struct {
 	Action  string `json:"action"`
 	Status  int    `json:"status"`
 	Display string `json:"display"`
+}
+
+type UserEditPasswordDto struct {
+	Password string `form:"new_password" json:"password" binding:"required,pwdValidate"`
+	//RePassword string `form:"re_password" json:"re_password" binding:"required,pwdValidate"`
+}
+
+func pwdValidate(fl validator.FieldLevel) bool {
+	reg := regexp.MustCompile(`^[a-zA-Z0-9!@#$%^&*]{6,}$`)
+	val := fl.Field().String()
+	if !reg.Match([]byte(val)) {
+		return false
+	}
+	return true
 }

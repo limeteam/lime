@@ -1,5 +1,4 @@
 package controllers
-
 import (
 	"github.com/gin-gonic/gin"
 	"lime/pkg/api/admin/controllers"
@@ -11,8 +10,6 @@ import (
 
 type UsersController struct {
 	controllers.BaseController
-	tk auth.TokenInterface
-	rd auth.AuthInterface
 }
 
 var UserService = service.UserService{}
@@ -46,22 +43,39 @@ func (C *UsersController) Register(c *gin.Context) {
 }
 
 func (C *UsersController) Info(c *gin.Context) {
-	metadata, err := C.tk.ExtractTokenMetadata(c.Request)
+	metadata, err := auth.NewToken().ExtractTokenMetadata(c.Request)
 	if err != nil {
 		C.Fail(c, e.ErrUnauthorized)
 		return
 	}
 	//lookup the metadata in redis:
-	userId, err := C.rd.FetchAuth(metadata.TokenUuid)
+	userId, err := auth.FetchAuth(metadata.TokenUuid)
 	if err != nil {
 		C.Fail(c, e.ErrUnauthorized)
-		return
-	}
-	if err != nil {
-		C.Fail(c, e.ErrLogin)
 		return
 	}
 	C.Resp(c, map[string]interface{}{
 		"result": userId,
 	})
+}
+
+func (C *UsersController) ResetPassword(c *gin.Context) {
+	var Dto dto.UserEditPasswordDto
+	if C.BindAndValidate(c, &Dto) {
+		metadata, err := auth.NewToken().ExtractTokenMetadata(c.Request)
+		if err != nil {
+			C.Fail(c, e.ErrUnauthorized)
+			return
+		}
+		//lookup the metadata in redis:
+		userId, err := auth.FetchAuth(metadata.TokenUuid)
+		if err != nil {
+			C.Fail(c, e.ErrUnauthorized)
+			return
+		}
+		res := UserService.UpdatePassword(userId,Dto)
+		C.Resp(c, map[string]interface{}{
+			"data": res,
+		})
+	}
 }
