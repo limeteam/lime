@@ -62,6 +62,17 @@ const mutations = {
     [types.PERSON_INFO](state, info) {
         state.userInfo = info
     },
+
+    SET_TOKEN: (state, token) => {
+        state.token = token
+    },
+
+    SET_NAME: (state, username) => {
+        state.username = username
+    },
+    SET_FACEICON: (state, faceicon) => {
+        state.faceicon = faceicon
+    }
 };
 
 export default mutations;

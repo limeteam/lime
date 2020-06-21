@@ -5,9 +5,9 @@
         </mt-header>
         <div class="info">
             <div class="head">
-                <img :src="info.head_img" alt="">
+                <img :src="info.faceicon" alt="">
             </div>
-            <div class="name">{{info.user}}</div>
+            <div class="name">{{info.username}}</div>
             <div class="item">
                 <mt-cell title="我的书架" is-link to="/shelf"></mt-cell>
             </div>
@@ -18,6 +18,7 @@
 
 <script>
     import {MessageBox} from 'mint-ui'
+    import {userInfo} from "../api";
 
     export default {
         name: "Personal",
@@ -45,8 +46,19 @@
             }
         },
         created() {
-            console.log(this.$store.state.userInfo);
-            this.info = this.$store.state.userInfo;
+            // this.info = this.$store.state.userInfo;
+            this.getUserInfo()
+        },
+        methods: {
+            async getUserInfo() {
+                this.loading = true;
+                try {
+                  const list = await userInfo();
+                  this.info = list.data.result;
+                } finally {
+                  this.loading = false;
+                }
+            },
         }
     }
 </script>

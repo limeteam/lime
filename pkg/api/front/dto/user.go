@@ -12,19 +12,9 @@ type LoginDto struct {
 
 type RegisterDto struct {
 	Username    string `json:"username"`
-	Mobile      string `json:"mobile"`
-	Sex         int    `json:"sex"`
+	Email		string `json:"email"`
+	Mobile		string `json:"mobile"`
 	Password    string `json:"password"`
-	Salt        string `json:"salt"`
-	Faceicon    string `json:"faceicon"`
-	Wechat      string `json:"wechat"`
-	Email       string `json:"email"`
-	Amount      int    `json:"amount"`
-	Coin        int    `json:"coin"`
-	ExemptLogin int    `json:"exempt_login"`
-	Source      int    `json:"source"`
-	IsVip       int    `json:"is_vip"`
-	ChannelId   int    `json:"channel_id"`
 }
 
 type LoginInfoDto struct {
@@ -32,6 +22,12 @@ type LoginInfoDto struct {
 	RefreshToken string `json:"refresh_token"`
 	AtExpires int `json:"at_expires"`
 	RtExpires int `json:"rt_expires"`
+}
+
+type InfoDto struct {
+	Id int `json:"id"`
+	Username string `json:"username"`
+	Faceicon string `json:"faceicon"`
 }
 
 type BindList struct {

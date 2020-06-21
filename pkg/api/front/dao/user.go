@@ -4,15 +4,16 @@ import (
 	"github.com/jinzhu/gorm"
 	"lime/pkg/api/admin/model"
 	"lime/pkg/api/front/domain/auth/login"
+	"lime/pkg/api/utils"
 	"lime/pkg/common/db"
 )
 
 type UsersDao struct{}
 
-func (c UsersDao) GetUserByUsername(username string) model.Users {
+func (c UsersDao) GetUserByField(username string,field string) model.Users {
 	var Users model.Users
 	db := db.GetGormDB()
-	db.Where("username = ?", username).First(&Users)
+	db.Where( field +"= ?", username).First(&Users)
 	return Users
 }
 
@@ -20,7 +21,15 @@ func (c UsersDao) GetUserByUsernameAndPassword(username string, password string)
 	var user model.Users
 	db := db.GetGormDB()
 	dbErr := map[string]string{}
-	err := db.Debug().Where("username = ?", username).Take(&user).Error
+	var err error
+	if utils.VerifyEmailFormat(username){
+		err = db.Debug().Where("email = ?", username).Take(&user).Error
+	}else if utils.VerifyMobileFormat(username) {
+		err = db.Debug().Where("mobile = ?", username).Take(&user).Error
+	}else {
+		err = db.Debug().Where("username = ?", username).Take(&user).Error
+	}
+
 	if gorm.IsRecordNotFoundError(err) {
 		dbErr["no_user"] = "user not found"
 		return nil, dbErr
