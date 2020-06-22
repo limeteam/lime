@@ -1,23 +1,25 @@
 <template>
     <div class="personal" v-if="info">
         <mt-header title="个人中心">
-            <mt-button icon="back" slot="left" @click="goBack"></mt-button>
+            <mt-button icon="back" slot="left" @click="goBack()"></mt-button>
         </mt-header>
         <div class="info">
             <div class="head">
-                <img :src="info.head_img" alt="">
+                <img :src="info.faceicon" alt="">
             </div>
-            <div class="name">{{info.user}}</div>
+            <div class="name">{{info.username}}</div>
             <div class="item">
                 <mt-cell title="我的书架" is-link to="/shelf"></mt-cell>
             </div>
         </div>
-        <mt-button class="btn" type="danger" @click="loginOut">退出登录</mt-button>
+        <mt-button class="btn" type="danger" @click="loginOut()">退出登录</mt-button>
     </div>
 </template>
 
 <script>
     import {MessageBox} from 'mint-ui'
+    import {userInfo} from "../api";
+    import { removeToken } from '@/utils/auth'
 
     export default {
         name: "Personal",
@@ -27,6 +29,21 @@
             }
         },
         methods: {
+            
+        },
+        created() {
+            this.getUserInfo()
+        },
+        methods: {
+            async getUserInfo() {
+                this.loading = true;
+                try {
+                  const list = await userInfo();
+                  this.info = list.data.result;
+                } finally {
+                  this.loading = false;
+                }
+            },
             goBack() {
                 this.$router.go(-1);
             },
@@ -37,16 +54,13 @@
                     showCancelButton: true
                 }).then(action => {
                     if (action == 'confirm') {
+                        removeToken();
                         this.$router.push('/login');
                     } else {
                         return false
                     }
                 })
             }
-        },
-        created() {
-            console.log(this.$store.state.userInfo);
-            this.info = this.$store.state.userInfo;
         }
     }
 </script>

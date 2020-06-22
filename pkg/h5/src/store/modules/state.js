@@ -1,3 +1,4 @@
+import { getToken} from '@/utils/auth'
 const state = {
     userInfo: null,
     types: [
@@ -30,6 +31,9 @@ const state = {
     font: false,
     fontSize: 16,
     currentStyle: 'style1',
-    styles: ['style1', 'style2', 'style3', 'style4', 'style5']
+    styles: ['style1', 'style2', 'style3', 'style4', 'style5'],
+    token: getToken(),
+    username: '',
+    faceicon: ''
 }
 export default state;

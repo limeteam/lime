@@ -1,7 +1,8 @@
 import axios from 'axios'
-// import { MessageBox, Message } from 'element-ui'
+import { Toast } from 'mint-ui';
 import store from '@/store'
-// import { getToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
+import {MessageBox} from 'mint-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -13,19 +14,17 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      // config.headers['X-Token'] = getToken()
+    const token = getToken()
+    if (token) {
+      // 让每个请求携带token
+      config.headers['Authorization'] = `Bearer ${token}`
     }
+    config.headers['Content-Type'] = `application/json;charset=UTF-8`
     return config
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    // console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -44,27 +43,27 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
-      // Message({
-      //   message: res.message || 'Error',
-      //   type: 'error',
-      //   duration: 5 * 1000
-      // })
+      Toast({
+        message: res.message || 'Error',
+        position: 'bottom',
+        duration: 5000
+      });
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        // MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        //   confirmButtonText: 'Re-Login',
-        //   cancelButtonText: 'Cancel',
-        //   type: 'warning'
-        // }).then(() => {
-        //   store.dispatch('user/resetToken').then(() => {
-        //     location.reload()
-        //   })
-        // })
+      if (res.code === 400 || res.code === 401 || res.code === 402) {
+        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出',
+          { confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            // type: 'warning'
+          }
+        ).then(() => {
+          store.dispatch('FedLogOut').then(() => {
+            location.reload() // 为了重新实例化vue-router对象 避免bug
+          })
+        })
       }
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {
@@ -72,12 +71,26 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    // Message({
-    //   message: error.message,
-    //   type: 'error',
-    //   duration: 5 * 1000
-    // })
+    const res = error.response || {}
+    if (res.status === 401) {
+      store.dispatch('resetToken').then(() => {
+        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出',
+          { confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+          }
+        ).then(() => {
+          location.reload()
+        })
+      })
+    } else {
+      //提示后端抛出的异常信息
+      const errMsg = (res.data && res.data.msg) || '发生未知的错误'
+      Message({
+        message: errMsg,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )

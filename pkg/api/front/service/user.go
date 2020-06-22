@@ -17,42 +17,50 @@ var UserDao = dao.UsersDao{}
 func (U UserService) Login(gDto dto.LoginDto) (loginInfo dto.LoginInfoDto, err error) {
 	var tokenErr = map[string]string{}
 
-	u, userErr := UserDao.GetUserByUsernameAndPassword(gDto.Username,gDto.Password)
+	u, userErr := UserDao.GetUserByUsernameAndPassword(gDto.Username, gDto.Password)
 	if userErr != nil {
-		return loginInfo , errors.New("no user")
+		return loginInfo, errors.New("no user")
 	}
 	ts, tErr := auth.NewToken().CreateToken(u.Id)
 	if tErr != nil {
 		tokenErr["token_error"] = tErr.Error()
-		return loginInfo ,tErr
+		return loginInfo, tErr
 	}
 	saveErr := auth.CreateAuth(u.Id, ts)
 	if saveErr != nil {
-		return loginInfo ,saveErr
+		return loginInfo, saveErr
 	}
 	return dto.LoginInfoDto{
 		AccessToken:  ts.AccessToken,
 		RefreshToken: ts.RefreshToken,
 		AtExpires:    0,
 		RtExpires:    0,
-	},nil
+	}, nil
 }
 
 func (U UserService) Register(gDto dto.RegisterDto) (err error) {
-	data := UserDao.GetUserByUsername(gDto.Username)
-	if data.Username != "" {
+	regUsername := UserDao.GetUserByField(gDto.Username,"username")
+	if regUsername.Username != "" {
 		return errors.New("已经有存在该账号")
+	}
+	regEmail := UserDao.GetUserByField(gDto.Email,"email")
+	if regEmail.Email != "" {
+		return errors.New("已经有存在该Email")
+	}
+	regMobile := UserDao.GetUserByField(gDto.Mobile,"mobile")
+	if regMobile.Mobile != "" {
+		return errors.New("已经有存在该手机号码")
 	}
 	salt, _ := auth.MakeSalt()
 	password, _ := auth.HashPassword(gDto.Password, salt)
 	Model := model.Users{
-		Username: gDto.Username,
-		Mobile:   gDto.Mobile,
-		Sex:      gDto.Sex,
-		Password: password,
-		Salt:     salt,
-		Faceicon: "",
-		Wechat: model.WechatInfo{},
+		Username:        gDto.Username,
+		Mobile:          gDto.Mobile,
+		Sex:             0,
+		Password:        password,
+		Salt:            salt,
+		Faceicon:        "",
+		Wechat:          model.WechatInfo{},
 		Email:           gDto.Email,
 		Amount:          0,
 		Coin:            0,
@@ -67,7 +75,7 @@ func (U UserService) Register(gDto dto.RegisterDto) (err error) {
 	if c.Error != nil {
 		log.Error(c.Error.Error())
 	}
-	return  nil
+	return nil
 }
 
 // UpdatePassword - update password only
@@ -80,4 +88,13 @@ func (U UserService) UpdatePassword(Id int, dto dto.UserEditPasswordDto) int64 {
 		"salt":     salt,
 	})
 	return c.RowsAffected
+}
+
+func (U UserService) Info(Id int) dto.InfoDto {
+	u := UserDao.Get(Id)
+	return dto.InfoDto{
+		Id:       u.Id,
+		Username: u.Username,
+		Faceicon: u.Faceicon,
+	}
 }

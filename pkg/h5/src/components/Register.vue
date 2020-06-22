@@ -8,6 +8,9 @@
             <mt-field :class="{email, error: emailState}" label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"
                       @blur.native.capture="checkEmail"
                       blurs="邮箱格式不正确"></mt-field>
+            <mt-field :class="{mobile, error: mobileState}" label="手机" placeholder="请输入手机号码" type="mobile" v-model="mobile"
+                      @blur.native.capture="checkMobile"
+                      blurs="手机号码格式不正确"></mt-field>
             <mt-field :class="{password, error: pwdState}" label="密码" placeholder="请输入密码" type="password"
                       blurs="密码长度在8-16个字符"
                       @blur.native.capture="checkPwd"
@@ -28,9 +31,11 @@
             return {
                 username: '',
                 email: '',
+                mobile: '',
                 password: '',
                 userState: false,
                 emailState: false,
+                mobileState: false,
                 pwdState: false,
             }
         },
@@ -50,6 +55,14 @@
                     this.emailState = true;
                 }
             },
+            checkMobile() {
+                let mobileReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+                if (mobileReg.test(this.mobile)) {
+                    this.mobileState = false;
+                } else {
+                    this.emailState = true;
+                }
+            },
             checkPwd() {
                 if (this.password.length > 16 || this.password.length < 8) {
                     this.pwdState = true;
@@ -59,11 +72,12 @@
             },
 
             registers() {
-                if (!this.userState && !this.emailState && !this.pwdState) {
+                if (!this.userState && !this.emailState && !this.mobileState && !this.pwdState) {
                     register({
-                        user: this.username,
-                        pwd: md5(this.password),
-                        email: this.email
+                        username: this.username,
+                        password: md5(this.password),
+                        email: this.email,
+                        mobile: this.mobile
                     }).then(res => {
                         if (res.insertStatus === 2) {
                             Toast({

@@ -14,7 +14,7 @@ export function getTitleList(book_id) {
     return request({
         url: '/v1/chapters',
         method: 'GET',
-        params: {"book_id": book_id}
+        params: { "book_id": book_id }
     })
 }
 
@@ -23,7 +23,7 @@ export function getBookContent(book_id, chapter_id) {
     return request({
         url: '/v1/chapters/' + chapter_id,
         method: 'GET',
-        params: {"book_id": book_id}
+        params: { "book_id": book_id }
     })
 }
 
@@ -104,19 +104,36 @@ export function postLately() {
 }
 
 // 登录
-export function login() {
+export function login(data) {
     return request({
-        url: '/v1/chapters/' + book_id,
-        method: 'GET',
-        params: query
+        url: '/v1/user/login',
+        method: 'POST',
+        data: data
     })
 }
 
 // 注册
-export function register() {
+export function register(data) {
     return request({
-        url: '/v1/chapters/' + book_id,
+        url: '/v1/user/register',
+        method: 'post',
+        data: data
+    })
+}
+
+export function logout() {
+    return request({
+        url: '/v1/user/logout',
         method: 'GET',
-        params: query
+        params: {
+            domain: 'zeus-config'
+        }
+    })
+}
+
+export function userInfo() {
+    return request({
+        url: '/v1/user/info',
+        method: 'GET'
     })
 }

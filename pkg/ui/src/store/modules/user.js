@@ -81,7 +81,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       getMenu().then(response => {
         const { data } = response
-        // 拉取了菜单的设置
         commit('SET_LOADED_MENUS', true)
         commit('SET_ROLES', data.result)
         commit('SET_NAME', 'admin')
@@ -91,7 +90,6 @@ const actions = {
         if (powerMenus.length > 0) {
           resolve(response)
         } else {
-          // 后端返回菜单列表为空, 无权限
           reject(' user has insufficient permissions!')
         }
       })

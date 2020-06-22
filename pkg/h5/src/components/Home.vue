@@ -117,12 +117,13 @@
                 });
             },
             toPerson(){
-                if(localStorage.getItem('userInfo')) {
-                    this.$router.push('/person');
-                }
-                else {
-                    this.$router.push('/login');
-                }
+                this.$router.push('/person');
+                // if(localStorage.getItem('userInfo')) {
+                    
+                // }
+                // else {
+                //     this.$router.push('/login');
+                // }
             }
         },
         created() {
