@@ -10,7 +10,7 @@ func Front(e *gin.Engine) {
 	//前台接口
 	v1 := e.Group("/v1")
 	UsersController := &controllersFront.UsersController{}
-	v1.POST("/user/info",middleware.AuthMiddleware(),UsersController.Info)
+	v1.GET("/user/info",middleware.AuthMiddleware(),UsersController.Info)
 	v1.POST("/user/login",UsersController.Login)
 	v1.POST("/user/register",UsersController.Register)
 	v1.POST("/user/resetPwd",middleware.AuthMiddleware(),UsersController.ResetPassword)

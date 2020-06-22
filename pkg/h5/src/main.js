@@ -5,6 +5,7 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 import router from './router'
 import store from './store'
+import './permission' // permission control
 import App from './App'
 
 

@@ -38,8 +38,8 @@ export default {
       this.loading = true;
       this.$store
         .dispatch("login", {
-          username: username,
-          password: password
+          username: this.username,
+          password: this.password
         })
         .then(() => {
           this.$router.push({

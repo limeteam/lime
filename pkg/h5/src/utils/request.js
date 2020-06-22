@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Toast } from 'mint-ui';
 import store from '@/store'
-// import { getToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
+import {MessageBox} from 'mint-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -13,8 +14,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // Do something before request is sent
-    const token = store.getters.token
+    const token = getToken()
     if (token) {
       // 让每个请求携带token
       config.headers['Authorization'] = `Bearer ${token}`
@@ -24,7 +24,7 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    // console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -43,7 +43,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
       Toast({
@@ -53,17 +53,17 @@ service.interceptors.response.use(
       });
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        // MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        //   confirmButtonText: 'Re-Login',
-        //   cancelButtonText: 'Cancel',
-        //   type: 'warning'
-        // }).then(() => {
-        //   store.dispatch('user/resetToken').then(() => {
-        //     location.reload()
-        //   })
-        // })
+      if (res.code === 400 || res.code === 401 || res.code === 402) {
+        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出',
+          { confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            // type: 'warning'
+          }
+        ).then(() => {
+          store.dispatch('FedLogOut').then(() => {
+            location.reload() // 为了重新实例化vue-router对象 避免bug
+          })
+        })
       }
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {
@@ -71,12 +71,26 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Toast({
-      message: error.message,
-      position: 'bottom',
-      duration: 5000
-    });
+    const res = error.response || {}
+    if (res.status === 401) {
+      store.dispatch('resetToken').then(() => {
+        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出',
+          { confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+          }
+        ).then(() => {
+          location.reload()
+        })
+      })
+    } else {
+      //提示后端抛出的异常信息
+      const errMsg = (res.data && res.data.msg) || '发生未知的错误'
+      Message({
+        message: errMsg,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )

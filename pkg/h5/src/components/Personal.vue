@@ -1,7 +1,7 @@
 <template>
     <div class="personal" v-if="info">
         <mt-header title="个人中心">
-            <mt-button icon="back" slot="left" @click="goBack"></mt-button>
+            <mt-button icon="back" slot="left" @click="goBack()"></mt-button>
         </mt-header>
         <div class="info">
             <div class="head">
@@ -12,13 +12,14 @@
                 <mt-cell title="我的书架" is-link to="/shelf"></mt-cell>
             </div>
         </div>
-        <mt-button class="btn" type="danger" @click="loginOut">退出登录</mt-button>
+        <mt-button class="btn" type="danger" @click="loginOut()">退出登录</mt-button>
     </div>
 </template>
 
 <script>
     import {MessageBox} from 'mint-ui'
     import {userInfo} from "../api";
+    import { removeToken } from '@/utils/auth'
 
     export default {
         name: "Personal",
@@ -28,25 +29,9 @@
             }
         },
         methods: {
-            goBack() {
-                this.$router.go(-1);
-            },
-            loginOut() {
-                MessageBox({
-                    title: '提示',
-                    message: '确定执行此操作?',
-                    showCancelButton: true
-                }).then(action => {
-                    if (action == 'confirm') {
-                        this.$router.push('/login');
-                    } else {
-                        return false
-                    }
-                })
-            }
+            
         },
         created() {
-            // this.info = this.$store.state.userInfo;
             this.getUserInfo()
         },
         methods: {
@@ -59,6 +44,23 @@
                   this.loading = false;
                 }
             },
+            goBack() {
+                this.$router.go(-1);
+            },
+            loginOut() {
+                MessageBox({
+                    title: '提示',
+                    message: '确定执行此操作?',
+                    showCancelButton: true
+                }).then(action => {
+                    if (action == 'confirm') {
+                        removeToken();
+                        this.$router.push('/login');
+                    } else {
+                        return false
+                    }
+                })
+            }
         }
     }
 </script>
