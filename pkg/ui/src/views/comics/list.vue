@@ -195,16 +195,16 @@ export default {
       this.getBookList();
     },
     onCreateNovel() {
-      this.$router.push({ path: "/novel/create" });
+      this.$router.push({ path: "/comics/create" });
     },
     on_refresh() {
       this.getBookList();
     },
     handleJumpChapater(id) {
-      this.$router.push({ path: "/novel/chapters?book_id=" + id });
+      this.$router.push({ path: "/comics/chapters?comic_id=" + id });
     },
     handleUpdate(row) {
-      this.$router.push({ path: "/novel/update?id=" + row.id });
+      this.$router.push({ path: "/comics/update?id=" + row.id });
     },
     handleModifyStatus(row, status) {
       updatestatus(row.id, { status: status })
@@ -308,7 +308,7 @@ export default {
           v.chapter_updated_at = this.$moment(v.chapter_updated_at).format(
             "YYYY-MM-DD HH:mm:ss"
           );
-          v.url = "/#/novel/view?id=" + v.id;
+          v.url = "/#/comics/view?id=" + v.id;
         }
         this.items.total_items = list.data.total;
       } finally {

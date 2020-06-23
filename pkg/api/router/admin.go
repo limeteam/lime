@@ -65,6 +65,13 @@ func Admin(e *gin.Engine) {
 	admin.POST("/comics/comic/:id/status", ComicsController.UpdateStatus)
 
 
+	ComicChaptersController := &controllers.ComicChaptersController{}
+	admin.GET("/comics/chapters", ComicChaptersController.List)
+	admin.GET("/comics/chapters/:id", ComicChaptersController.Get)
+	admin.POST("/comics/chapters/:id", ComicChaptersController.Edit)
+	admin.DELETE("/comics/chapters/:id", ComicChaptersController.Delete)
+
+
 	ComicCommentsController := &controllers.ComicCommentsController{}
 	admin.GET("/comics/comments", ComicCommentsController.List)
 	admin.GET("/comics/comments/:id", ComicCommentsController.Get)

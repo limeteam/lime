@@ -244,29 +244,29 @@ export const asyncRoutes = [
          hidden: true,
          meta: { title: '查看漫画', icon: 'create' }
        },
+      {
+        path: '/comics/chapters',
+        component: () => import('@/views/comicChapters/list'),
+        name: 'ComicChaptersList',
+        hidden: true,
+        meta: { title: '章节列表', icon: 'list' }
+      },
+      {
+        path: '/comics/chapters/create',
+        component: () => import('@/views/comicChapters/create'),
+        name: 'CreateComicChapters',
+        hidden: true,
+        meta: { title: '新建章节', icon: 'create' }
+      },
+      {
+        path: '/comics/chapters/update',
+        component: () => import('@/views/comicChapters/update'),
+        name: 'UpdateComicChapters',
+        hidden: true,
+        meta: { title: '修改章节', icon: 'create' }
+      },
       // {
-      //   path: '/novel/chapters',
-      //   component: () => import('@/views/chapters/list'),
-      //   name: 'ChaptersList',
-      //   hidden: true,
-      //   meta: { title: '章节列表', icon: 'list' }
-      // },
-      // {
-      //   path: '/novel/chapters/create',
-      //   component: () => import('@/views/chapters/create'),
-      //   name: 'CreateChapters',
-      //   hidden: true,
-      //   meta: { title: '新建章节', icon: 'create' }
-      // },
-      // {
-      //   path: '/novel/chapters/update',
-      //   component: () => import('@/views/chapters/update'),
-      //   name: 'UpdateChapters',
-      //   hidden: true,
-      //   meta: { title: '修改章节', icon: 'create' }
-      // },
-      // {
-      //   path: '/novel/uploadnovel/create',
+      //   path: '/comics/uploadnovel/create',
       //   component: () => import('@/views/books/upload'),
       //   name: 'uploadNovel',
       //   hidden: false,
