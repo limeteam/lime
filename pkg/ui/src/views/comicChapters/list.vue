@@ -12,22 +12,12 @@
         >
           <el-form-item label="是否收费" prop="is_vip">
             <el-select v-model="formData.is_vip" placeholder="请选择" style="width: 100px">
-              <el-option
-                v-for="(item,index) in is_vips"
-                :key="index"
-                :label="item"
-                :value="index"
-              />
+              <el-option v-for="(item,index) in is_vips" :key="index" :label="item" :value="index" />
             </el-select>
           </el-form-item>
           <el-form-item label="章节序号" prop="id_sort">
             <el-select v-model="formData.id_sort" placeholder="请选择" style="width: 100px">
-              <el-option
-                v-for="(item,index) in id_sort"
-                :key="index"
-                :label="item"
-                :value="index"
-              />
+              <el-option v-for="(item,index) in id_sort" :key="index" :label="item" :value="index" />
             </el-select>
           </el-form-item>
           <el-form-item label="标题" prop="title">
@@ -37,7 +27,7 @@
             <el-button :loading="loading" type="primary" @click="onSubmit">搜索</el-button>
             <el-form-item style="text-align: right;width: 50%;">
               <el-button type="primary" @click="onCreateChapter">新增章节</el-button>
-          </el-form-item>
+            </el-form-item>
           </el-form-item>
         </el-form>
       </div>
@@ -45,20 +35,15 @@
       <!--列表-->
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column label="章节序号" prop="id" width="80px" />
-        <el-table-column label="标题" prop="title" width="100px" />
+        <el-table-column label="章节名称" prop="title" width="100px" />
+        <el-table-column label="章节图片数" prop="chapter_pic_num" width="100px" />
         <el-table-column label="是否收费" prop="is_vip" width="80px" />
-        <el-table-column label="字数" prop="text_num" width="100px" />
         <el-table-column label="创建时间" prop="created_at" width="123px" />
         <el-table-column label="更新时间" prop="updated_at" width="123px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-            <el-button
-              icon="el-icon-delete"
-              size="mini"
-              type="danger"
-              @click="handleDelete(row)"
-            >删除</el-button>
+            <el-button icon="el-icon-delete" size="mini" type="danger" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -81,7 +66,7 @@ import {
   createChapter,
   updateChapter,
   deleteChapter
-} from "@/api/lime-admin/chapter";
+} from "@/api/lime-admin/comicChapter";
 import Pagination from "@/components/Pagination";
 
 export default {
@@ -93,15 +78,14 @@ export default {
         page: 1,
         skip: 0,
         limit: 20,
-        importance: undefined,
         title: undefined,
         type: undefined,
-        sort: '+id'
+        sort: "+id"
       },
       formData: {
         title: "",
         is_vip: 0,
-        text_num: 0,
+        chapter_pic_num: 0,
         page: 1,
         page_size: 10
       },
@@ -109,7 +93,7 @@ export default {
         id: undefined,
         title: "",
         is_vip: 0,
-        text_num: 0
+        chapter_pic_num: 0
       },
       loading: false,
       items: {
@@ -120,7 +104,7 @@ export default {
       is_vips: ["全部", "是", "否"],
       id_sort: ["升序", "降序"],
       dialogFormVisible: false,
-      dialogStatus: "",
+      dialogStatus: ""
     };
   },
   computed: {},
@@ -138,8 +122,8 @@ export default {
       this.getChaptersList();
     },
     onCreateChapter() {
-      var book_id = this.$route.query.book_id
-      this.$router.push({ path: "/novel/chapters/create?book_id=" + book_id });
+      var comic_id = this.$route.query.comic_id;
+      this.$router.push({ path: "/comics/chapters/create?comic_id=" + comic_id });
     },
     timeChange(val) {
       // 时间选择
@@ -192,7 +176,13 @@ export default {
       });
     },
     handleUpdate(row) {
-      this.$router.push({ path: "/novel/chapters/update?book_id=" + row.novel_id +"&chapter_id="+ row.id });
+      this.$router.push({
+        path:
+          "/comics/chapters/update?comic_id=" +
+          row.comic_id +
+          "&chapter_id=" +
+          row.id
+      });
     },
     updateData() {
       this.$refs["dataForm"].validate(valid => {
@@ -244,13 +234,17 @@ export default {
       // 获取列表
       this.loading = true;
       try {
-        this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit
-        this.listQuery.q = 'novel_id=' + this.$route.query.book_id
+        this.listQuery.skip = (this.listQuery.page - 1) * this.listQuery.limit;
+        this.listQuery.q = "comic_id=" + this.$route.query.comic_id;
         const list = await ChapterList(this.listQuery);
         this.items.list = list.data.result;
         for (const v of this.items.list) {
-          v.created_at = this.$moment(v.created_at).format('YYYY-MM-DD HH:mm:ss');
-          v.updated_at = this.$moment(v.updated_at).format('YYYY-MM-DD HH:mm:ss');
+          v.created_at = this.$moment(v.created_at).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          v.updated_at = this.$moment(v.updated_at).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
         }
         this.items.total_items = list.data.total;
       } finally {

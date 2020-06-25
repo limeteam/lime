@@ -76,11 +76,4 @@ func Admin(e *gin.Engine) {
 	admin.GET("/comics/comments", ComicCommentsController.List)
 	admin.GET("/comics/comments/:id", ComicCommentsController.Get)
 	admin.DELETE("/comics/comments/:id", ComicCommentsController.Delete)
-
-	//ComicChaptersController := &controllers.ComicChaptersController{}
-	//e.GET("/comics/chapters", ComicChaptersController.List)
-	//e.GET("/comics/chapters/:id", ComicChaptersController.Get)
-	//e.POST("/comics/chapters", ComicChaptersController.Create)
-	//e.PUT("/comics/chapters/:id", ComicChaptersController.Edit)
-	//e.DELETE("/comics/chapters/:id", ComicChaptersController.Delete)
 }

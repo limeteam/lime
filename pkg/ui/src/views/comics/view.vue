@@ -6,10 +6,10 @@
           <span class="book_title"></span>
         </el-col>
         <el-col :span="2">
-          <a href="/#/novel/books" class="el-button el-button--primary">小说列表</a>
+          <a href="/#/novel/books" class="el-button el-button--primary">漫画列表</a>
         </el-col>
       </el-row>
-      <el-divider>小说详情</el-divider>
+      <el-divider>漫画详情</el-divider>
     </div>
     <el-form
       ref="dataForm"
@@ -33,7 +33,7 @@
           <el-option v-for="item in categorys" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item label="小说名" prop="name">
+      <el-form-item label="漫画名" prop="name">
         <el-input v-model="form.name" :disabled="true" />
       </el-form-item>
       <el-form-item label="原名" prop="old_name">
@@ -55,11 +55,11 @@
           step-strictly
           :disabled="true"
         ></el-input-number>
-        <div class="help-block">免费小说设置成0</div>
+        <div class="help-block">免费漫画设置成0</div>
       </el-form-item>
       <el-form-item label="每章价格" prop="chapter_price">
         <el-input-number v-model="form.chapter_price" :step="1" step-strictly :disabled="true"></el-input-number>
-        <div class="help-block">免费小说设置成0</div>
+        <div class="help-block">免费漫画设置成0</div>
       </el-form-item>
       <el-form-item label="评分" prop="score">
         <el-input-number v-model="form.score" :step="1" step-strictly :disabled="true"></el-input-number>
@@ -117,7 +117,7 @@
             :value="item.key"
           />
         </el-select>
-        <div class="help-block">下架状态小说将在各端不可见</div>
+        <div class="help-block">下架状态漫画将在各端不可见</div>
       </el-form-item>
       <el-form-item label="是否敏感作品" prop="is_sensitivity">
         <el-select v-model="form.is_sensitivity" class="filter-item" placeholder="请选择" disabled>
@@ -128,7 +128,7 @@
             :value="item.key"
           />
         </el-select>
-        <div class="help-block">敏感小说不会出现在书库和搜索结果中，只能通过推荐位和推送等形式触达用户</div>
+        <div class="help-block">敏感漫画不会出现在书库和搜索结果中，只能通过推荐位和推送等形式触达用户</div>
       </el-form-item>
     </el-form>
   </el-card>
@@ -136,9 +136,9 @@
 <script>
 import { categoryList } from "@/api/lime-admin/category";
 import {
-  createBook,
-  getBook,
-  updateBook,
+  createComic,
+  getComic,
+  updateComic,
   uploadcover
 } from "@/api/lime-admin/book";
 import {
@@ -149,7 +149,7 @@ import {
   BOOK_IS_SENSITIVITYS
 } from "./emun/index.js";
 export default {
-  name: "UpdateBook",
+  name: "UpdateComic",
   data() {
     return {
       form: {
@@ -200,7 +200,7 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          updateBook(this.form.id, this.form).then(() => {
+          updateComic(this.form.id, this.form).then(() => {
             this.dialogFormVisible = false;
             this.$notify({
               title: "成功",
@@ -259,7 +259,7 @@ export default {
       this.loading = true;
       try {
         var id = this.$route.query.id;
-        const list = await getBook(id);
+        const list = await getComic(id);
         this.form = list.data.result;
         this.imageUrl = process.env.VUE_APP_CONFIG_API + list.data.result.cover;
       } finally {

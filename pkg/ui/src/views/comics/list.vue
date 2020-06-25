@@ -23,7 +23,7 @@
             >搜索</el-button>
           </el-form-item>
           <el-form-item style="text-align: right;width: 60%;">
-            <el-button type="primary" @click="onCreateNovel">新增小说</el-button>
+            <el-button type="primary" @click="onCreateComic">新增漫画</el-button>
           </el-form-item>
           <selectedpanel />
         </el-form>
@@ -33,12 +33,12 @@
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column prop="vertical_cover" label="竖版封面" width="100px" align="center">
           <template slot-scope="scope">
-            <img :src="base_url + scope.row.vertical_cover" style="width: 75px;height:100px" />
+            <img :src="scope.row.vertical_cover" style="width: 75px;height:100px" />
           </template>
         </el-table-column>
         <el-table-column prop="horizontal_cover" label="横版封面" width="100px" align="center">
           <template slot-scope="scope">
-            <img :src="base_url + scope.row.horizontal_cover" style="width: 150px;height:100px" />
+            <img :src="scope.row.horizontal_cover" style="width: 150px;height:100px" />
           </template>
         </el-table-column>
         <el-table-column prop="name" label="类型/名称" width="220px" align="left">
@@ -91,7 +91,7 @@
         :total="items.total_items"
         :page.sync="formData.page"
         :limit.sync="formData.page_size"
-        @pagination="getBookList"
+        @pagination="getComicList"
       />
       <!--列表 -->
     </el-card>
@@ -100,12 +100,12 @@
 <script>
 import { categoryList } from "@/api/lime-admin/category";
 import {
-  BookList,
-  createBook,
-  updateBook,
-  deleteBook,
+  ComicList,
+  createComic,
+  updateComic,
+  deleteComic,
   updatestatus
-} from "@/api/lime-admin/book";
+} from "@/api/lime-admin/comic";
 import Pagination from "@/components/Pagination";
 import { CATEGORY_CHANNEL } from "./emun/index.js";
 import selectedpanel from "./components/selectedpanel";
@@ -139,17 +139,11 @@ export default {
         cover: "",
         author: "",
         source: "",
-        split_rule: "",
-        upload_file: "",
         status: 0,
         attribute: 0,
         chapter_price: 0,
-        thousand_characters_price: 0,
+        free_chapter: 0,
         score: 0,
-        text_num: 0,
-        chapter_num: 0,
-        chapter_id: 0,
-        chapter_title: "",
         views: 0,
         collect_num: 0,
         online_status: 0,
@@ -182,23 +176,23 @@ export default {
   created() {},
   watch: {
     $route() {
-      this.getBookList();
+      this.getComicList();
     }
   },
   mounted() {
-    this.getBookList();
+    this.getComicList();
   },
   methods: {
     onSubmit() {
       // 查询按钮
       this.formData.page = 1;
-      this.getBookList();
+      this.getComicList();
     },
-    onCreateNovel() {
+    onCreateComic() {
       this.$router.push({ path: "/comics/create" });
     },
     on_refresh() {
-      this.getBookList();
+      this.getComicList();
     },
     handleJumpChapater(id) {
       this.$router.push({ path: "/comics/chapters?comic_id=" + id });
@@ -215,7 +209,7 @@ export default {
             type: "success",
             duration: 2000
           });
-          this.getBookList();
+          this.getComicList();
         })
         .catch(res => {
           this.$message.error(res.msg);
@@ -228,7 +222,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          deleteBook(row.id, { id: row.id })
+          deleteComic(row.id, { id: row.id })
             .then(() => {
               this.$notify({
                 title: "成功",
@@ -236,7 +230,7 @@ export default {
                 type: "success",
                 duration: 2000
               });
-              this.getBookList();
+              this.getComicList();
             })
             .catch(res => {
               this.$message.error(res.msg);
@@ -247,9 +241,9 @@ export default {
     currentChange(index) {
       // 分页
       this.formData.page = index;
-      this.getBookList();
+      this.getComicList();
     },
-    async getBookList() {
+    async getComicList() {
       // 获取列表
       this.loading = true;
       try {
@@ -290,7 +284,7 @@ export default {
           var id = categorys.data.list[i].id;
           categories[id] = categorys.data.list[i].name;
         }
-        const list = await BookList(this.listQuery);
+        const list = await ComicList(this.listQuery);
         this.items.list = list.data.result;
         for (const v of this.items.list) {
           switch (v.channel_id) {

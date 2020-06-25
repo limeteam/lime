@@ -1,13 +1,13 @@
 import request from './request'
 
-export function getBook(id) {
+export function getComic(id) {
   return request({
     url: '/admin/comics/comic/' + id,
     method: 'GET'
   })
 }
 
-export function BookList(query) {
+export function ComicList(query) {
   return request({
     url: '/admin/comics/comic',
     method: 'GET',
@@ -15,7 +15,7 @@ export function BookList(query) {
   })
 }
 
-export function updateBook(id, data) {
+export function updateComic(id, data) {
   return request({
     url: '/admin/comics/comic/' + id,
     method: 'put',
@@ -31,7 +31,7 @@ export function updatestatus(id, data) {
   })
 }
 
-export function createBook(data) {
+export function createComic(data) {
   return request({
     url: '/admin/comics/comic',
     method: 'post',
@@ -39,7 +39,7 @@ export function createBook(data) {
   })
 }
 
-export function deleteBook(id,data) {
+export function deleteComic(id,data) {
   return request({
     url: '/admin/comics/comic/' + id,
     method: 'delete',

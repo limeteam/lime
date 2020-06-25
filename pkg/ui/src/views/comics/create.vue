@@ -3,13 +3,13 @@
     <div>
       <el-row>
         <el-col :span="22">
-          <span class="book_title"></span>
+          <span class="comic_title"></span>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary" @click="onNovelList">小说列表</el-button>
+          <el-button type="primary" @click="onComicList">漫画列表</el-button>
         </el-col>
       </el-row>
-      <el-divider>新增小说</el-divider>
+      <el-divider>新增漫画</el-divider>
     </div>
     <el-form
       ref="dataForm"
@@ -28,15 +28,20 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="所属分类" prop="category_id">
-        <el-select v-model="form.category_id" class="filter-item" placeholder="请选择">
-          <el-option v-for="item in categorys" :key="item.id" :label="item.name" :value="item.id" />
-        </el-select>
+      <el-form-item label="所属分类" prop="category_ids">
+        <el-checkbox-group v-model="form.category_ids">
+          <el-checkbox
+            v-for="item in categorys"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="小说名" prop="name">
+      <el-form-item label="漫画名" prop="name">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="原名" prop="old_name">
+      <el-form-item label="漫画原名" prop="old_name">
         <el-input v-model="form.old_name" />
       </el-form-item>
       <el-form-item label="来源" prop="source">
@@ -45,20 +50,44 @@
       <el-form-item label="作者" prop="author">
         <el-input v-model="form.author" />
       </el-form-item>
-      <el-form-item label="简介" prop="desc">
+      <el-form-item label="作品简介" prop="desc">
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
-      <el-form-item label="千字价格" prop="thousand_characters_price">
-        <el-input-number v-model="form.thousand_characters_price" :step="1" step-strictly></el-input-number>
-        <div class="help-block">免费小说设置成0</div>
+      <el-form-item label="横版封面" prop="vertical_cover">
+        <el-upload
+          class="cover-uploader"
+          :data="dataObj"
+          :before-upload="beforeUpload"
+          accept="image/jpeg, image/gif, image/png, image/bmp"
+          :on-success="handleVerticalCoverSuccess"
+          action="https://upload-z2.qiniup.com"
+        >
+          <img v-if="verticalImageUrl" :src="verticalImageUrl" class="vertical_cover" />
+          <i v-else class="el-icon-plus cover-uploader-icon"></i>
+        </el-upload>
+        <div class="help-block">建议大小600*400</div>
       </el-form-item>
-      <el-form-item label="每章价格" prop="chapter_price">
+
+      <el-form-item label="竖版封面" prop="horizontal_cover">
+        <el-upload
+          class="cover-uploader"
+          :data="dataObj"
+          :before-upload="beforeUpload"
+          accept="image/jpeg, image/gif, image/png, image/bmp"
+          :on-success="handleHorizontalCoverSuccess"
+          action="https://upload-z2.qiniup.com"
+        >
+          <img v-if="horizontalImageUrl" :src="horizontalImageUrl" class="horizontal_cover" />
+          <i v-else class="el-icon-plus cover-uploader-icon"></i>
+        </el-upload>
+        <div class="help-block">建议大小300*400</div>
+      </el-form-item>
+      <el-form-item label="免费章节数" prop="free_chapter">
+        <el-input-number v-model="form.free_chapter" :step="1" step-strictly></el-input-number>
+      </el-form-item>
+      <el-form-item label="章节定价" prop="chapter_price">
         <el-input-number v-model="form.chapter_price" :step="1" step-strictly></el-input-number>
         <div class="help-block">免费小说设置成0</div>
-      </el-form-item>
-      <el-form-item label="评分" prop="score">
-        <el-input-number v-model="form.score" :step="1" step-strictly></el-input-number>
-        <div class="help-block">可设值0~100，前端展示1.0~10.0分（设置值/10）</div>
       </el-form-item>
       <el-form-item label="浏览数" prop="views">
         <el-input-number v-model="form.views" :step="1" step-strictly></el-input-number>
@@ -67,25 +96,10 @@
       <el-form-item label="收藏数" prop="collect_num">
         <el-input-number v-model="form.collect_num" :step="1" step-strictly></el-input-number>
       </el-form-item>
-      <el-form-item label="封面" prop="cover">
-        <el-upload
-          class="cover-uploader"
-          action=""
-          :auto-upload=false
-          :on-change="handleImgSuccess"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="cover" />
-          <i v-else class="el-icon-plus cover-uploader-icon"></i>
-        </el-upload>
-        <div class="help-block">建议大小225*300</div>
-      </el-form-item>
       <el-form-item label="属性" prop="flag">
         <el-checkbox-group v-model="form.flag">
           <el-checkbox
-            v-for="item in book_atts"
+            v-for="item in comic_atts"
             :key="item.key"
             :label="item.display_name"
             :value="item.key"
@@ -95,7 +109,7 @@
       <el-form-item label="状态" prop="status">
         <el-select v-model="form.status" class="filter-item" placeholder="请选择">
           <el-option
-            v-for="item in book_status"
+            v-for="item in comic_status"
             :key="item.key"
             :label="item.display_name"
             :value="item.key"
@@ -105,7 +119,7 @@
       <el-form-item label="上架状态" prop="online_status">
         <el-select v-model="form.online_status" class="filter-item" placeholder="请选择">
           <el-option
-            v-for="item in book_online_status"
+            v-for="item in comic_online_status"
             :key="item.key"
             :label="item.display_name"
             :value="item.key"
@@ -116,7 +130,7 @@
       <el-form-item label="是否敏感作品" prop="is_sensitivity">
         <el-select v-model="form.is_sensitivity" class="filter-item" placeholder="请选择">
           <el-option
-            v-for="item in book_is_sensitivity"
+            v-for="item in comic_is_sensitivity"
             :key="item.key"
             :label="item.display_name"
             :value="item.key"
@@ -132,60 +146,61 @@
   </el-card>
 </template>
 <script>
-import { categoryList } from "@/api/lime-admin/category";
-import { createBook } from "@/api/lime-admin/book";
+import { categoryList } from "@/api/lime-admin/comicCategory";
+import { createComic } from "@/api/lime-admin/comic";
+import { getQiniuToken } from "@/api/lime-admin/upload";
 import {
   CATEGORY_CHANNEL,
-  BOOK_ATTRS,
-  BOOK_ONLINE_STATUS,
-  BOOK_STATUS,
-  BOOK_IS_SENSITIVITYS
+  COMIC_ATTRS,
+  COMIC_ONLINE_STATUS,
+  COMIC_STATUS,
+  COMIC_IS_SENSITIVITYS
 } from "./emun/index.js";
 export default {
-  name: "CreateBook",
+  name: "CreateComic",
   data() {
     return {
       form: {
         name: "",
         old_name: "",
-        channel_id: 0,
-        category_id: 0,
+        channel_id: 1,
+        category_ids: [],
         desc: "",
         cover: "",
         author: "",
         source: "",
-        split_rule: "",
-        upload_file: "",
+        vertical_cover: "",
+        horizontal_cover: "",
         status: 0,
         flag: [],
         chapter_price: 0,
-        thousand_characters_price: 0,
+        free_chapter: 0,
         score: 0,
-        text_num: 0,
-        chapter_num: 0,
         chapter_id: 0,
-        chapter_title: "",
         views: 0,
         collect_num: 0,
         online_status: 0,
         is_sensitivity: 0
       },
       category_channels: CATEGORY_CHANNEL,
-      book_atts: BOOK_ATTRS,
-      book_online_status: BOOK_ONLINE_STATUS,
-      book_status: BOOK_STATUS,
-      book_is_sensitivity: BOOK_IS_SENSITIVITYS,
+      comic_atts: COMIC_ATTRS,
+      comic_online_status: COMIC_ONLINE_STATUS,
+      comic_status: COMIC_STATUS,
+      comic_is_sensitivity: COMIC_IS_SENSITIVITYS,
       categorys: [],
       fileList: [],
-      imageUrl: ''
+      dataObj: { token: "", key: "" },
+      domain: "",
+      verticalImageUrl: '',
+      horizontalImageUrl: ''
     };
   },
   mounted() {
     this.getCategorys();
   },
   methods: {
-    onNovelList() {
-      this.$router.push({ path: "/novel/books"});
+    onComicList() {
+      this.$router.push({ path: "/comics/comic"});
     },
     resetForm() {
       // 重置
@@ -194,7 +209,7 @@ export default {
     createData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          createBook(this.form).then(() => {
+          createComic(this.form).then(() => {
             this.dialogFormVisible = false;
             this.$notify({
               title: "成功",
@@ -203,14 +218,35 @@ export default {
               duration: 2000
             });
             this.$store.dispatch('tagsView/delView', this.$route)
-            this.$router.push({ path: "/novel/books" });
+            this.$router.push({ path: "/comics/comic" });
           });
         }
       });
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(this.imageUrl);
+    beforeUpload(file) {
+      const _self = this;
+      return new Promise((resolve, reject) => {
+        getQiniuToken()
+          .then(response => {
+            const token = response.data.token;
+            _self._data.dataObj.token = token;
+            _self._data.domain = response.data.domain;
+            _self._data.dataObj.key = "faceicon/" + file.name;
+            resolve(true);
+          })
+          .catch(err => {
+            console.log(err);
+            reject(false);
+          });
+      });
+    },
+    handleVerticalCoverSuccess(res, file) {
+      this.verticalImageUrl = this.domain + res.key;
+      this.form.vertical_cover = this.verticalImageUrl;
+    },
+    handleHorizontalCoverSuccess(res, file) {
+      this.horizontalImageUrl = this.domain + res.key;
+      this.form.horizontal_cover = this.horizontalImageUrl;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -253,7 +289,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.book_title {
+.comic_title {
   font-weight: 700 !important;
   font-size: 16px;
   padding: 20px 20px;
@@ -282,7 +318,12 @@ export default {
   line-height: 255px;
   text-align: center;
 }
-.cover {
+.vertical_cover {
+  width: 255px;
+  height: 300px;
+  display: block;
+}
+.horizontal_cover {
   width: 255px;
   height: 300px;
   display: block;

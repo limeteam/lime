@@ -1,7 +1,6 @@
 package model
 
 import (
-	"lime/pkg/common/db"
 	"time"
 )
 
@@ -10,7 +9,7 @@ type Comics struct {
 	Name               string     `json:"name"`                  //漫画名
 	Old_name           string     `json:"old_name"`              //原名
 	Channel_id         int        `json:"channel_id"`            //所属频道
-	Category_id        int        `json:"category_id"`           //漫画分类
+	Category_ids       string     `json:"category_ids"`          //漫画分类
 	Desc               string     `json:"desc"`                  //漫画简介
 	Horizontal_cover   string     `json:"horizontal_cover"`      //横版封面
 	Vertical_cover     string     `json:"vertical_cover"`        //竖版封面
@@ -19,6 +18,7 @@ type Comics struct {
 	Status             int        `json:"status"`                //小说状态，0连载中，1已完结
 	Flag               string     `json:"flag"`                  //属性，0 免费 1 热门 2 会员 3 推荐
 	Chapter_price      int        `json:"chapter_price"`         //章节定价
+	Free_chapter       int        `json:"free_chapter"`          //免费章节
 	Chapter_updated_at *time.Time `json:"chapter_updated_at"`    //最新章节时间
 	Views              int        `json:"views"`                 //浏览次数
 	Collect_num        int        `json:"collect_num"`           //收藏数
@@ -34,5 +34,5 @@ func (C *Comics) TableName() string {
 }
 
 func init() {
-	db.Register(&Comics{})
+	//db.Register(&Comics{})
 }
