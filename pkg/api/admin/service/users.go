@@ -71,22 +71,6 @@ func (bs UsersService) Create(dto dto.UsersCreateDto) (model.Users, error) {
 func (bs UsersService) Update(dto dto.UsersEditDto) int64 {
 	Model := model.Users{
 		Id:              dto.Id,
-		Username:        dto.Username,
-		Mobile:          dto.Mobile,
-		Sex:             dto.Sex,
-		Password:        dto.Password,
-		Salt:            dto.Salt,
-		Faceicon:        dto.Faceicon,
-		Wechat:          dto.Wechat,
-		Email:           dto.Email,
-		Amount:          dto.Amount,
-		Coin:            dto.Coin,
-		Exempt_login:    dto.Exempt_login,
-		Source:          dto.Source,
-		Is_vip:          dto.Is_vip,
-		Channel_id:      dto.Channel_id,
-		Status:          dto.Status,
-		Last_login_time: time.Now(),
 	}
 	c := UsersDao.Update(&Model, map[string]interface{}{
 		"Username": dto.Username,

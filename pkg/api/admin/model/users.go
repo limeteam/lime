@@ -1,9 +1,7 @@
 package model
 
 import (
-	"database/sql/driver"
-	"encoding/json"
-	"lime/pkg/common/db"
+	"gorm.io/datatypes"
 	"time"
 )
 
@@ -15,7 +13,7 @@ type Users struct {
 	Password        string     `json:"password"`                 //密码
 	Salt            string     `json:"salt"`                     //加密盐
 	Faceicon        string     `json:"faceicon"`                 //头像地址
-	Wechat          WechatInfo `json:"wechat" gorm:"type:json; ` //微信绑定信息
+	Wechat          datatypes.JSON `json:"wechat" gorm:"type:json; ` //微信绑定信息
 	Email           string     `json:"email"`                    //邮箱
 	Amount          int        `json:"amount"`                   //现金金额
 	Coin            int        `json:"coin"`                     //金币
@@ -36,19 +34,10 @@ type WechatInfo struct {
 	Headimgurl string `json:"headimgurl"`
 }
 
-func (c WechatInfo) Value() (driver.Value, error) {
-	b, err := json.Marshal(c)
-	return string(b), err
-}
-
-func (c *WechatInfo) Scan(input interface{}) error {
-	return json.Unmarshal(input.([]byte), c)
-}
-
 func (U *Users) TableName() string {
 	return "users"
 }
 
 func init() {
-	db.Register(&Users{})
+	//db.Register(&Users{})
 }

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/nfnt/resize"
 	log "github.com/sirupsen/logrus"
 	"image/jpeg"
@@ -57,21 +58,15 @@ func (bs ComicChaptersService) Create(dto dto.ComicChaptersCreateDto) (model.Com
 // Update
 func (bs ComicChaptersService) Update(dto dto.ComicChaptersEditDto) int64 {
 	Model := model.ComicChapters{
-		Id:          dto.Id,
-		Comic_id:    dto.Comic_id,
-		Chapter_no:  dto.Chapter_no,
-		Title:       dto.Title,
-		Desc:        dto.Desc,
-		Cover:       dto.Cover,
-		Upload_type: dto.Upload_type,
-		Is_vip:      dto.Is_vip,
-		UpdatedAt:   time.Now(),
+		Id: dto.Id,
 	}
+	fmt.Println(dto.Desc)
+	var desc = dto.Desc
 	c := ComicChaptersDao.Update(&Model, map[string]interface{}{
 		"comic_id":    dto.Comic_id,
 		"chapter_no":  dto.Chapter_no,
 		"title":       dto.Title,
-		"desc":        dto.Desc,
+		"desc":        desc,
 		"cover":       dto.Cover,
 		"upload_type": dto.Upload_type,
 		"is_vip":      dto.Is_vip,

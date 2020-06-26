@@ -1,6 +1,7 @@
 package dto
 
 import (
+	"gorm.io/datatypes"
 	"lime/pkg/api/admin/model"
 	"time"
 )
@@ -22,7 +23,7 @@ type UsersListDto struct {
 	Password      string           `form:"password" json:"password"`
 	Salt          string           `form:"salt" json:"salt"`
 	Faceicon      string           `form:"faceicon" json:"faceicon"`
-	Wechat        model.WechatInfo `form:"wechat" json:"wechat"`
+	Wechat        datatypes.JSON `form:"wechat" json:"wechat"`
 	Email         string           `form:"email" json:"email"`
 	Amount        int              `form:"amount" json:"amount"`
 	Coin          int              `form:"coin" json:"coin"`
@@ -46,7 +47,7 @@ type UsersCreateDto struct {
 	Password        string           `form:"password" json:"password"`
 	Salt            string           `form:"salt" json:"salt"`
 	Faceicon        string           `form:"faceicon" json:"faceicon"`
-	Wechat          model.WechatInfo `gorm:"type:json form:"wechat" json:"wechat"`
+	Wechat          datatypes.JSON `gorm:"type:json form:"wechat" json:"wechat"`
 	Email           string           `form:"email" json:"email"`
 	Amount          int              `form:"amount" json:"amount"`
 	Coin            int              `form:"coin" json:"coin"`
@@ -67,7 +68,7 @@ type UsersEditDto struct {
 	Password        string           `form:"password" json:"password"`
 	Salt            string           `form:"salt" json:"salt"`
 	Faceicon        string           `form:"faceicon" json:"faceicon"`
-	Wechat          model.WechatInfo `gorm:"type:json form:"wechat" json:"wechat"`
+	Wechat          datatypes.JSON `gorm:"type:json form:"wechat" json:"wechat"`
 	Email           string           `form:"email" json:"email"`
 	Amount          int              `form:"amount" json:"amount"`
 	Coin            int              `form:"coin" json:"coin"`
