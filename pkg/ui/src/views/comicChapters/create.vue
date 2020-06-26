@@ -63,35 +63,15 @@
           <el-upload
             :data="dataObj"
             action="https://upload-z2.qiniup.com"
-            accept="image/jpeg, image/gif, image/png, image/bmp"
             list-type="picture-card"
             :before-upload="beforeUpload"
-            :on-success="handleAvatarSuccess"
-            :auto-upload="false"
+            :on-success="handle_success"
+            accept="image/jpeg, image/gif, image/png, image/bmp"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
           >
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{file}">
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
-              <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                  <i class="el-icon-zoom-in"></i>
-                </span>
-                <span
-                  v-if="!disabled"
-                  class="el-upload-list__item-delete"
-                  @click="handleDownload(file)"
-                >
-                  <i class="el-icon-download"></i>
-                </span>
-                <span
-                  v-if="!disabled"
-                  class="el-upload-list__item-delete"
-                  @click="handleRemove(file)"
-                >
-                  <i class="el-icon-delete"></i>
-                </span>
-              </span>
-            </div>
+            <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt />
@@ -145,7 +125,8 @@ export default {
       imageUrl: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      disabled: false
+      disabled: false,
+      fileList: []
     };
   },
   mounted() {},

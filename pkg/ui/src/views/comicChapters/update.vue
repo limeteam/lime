@@ -188,7 +188,6 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          // console.log(this.fileList);
           this.form.desc = this.fileList;
           this.form.id = parseInt(this.$route.query.chapter_id);
           updateChapter(this.form.id, this.form).then(() => {
@@ -214,12 +213,6 @@ export default {
         const list = await getChapter(id);
         this.form = list.data.result;
         this.fileList = list.data.result.desc;
-        console.log(this.fileList);
-        // if (list.data.result.faceicon.indexOf("http") !== -1){
-        //     this.imageUrl = list.data.result.faceicon;
-        // }else{
-        //     this.imageUrl = process.env.VUE_APP_CONFIG_API + list.data.result.faceicon;
-        // }
       } finally {
         this.loading = false;
       }
