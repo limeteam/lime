@@ -2,7 +2,6 @@ package dto
 
 import (
 	"gorm.io/datatypes"
-	"lime/pkg/api/admin/model"
 	"time"
 )
 

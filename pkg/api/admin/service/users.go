@@ -37,18 +37,13 @@ func (bs UsersService) List(dto dto.GeneralListDto) ([]model.Users, int64) {
 // Create
 func (bs UsersService) Create(dto dto.UsersCreateDto) (model.Users, error) {
 	Model := model.Users{
-		Username: dto.Username,
-		Mobile:   dto.Mobile,
-		Sex:      dto.Sex,
-		Password: dto.Password,
-		Salt:     dto.Salt,
-		Faceicon: dto.Faceicon,
-		Wechat: model.WechatInfo{
-			Openid:     "o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
-			Unionid:    "o6_bmasdasdsad6_2sgVt7hMZOPfL",
-			Nickname:   "coso",
-			Headimgurl: "http://thirdwx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0",
-		},
+		Username:        dto.Username,
+		Mobile:          dto.Mobile,
+		Sex:             dto.Sex,
+		Password:        dto.Password,
+		Salt:            dto.Salt,
+		Faceicon:        dto.Faceicon,
+		Wechat:          dto.Wechat,
 		Email:           dto.Email,
 		Amount:          dto.Amount,
 		Coin:            dto.Coin,
@@ -70,21 +65,16 @@ func (bs UsersService) Create(dto dto.UsersCreateDto) (model.Users, error) {
 // Update
 func (bs UsersService) Update(dto dto.UsersEditDto) int64 {
 	Model := model.Users{
-		Id:              dto.Id,
+		Id: dto.Id,
 	}
 	c := UsersDao.Update(&Model, map[string]interface{}{
-		"Username": dto.Username,
-		"Mobile":   dto.Mobile,
-		"Sex":      dto.Sex,
-		"Password": dto.Password,
-		"Salt":     dto.Salt,
-		"Faceicon": dto.Faceicon,
-		"Wechat": model.WechatInfo{
-			Openid:     "o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
-			Unionid:    "o6_bmasdasdsad6_2sgVt7hMZOPfL",
-			Nickname:   "coso",
-			Headimgurl: "http://thirdwx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0",
-		},
+		"Username":        dto.Username,
+		"Mobile":          dto.Mobile,
+		"Sex":             dto.Sex,
+		"Password":        dto.Password,
+		"Salt":            dto.Salt,
+		"Faceicon":        dto.Faceicon,
+		"Wechat":          dto.Wechat,
 		"Email":           dto.Email,
 		"Amount":          dto.Amount,
 		"Coin":            dto.Coin,

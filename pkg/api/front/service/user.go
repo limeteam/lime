@@ -60,7 +60,7 @@ func (U UserService) Register(gDto dto.RegisterDto) (err error) {
 		Password:        password,
 		Salt:            salt,
 		Faceicon:        "",
-		Wechat:          model.WechatInfo{},
+		//Wechat:          "",
 		Email:           gDto.Email,
 		Amount:          0,
 		Coin:            0,
