@@ -91,7 +91,7 @@ export const asyncRoutes = [
     name: 'Operation',
     meta: {
       title: '运营管理',
-      icon: 'list'
+      icon: 'component'
     },
     children: [
       {
@@ -99,21 +99,21 @@ export const asyncRoutes = [
         component: () => import('@/views/users/list'),
         name: 'UserList',
         hidden: false,
-        meta: { title: '用户列表', icon: 'list' }
+        meta: { title: '用户列表', icon: 'peoples' }
       },
       {
         path: '/users/create',
         component: () => import('@/views/users/create'),
         name: 'CreateUser',
         hidden: true,
-        meta: { title: '添加用户', icon: 'create' }
+        meta: { title: '添加用户', icon: 'form' }
       },
       {
         path: '/users/update',
         component: () => import('@/views/users/update'),
         name: 'UpdateUser',
         hidden: true,
-        meta: { title: '编辑用户', icon: 'create' }
+        meta: { title: '编辑用户', icon: 'form' }
       },
     ]
   },
@@ -124,7 +124,7 @@ export const asyncRoutes = [
     name: 'Novels',
     meta: {
       title: '小说管理',
-      icon: 'list'
+      icon: 'component'
     },
     children: [
       {
@@ -146,21 +146,21 @@ export const asyncRoutes = [
         component: () => import('@/views/books/create'),
         name: 'CreateBook',
         hidden: true,
-        meta: { title: '新建小说', icon: 'create' }
+        meta: { title: '新建小说', icon: 'form' }
       },
       {
         path: '/novel/update',
         component: () => import('@/views/books/update'),
         name: 'UpdateBook',
         hidden: true,
-        meta: { title: '修改小说', icon: 'create' }
+        meta: { title: '修改小说', icon: 'form' }
       },
       {
         path: '/novel/view',
         component: () => import('@/views/books/view'),
         name: 'getBook',
         hidden: true,
-        meta: { title: '查看小说', icon: 'create' }
+        meta: { title: '查看小说', icon: 'form' }
       },
       {
         path: '/novel/chapters',
@@ -174,21 +174,21 @@ export const asyncRoutes = [
         component: () => import('@/views/chapters/create'),
         name: 'CreateChapters',
         hidden: true,
-        meta: { title: '新建章节', icon: 'create' }
+        meta: { title: '新建章节', icon: 'form' }
       },
       {
         path: '/novel/chapters/update',
         component: () => import('@/views/chapters/update'),
         name: 'UpdateChapters',
         hidden: true,
-        meta: { title: '修改章节', icon: 'create' }
+        meta: { title: '修改章节', icon: 'form' }
       },
       {
         path: '/novel/uploadnovel/create',
         component: () => import('@/views/books/upload'),
         name: 'uploadNovel',
         hidden: false,
-        meta: { title: '上传小说', icon: 'list' }
+        meta: { title: '上传小说', icon: 'form' }
       },
       {
         path: '/novel/comments/lists',
@@ -206,7 +206,7 @@ export const asyncRoutes = [
     name: 'Comics',
     meta: {
       title: '漫画管理',
-      icon: 'list'
+      icon: 'component'
     },
     children: [
       {
@@ -228,22 +228,22 @@ export const asyncRoutes = [
         component: () => import('@/views/comics/create'),
         name: 'CreateComics',
         hidden: true,
-        meta: { title: '新建漫画', icon: 'comics' }
+        meta: { title: '新建漫画', icon: 'edit' }
       },
       {
         path: '/comics/update',
         component: () => import('@/views/comics/update'),
         name: 'UpdateComics',
         hidden: true,
-        meta: { title: '修改漫画', icon: 'create' }
+        meta: { title: '修改漫画', icon: 'form' }
       },
-       {
-         path: '/comics/view',
-         component: () => import('@/views/comics/view'),
-         name: 'getComics',
-         hidden: true,
-         meta: { title: '查看漫画', icon: 'create' }
-       },
+      {
+        path: '/comics/view',
+        component: () => import('@/views/comics/view'),
+        name: 'getComics',
+        hidden: true,
+        meta: { title: '查看漫画', icon: 'form' }
+      },
       {
         path: '/comics/chapters',
         component: () => import('@/views/comicChapters/list'),
@@ -256,28 +256,54 @@ export const asyncRoutes = [
         component: () => import('@/views/comicChapters/create'),
         name: 'CreateComicChapters',
         hidden: true,
-        meta: { title: '新建章节', icon: 'create' }
+        meta: { title: '新建章节', icon: 'form' }
       },
       {
         path: '/comics/chapters/update',
         component: () => import('@/views/comicChapters/update'),
         name: 'UpdateComicChapters',
         hidden: true,
-        meta: { title: '修改章节', icon: 'create' }
+        meta: { title: '修改章节', icon: 'edit' }
       },
-      // {
-      //   path: '/comics/uploadnovel/create',
-      //   component: () => import('@/views/books/upload'),
-      //   name: 'uploadNovel',
-      //   hidden: false,
-      //   meta: { title: '上传小说', icon: 'list' }
-      // },
       {
         path: '/comics/comments/lists',
         component: () => import('@/views/comicComments/list'),
         name: 'ComicCommentsList',
         hidden: false,
         meta: { title: '评论列表', icon: 'list' }
+      },
+    ]
+  },
+  {
+    path: '/distributor',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Distributor',
+    meta: {
+      title: '分销管理',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: '/distributor/distributorList',
+        component: () => import('@/views/distributor/list'),
+        name: 'distributorList',
+        hidden: false,
+        meta: { title: '分销商列表', icon: 'list' }
+      },
+      {
+        path: '/distributor/distributorLevelList',
+        component: () => import('@/views/distributor/levellist'),
+        name: 'distributorLevelList',
+        hidden: false,
+        meta: { title: '分销商等级管理', icon: 'list' }
+      },
+      {
+        path: '/distributor/distributionSetting',
+        component: () => import('@/views/distributor/setting'),
+        name: 'distributionSetting',
+        hidden: false,
+        meta: { title: '基础设置', icon: 'list' }
       },
     ]
   },

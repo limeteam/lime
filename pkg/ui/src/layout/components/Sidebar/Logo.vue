@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import minLogo from '@/assets/logo-min.png'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,8 +25,8 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Element Admin',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: 'Lime',
+      logo: minLogo
     }
   }
 }

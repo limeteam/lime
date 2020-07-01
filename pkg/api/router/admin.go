@@ -77,4 +77,26 @@ func Admin(e *gin.Engine) {
 	admin.GET("/comics/comments", ComicCommentsController.List)
 	admin.GET("/comics/comments/:id", ComicCommentsController.Get)
 	admin.DELETE("/comics/comments/:id", ComicCommentsController.Delete)
+
+
+	DistributorLevelController := &controllers.DistributorLevelController{}
+	admin.GET("/distributorlevels", DistributorLevelController.List)
+	admin.GET("/distributorlevels/:id", DistributorLevelController.Get)
+	admin.POST("/distributorlevels", DistributorLevelController.Create)
+	admin.PUT("/distributorlevels/:id", DistributorLevelController.Edit)
+	admin.DELETE("/distributorlevels/:id", DistributorLevelController.Delete)
+
+	DistributorController := &controllers.DistributorController{}
+	admin.GET("/distributors", DistributorController.List)
+	admin.GET("/distributors/:id", DistributorController.Get)
+	admin.POST("/distributors", DistributorController.Create)
+	admin.PUT("/distributors/:id", DistributorController.Edit)
+	admin.DELETE("/distributors/:id", DistributorController.Delete)
+
+	ConfigController := &controllers.ConfigController{}
+	admin.GET("/configs", ConfigController.List)
+	admin.GET("/configs/:id", ConfigController.Get)
+	admin.POST("/configs", ConfigController.Create)
+	admin.PUT("/configs/:id", ConfigController.Edit)
+	admin.DELETE("/configs/:id", ConfigController.Delete)
 }
