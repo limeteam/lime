@@ -13,13 +13,13 @@
 export default {
   data() {
     return {
-      activeName: "first"
+      activeName: "second"
     };
   },
   methods: {
     handleClick(tab, event) {
-      if(tab.name == 'second'){
-        this.$router.push({ path: "/distributor/settlementSetting" });
+      if(tab.name == 'first'){
+        this.$router.push({ path: "/distributor/distributionSetting" });
       }
     }
   }

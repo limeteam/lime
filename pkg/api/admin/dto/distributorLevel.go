@@ -12,7 +12,7 @@ type DistributorLevelListDto struct {
 	Id                     int        `form:"id" json:"id"`
 	Name                   string     `form:"name" json:"name"`                                     //等级名称
 	Repurchase_commission  string     `form:"repurchase_commission" json:"repurchase_commission"`   //复购返佣
-	Rakeback_type          int        `form:"rakeback_type" json:"rakeback_type"`                   //返佣类型 1按比例返佣 2 按固定返佣
+	Recommendtype          int       `form:"recommendtype" json:"recommendtype"`                    //返佣类型 1按比例返佣 2 按固定返佣
 	Auto_upgrade           int        `form:"auto_upgrade" json:"auto_upgrade"`                     //自动升级 0 否 1是
 	Upgrade_conditions     string     `form:"upgrade_conditions" json:"upgrade_conditions"`         //升级条件
 	Adaptive_degradation   int        `form:"adaptive_degradation" json:"adaptive_degradation"`     //自动降级
@@ -29,7 +29,7 @@ type DistributorLevelListDto struct {
 type DistributorLevelCreateDto struct {
 	Name                   string    `form:"name" json:"name"`                                     //等级名称
 	Repurchase_commission  string    `form:"repurchase_commission" json:"repurchase_commission"`   //复购返佣
-	Rakeback_type          int       `form:"rakeback_type" json:"rakeback_type"`                   //返佣类型 1按比例返佣 2 按固定返佣
+	Recommendtype          int       `form:"recommendtype" json:"recommendtype"`                //返佣类型 1按比例返佣 2 按固定返佣
 	Auto_upgrade           int       `form:"auto_upgrade" json:"auto_upgrade"`                     //自动升级 0 否 1是
 	Upgrade_conditions     string    `form:"upgrade_conditions" json:"upgrade_conditions"`         //升级条件
 	Adaptive_degradation   int       `form:"adaptive_degradation" json:"adaptive_degradation"`     //自动降级
@@ -43,7 +43,7 @@ type DistributorLevelEditDto struct {
 	Id                     int       `uri:"id" json:"id" binding:"required"`
 	Name                   string    `form:"name" json:"name"`                                     //等级名称
 	Repurchase_commission  string    `form:"repurchase_commission" json:"repurchase_commission"`   //复购返佣
-	Rakeback_type          int       `form:"rakeback_type" json:"rakeback_type"`                   //返佣类型 1按比例返佣 2 按固定返佣
+	Recommendtype          int       `form:"recommendtype" json:"recommendtype"`                   //返佣类型 1按比例返佣 2 按固定返佣
 	Auto_upgrade           int       `form:"auto_upgrade" json:"auto_upgrade"`                     //自动升级 0 否 1是
 	Upgrade_conditions     string    `form:"upgrade_conditions" json:"upgrade_conditions"`         //升级条件
 	Adaptive_degradation   int       `form:"adaptive_degradation" json:"adaptive_degradation"`     //自动降级

@@ -8,7 +8,7 @@ type DistributorLevel struct {
 	Id                     int        `gorm:"primary_key" json:"id"`  //分类ID
 	Name                   string     `json:"name"`                   //等级名称
 	Repurchase_commission  string     `json:"repurchase_commission"`  //复购返佣
-	Rakeback_type          int        `json:"rakeback_type"`          //返佣类型 1按比例返佣 2 按固定返佣
+	Recommendtype          int        `json:"recommendtype"`          //返佣类型 1按比例返佣 2 按固定返佣
 	Auto_upgrade           int        `json:"auto_upgrade"`           //自动升级 0 否 1是
 	Upgrade_conditions     string     `json:"upgrade_conditions"`     //升级条件
 	Adaptive_degradation   int        `json:"adaptive_degradation"`   //自动降级

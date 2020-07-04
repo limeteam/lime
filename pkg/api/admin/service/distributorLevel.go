@@ -56,7 +56,7 @@ func (cs DistributorLevelService) Update(dto dto.DistributorLevelEditDto) int64 
 	c := DistributorLevelDao.Update(&Model, map[string]interface{}{
 		"name":                   dto.Name,
 		"repurchase_commission":  dto.Repurchase_commission,
-		"rakeback_type":          dto.Rakeback_type,
+		"recommendtype":          dto.recommendtype,
 		"auto_upgrade":           dto.Auto_upgrade,
 		"upgrade_conditions":     dto.Upgrade_conditions,
 		"adaptive_degradation":   dto.Adaptive_degradation,

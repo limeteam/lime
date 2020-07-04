@@ -299,11 +299,25 @@ export const asyncRoutes = [
         meta: { title: '分销商等级管理', icon: 'list' }
       },
       {
+        path: '/distributor/distributorLevelCreate',
+        component: () => import('@/views/distributor/levelCreate'),
+        name: 'distributorLevelCreate',
+        hidden: true,
+        meta: { title: '创建分销商', icon: 'list' }
+      },
+      {
         path: '/distributor/distributionSetting',
         component: () => import('@/views/distributor/setting'),
         name: 'distributionSetting',
         hidden: false,
         meta: { title: '基础设置', icon: 'list' }
+      },
+      {
+        path: '/distributor/settlementSetting',
+        component: () => import('@/views/distributor/settlementSetting'),
+        name: 'settlementSetting',
+        hidden: true,
+        meta: { title: '结算设置', icon: 'list' }
       },
     ]
   },

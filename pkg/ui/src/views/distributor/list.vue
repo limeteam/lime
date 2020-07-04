@@ -10,17 +10,20 @@
           size="small"
           class="demo-form-inline"
         >
-          <el-form-item label="分类名" prop="name">
+          <el-form-item label="推荐人" prop="name">
+            <el-input v-model="formData.name" placeholder />
+          </el-form-item>
+          <el-form-item label="分销商" prop="name">
+            <el-input v-model="formData.name" placeholder />
+          </el-form-item>
+          <el-form-item label="手机" prop="name">
+            <el-input v-model="formData.name" placeholder />
+          </el-form-item>
+          <el-form-item label="分销商等级" prop="name">
             <el-input v-model="formData.name" placeholder />
           </el-form-item>
           <el-form-item>
             <el-button :loading="loading" type="primary" @click="onSubmit">搜索</el-button>
-            <el-button
-              style="margin-left: 400px;"
-              type="primary"
-              icon="el-icon-edit"
-              @click="handleCreate"
-            >新增分类</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -28,9 +31,12 @@
       <!--列表-->
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column label="ID" prop="id" width="80px" />
-        <el-table-column label="分类名" prop="name" width="100px" />
-        <el-table-column label="漫画数" prop="comic_num" width="80px" />
-        <el-table-column label="分类展示排序" prop="sort" width="123px" />
+        <el-table-column label="推荐人" prop="name" width="100px" />
+        <el-table-column label="分销商" prop="comic_num" width="80px" />
+        <el-table-column label="姓名/手机" prop="sort" width="123px" />
+        <el-table-column label="分销等级/下级人数" prop="sort" width="123px" />
+        <el-table-column label="可用佣金/已提现佣金" prop="sort" width="123px" />
+        <el-table-column label="状态" prop="sort" width="123px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
@@ -40,12 +46,6 @@
               type="danger"
               @click="handleDelete(row)"
             >删除</el-button>
-            <el-button
-              icon="el-icon-view"
-              size="mini"
-              type="success"
-              @click="handleClick(row)"
-            >分类小说</el-button>
           </template>
         </el-table-column>
       </el-table>
