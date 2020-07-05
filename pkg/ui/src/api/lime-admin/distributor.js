@@ -39,10 +39,25 @@ export function createDistributor(data) {
   })
 }
 
-export function deleteDistributor(id,data) {
+export function deleteDistributor(id, data) {
   return request({
     url: '/admin/distributors/' + id,
     method: 'delete',
     data: data
+  })
+}
+
+export function distributionSetting(code, data) {
+  return request({
+    url: '/admin/configs/' + code + '/distributor',
+    method: 'post',
+    data: data
+  })
+}
+
+export function getDistributionSetting(code, data) {
+  return request({
+    url: '/admin/distributor/' + code,
+    method: 'GET'
   })
 }

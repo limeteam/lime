@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"lime/pkg/api/admin/dao"
 	"lime/pkg/api/admin/dto"
@@ -19,6 +20,10 @@ func (cs ConfigService) InfoOfId(dto dto.GeneralGetDto) model.Config {
 	return ConfigDao.Get(dto.Id)
 }
 
+func (cs ConfigService) InfoOfCode(dto dto.ConfigGetByCodeDto) model.Config {
+	return ConfigDao.GetByCode(dto.Code)
+}
+
 func (cs ConfigService) GetAll() []model.Config {
 	return ConfigDao.GetAll()
 }
@@ -35,7 +40,6 @@ func (cs ConfigService) Create(dto dto.ConfigCreateDto) (model.Config, error) {
 		Config_code:       dto.Config_code,
 		Config_value:      dto.Config_value,
 		Config_group:      dto.Config_group,
-		Config_value_type: dto.Config_value_type,
 		Desc:              dto.Desc,
 		Status:            dto.Status,
 		CreatedAt:         time.Now(),
@@ -58,7 +62,6 @@ func (cs ConfigService) Update(dto dto.ConfigEditDto) int64 {
 		"config_code":       dto.Config_code,
 		"config_value":      dto.Config_value,
 		"config_group":      dto.Config_group,
-		"config_value_type": dto.Config_value_type,
 		"desc":              dto.Desc,
 		"status":            dto.Status,
 		"updated_at":        time.Now(),
@@ -84,5 +87,33 @@ func (cs ConfigService) Delete(dto dto.GeneralDelDto) int64 {
 		Id: dto.Id,
 	}
 	c := ConfigDao.Delete(&Model)
+	return c.RowsAffected
+}
+
+// UpdateByCode
+func (cs ConfigService) UpdateByCode(dto dto.ConfigUpdateDto) int64 {
+	fmt.Println(dto.Config_code)
+	Model := ConfigDao.GetByCode(dto.Config_code)
+	if Model.Id <= 0 {
+		Model := model.Config{
+			Name:              dto.Config_code,
+			Config_code:       dto.Config_code,
+			Config_value:      dto.Config_value,
+			Config_group:      "base_config",
+			Desc:              dto.Config_code,
+			Status:            1,
+			UpdatedAt:         time.Now(),
+		}
+		c := ConfigDao.Create(&Model)
+		if c.Error != nil {
+			log.Error(c.Error.Error())
+		}
+		return c.RowsAffected
+	}
+	c := ConfigDao.Update(&Model, map[string]interface{}{
+		"config_code":       dto.Config_code,
+		"config_value":      dto.Config_value,
+		"updated_at":        time.Now(),
+	})
 	return c.RowsAffected
 }

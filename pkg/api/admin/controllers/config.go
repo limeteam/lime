@@ -50,6 +50,19 @@ func (C *ConfigController) Edit(c *gin.Context) {
 	}
 }
 
+func (C *ConfigController) EditByCode(c *gin.Context) {
+	var Dto dto.ConfigUpdateDto
+	if C.BindAndValidate(c, &Dto) {
+		affected := ConfigService.UpdateByCode(Dto)
+		if affected > 0 {
+			C.Ok(c, "更新成功")
+			return
+		}
+		C.Fail(c, e.ErrEditFail)
+		return
+	}
+}
+
 func (C *ConfigController) UpdateStatus(c *gin.Context) {
 	var Dto dto.ConfigUpdateStatusDto
 	if C.BindAndValidate(c, &Dto) {
@@ -73,6 +86,20 @@ func (C *ConfigController) Get(c *gin.Context) {
 		}
 		C.Resp(c, map[string]interface{}{
 			"result": data,
+		})
+	}
+}
+
+func (C *ConfigController) GetByCode(c *gin.Context) {
+	var Dto dto.ConfigGetByCodeDto
+	if C.BindAndValidate(c, &Dto) {
+		data := ConfigService.InfoOfCode(Dto)
+		if data.Id < 1 {
+			C.Fail(c, e.ErrIdData)
+			return
+		}
+		C.Resp(c, map[string]interface{}{
+			"result": data.Config_value,
 		})
 	}
 }

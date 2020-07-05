@@ -18,6 +18,13 @@ func (c ConfigDao) Get(id int) model.Config {
 	return Config
 }
 
+func (c ConfigDao) GetByCode(code string) model.Config {
+	var Config model.Config
+	db := db.GetGormDB()
+	db.Where("config_code = ?", code).First(&Config)
+	return Config
+}
+
 func (c ConfigDao) GetAll() []model.Config {
 	var Config []model.Config
 	db := db.GetGormDB()

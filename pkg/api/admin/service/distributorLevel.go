@@ -33,7 +33,6 @@ func (cs DistributorLevelService) Create(dto dto.DistributorLevelCreateDto) (mod
 	Model := model.DistributorLevel{
 		Name:                   dto.Name,
 		Repurchase_commission:  dto.Repurchase_commission,
-		Rakeback_type:          dto.Rakeback_type,
 		Auto_upgrade:           dto.Auto_upgrade,
 		Upgrade_conditions:     dto.Upgrade_conditions,
 		Adaptive_degradation:   dto.Adaptive_degradation,
@@ -55,14 +54,13 @@ func (cs DistributorLevelService) Update(dto dto.DistributorLevelEditDto) int64 
 	}
 	c := DistributorLevelDao.Update(&Model, map[string]interface{}{
 		"name":                   dto.Name,
-		"repurchase_commission":  dto.Repurchase_commission,
-		"recommendtype":          dto.recommendtype,
-		"auto_upgrade":           dto.Auto_upgrade,
-		"upgrade_conditions":     dto.Upgrade_conditions,
-		"adaptive_degradation":   dto.Adaptive_degradation,
-		"degradation_conditions": dto.Degradation_conditions,
-		"weight":                 dto.Weight,
-		"updated_at":             time.Now(),
+			"repurchase_commission":  dto.Repurchase_commission,
+			"auto_upgrade":           dto.Auto_upgrade,
+			"upgrade_conditions":     dto.Upgrade_conditions,
+			"adaptive_degradation":   dto.Adaptive_degradation,
+			"degradation_conditions": dto.Degradation_conditions,
+			"weight":                 dto.Weight,
+			"updated_at":             time.Now(),
 	})
 	return c.RowsAffected
 }

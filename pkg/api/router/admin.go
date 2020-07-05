@@ -99,4 +99,6 @@ func Admin(e *gin.Engine) {
 	admin.POST("/configs", ConfigController.Create)
 	admin.PUT("/configs/:id", ConfigController.Edit)
 	admin.DELETE("/configs/:id", ConfigController.Delete)
+	admin.POST("/configs/:code/distributor", ConfigController.EditByCode)
+	admin.GET("/distributor/:code", ConfigController.GetByCode)
 }

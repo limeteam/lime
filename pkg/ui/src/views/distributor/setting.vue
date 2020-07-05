@@ -43,7 +43,7 @@
                 <el-checkbox-group v-model="form.distributorconditions">
                   <el-row>
                     <el-col :span="8">
-                      <el-checkbox label="消费金额达" name="form.distributorconditions" size="mini"></el-checkbox>
+                      <el-checkbox label="1" size="mini">消费金额达</el-checkbox>
                     </el-col>
                     <el-col :span="14">
                       <el-input placeholder v-model="form.pay_money">
@@ -53,7 +53,7 @@
                   </el-row>
                   <el-row>
                     <el-col :span="8">
-                      <el-checkbox label="订单数达" name="form.distributorconditions" size="mini"></el-checkbox>
+                      <el-checkbox label="2" size="mini">订单数达</el-checkbox>
                     </el-col>
                     <el-col :span="14">
                       <el-input placeholder v-model="form.order_number">
@@ -63,12 +63,12 @@
                   </el-row>
                   <el-row>
                     <el-col :span="8">
-                      <el-checkbox label="购买商品，并完成订单" name="form.distributorconditions" size="mini"></el-checkbox>
+                      <el-checkbox label="3" size="mini">购买商品，并完成订单</el-checkbox>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="8">
-                      <el-checkbox label="购买指定商品" name="form.distributorconditions" size="mini"></el-checkbox>
+                      <el-checkbox label="4" size="mini">购买指定商品</el-checkbox>
                     </el-col>
                   </el-row>
                 </el-checkbox-group>
@@ -93,7 +93,7 @@
               <div class="help-block">开启后，分销商按照权重顺序跳级或跳降级，只要升级或降级条件满足则会一直执行。</div>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="saveData">保存</el-button>
+              <el-button type="primary" @click="saveData()">保存</el-button>
               <el-button>取消</el-button>
             </el-form-item>
           </el-form>
@@ -107,6 +107,7 @@
   </div>
 </template>
 <script>
+import { distributionSetting,getDistributionSetting } from "@/api/lime-admin/distributor";
 export default {
   data() {
     return {
@@ -116,9 +117,12 @@ export default {
         distribution_pattern: 1,
         purchasetype: 0,
         distribution_admin_status: 0,
-        distributorcondition: [],
+        distributorcondition: 0,
         distributorconditions: [],
-        upgradeconditions: []
+        lower_condition: 0,
+        distributorcheck: 0,
+        distributorDatum: 0,
+        distributorgrade: 0
       },
       distribution_pattern_options: [
         {
@@ -134,13 +138,43 @@ export default {
           label: "三级分销"
         }
       ],
-      value: ""
     };
+  },
+  mounted() {
+    this.getSetting();
   },
   methods: {
     handleClick(tab, event) {
       if (tab.name == "second") {
         this.$router.push({ path: "/distributor/settlementSetting" });
+      }
+    },
+    saveData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          var data = { config_code: "distributionSetting", config_value: this.form };
+          distributionSetting("distributionSetting", data).then(() => {
+            this.$notify({
+              title: "成功",
+              message: "保存成功",
+              type: "success",
+              duration: 2000
+            });
+            this.$router.push({ path: "/distributor/distributionSetting" });
+          });
+        }
+      });
+    },
+    async getSetting() {
+      // 获取列表
+      this.loading = true;
+      try {
+        const list = await getDistributionSetting('settlementSetting');
+        if (list.data.result !== null){
+          this.form = list.data.result;
+        }
+      } finally {
+        this.loading = false;
       }
     }
   }
