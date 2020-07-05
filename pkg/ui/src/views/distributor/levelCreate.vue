@@ -40,12 +40,12 @@
         </el-radio-group>
         <div class="help-block">分销商下线购买商品后获得的分销返佣</div>
       </el-form-item>
-      <el-form-item label="自动升级" prop="auto_upgrade">
-        <el-switch v-model="form.auto_upgrade"></el-switch>
+      <el-form-item label="自动升级" prop="upgrade_switch">
+        <el-switch v-model="form.upgrade_switch"></el-switch>
         <div class="help-block">开启后满足一定条件自动升级，关闭后则该等级不会自动升级。</div>
       </el-form-item>
-      <el-form-item label="升级条件" prop="auto_upgrade" v-if="form.auto_upgrade == 1">
-        <el-radio-group v-model="form.recommendtype">
+      <el-form-item label="升级条件" prop="upgradecondition" v-if="form.upgrade_switch == 1">
+        <el-radio-group v-model="form.upgradecondition">
           <el-radio :label="1">按比例返佣</el-radio>
           <el-radio :label="2">按固定返佣</el-radio>
         </el-radio-group>
@@ -53,78 +53,78 @@
           <el-checkbox-group v-model="form.upgradeconditions">
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="一级分销商达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="一级分销商达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder="" v-model="input2">
+                <el-input placeholder="" v-model="number1">
                   <template slot="append">人</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="二级分销商达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="二级分销商达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder="" v-model="input2">
+                <el-input placeholder="" v-model="number2">
                   <template slot="append">人</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="三级分销商达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="三级分销商达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="number3">
                   <template slot="append">人</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="团队人数达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="团队人数达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="number4">
                   <template slot="append">人(分销商)</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="下线客户数达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="下线客户数达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="number5">
                   <template slot="append">人(非分销商)</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="下线总人数达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="下线总人数达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="offline_number">
                   <template slot="append">人(分销商+非分销商)</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="指定推荐等级" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="指定推荐等级" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
                 <el-row>
                   <el-col :span="10">
-                    <el-select v-model="select" placeholder>
+                    <el-select v-model="upgrade_level" placeholder>
                   <el-option label="默认指定等级" value="1"></el-option>
                   <el-option label="等级1" value="2"></el-option>
                 </el-select>
                   </el-col>
                   <el-col :span="14">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="level_number">
                       <template slot="prepend">达</template>
                       <template slot="append">人</template>
                     </el-input>
@@ -134,47 +134,47 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="分销订单金额达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="分销订单金额达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="order_money">
                   <template slot="append">元</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="分销订单达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="分销订单达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="order_number">
                   <template slot="append">单</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="内购订单金额达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="内购订单金额达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="selforder_money">
                   <template slot="append">元</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="内购订单达" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="内购订单达" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
-                <el-input placeholder v-model="input2">
+                <el-input placeholder v-model="selforder_number">
                   <template slot="append">单</template>
                 </el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="购买指定商品" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="购买指定商品" name="upgradeconditions" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="14">
                 <el-input placeholder v-model="input2"></el-input>
@@ -184,13 +184,13 @@
         </el-card>
       </el-form-item>
 
-      <el-form-item label="自动降级" prop="adaptive_degradation">
-        <el-switch v-model="form.adaptive_degradation"></el-switch>
+      <el-form-item label="自动降级" prop="downgrade_switch">
+        <el-switch v-model="form.downgrade_switch"></el-switch>
         <div class="help-block">开启后不满足指定条件自动降级，关闭后则该等级不会自动降级。</div>
       </el-form-item>
 
-      <el-form-item label="降级条件" prop="auto_upgrade" v-if="form.adaptive_degradation == 1">
-        <el-radio-group v-model="form.recommendtype">
+      <el-form-item label="降级条件" prop="downgradecondition" v-if="form.downgrade_switch == 1">
+        <el-radio-group v-model="form.downgradecondition">
           <el-radio :label="1">满足所有勾选条件</el-radio>
           <el-radio :label="2">满足勾选条件之一即可</el-radio>
         </el-radio-group>
@@ -198,17 +198,17 @@
           <el-checkbox-group v-model="form.upgradeconditions">
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="团队订单量" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="团队订单量" name="downgradecondition" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="16">
                 <el-row>
                   <el-col :span="10">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="team_number_day">
                       <template slot="append">天内</template>
                     </el-input>
                   </el-col>
                   <el-col :span="14">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="team_number">
                       <template slot="prepend">少于</template>
                       <template slot="append">单</template>
                     </el-input>
@@ -218,17 +218,17 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-checkbox label="团队订单金额" name="type" size="mini"></el-checkbox>
+                <el-checkbox label="团队订单金额" name="downgradecondition" size="mini"></el-checkbox>
               </el-col>
               <el-col :span="16">
                 <el-row>
                   <el-col :span="10">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="team_money_day">
                       <template slot="append">天内</template>
                     </el-input>
                   </el-col>
                   <el-col :span="14">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="team_money">
                       <template slot="prepend">少于</template>
                       <template slot="append">单</template>
                     </el-input>
@@ -243,12 +243,12 @@
               <el-col :span="16">
                 <el-row>
                   <el-col :span="10">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="self_money_day">
                       <template slot="append">天内</template>
                     </el-input>
                   </el-col>
                   <el-col :span="14">
-                    <el-input placeholder v-model="input2">
+                    <el-input placeholder v-model="self_money">
                       <template slot="prepend">少于</template>
                       <template slot="append">单</template>
                     </el-input>
@@ -281,7 +281,9 @@ export default {
         recommendtype: 1,
         buyagain_switch: 1,
         auto_upgrade: 0,
+        upgrade_switch:0,
         upgradeconditions: [],
+        downgrade_switch:0,
         upgrade_conditions: "",
         adaptive_degradation: 0,
         degradation_conditions: "",
