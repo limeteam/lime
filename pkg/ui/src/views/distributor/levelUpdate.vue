@@ -261,14 +261,17 @@
         <div class="help-block">等级权重，数字不能重复，数字越大等级越高。按设置的权重大小从低到高进行升级。</div>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="createData">添加</el-button>
+        <el-button type="primary" @click="updateData()">修改</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
   </el-card>
 </template>
 <script>
-import { createDistributorLevel } from "@/api/lime-admin/distributorLevel";
+import {
+  updateDistributorLevel,
+  getDistributorLevel
+} from "@/api/lime-admin/distributorLevel";
 export default {
   name: "CreateDistributorLevel",
   data() {
@@ -295,15 +298,17 @@ export default {
         selforder_number: 0,
         downgradecondition: 0,
         downgrade_switch: 0,
-        upgrade_conditions: "",
+        upgrade_conditions: [],
         adaptive_degradation: 0,
-        degradation_conditions: "",
+        degradation_conditions: [],
         downgradeconditions: [],
         weight: 0
       }
     };
   },
-  mounted() {},
+  mounted() {
+    this.getLevelInfo();
+  },
   methods: {
     onLevelList() {
       this.$router.push({ path: "/distributor/distributorLevelList" });
@@ -315,7 +320,7 @@ export default {
     changeBuyagain: function($event) {
       console.log(this.form.buyagain_switch);
     },
-    createData() {
+    updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           var data = {
@@ -351,7 +356,7 @@ export default {
             },
             weight: this.form.weight
           };
-          createDistributorLevel(data).then(() => {
+          updateDistributorLevel(id, data).then(() => {
             this.dialogFormVisible = false;
             this.$notify({
               title: "成功",
@@ -364,6 +369,45 @@ export default {
           });
         }
       });
+    },
+    async getLevelInfo() {
+      // 获取列表
+      this.loading = true;
+      try {
+        var id = this.$route.query.id;
+        const list = await getDistributorLevel(id);
+        var data = list.data.result;
+        this.form = {
+          name: data.name,
+          recommendtype: data.recommendtype,
+          buyagain_switch: data.buyagain_switch,
+          auto_upgrade: data.auto_upgrade,
+          upgrade_switch: 0,
+          upgradecondition: data.upgrade_conditions.upgrade_condition,
+          upgradeconditions: data.upgrade_conditions.upgrade_conditions,
+          number1: data.upgrade_conditions.number1,
+          number2: data.upgrade_conditions.number2,
+          number3: data.upgrade_conditions.number3,
+          number4: data.upgrade_conditions.number4,
+          number5: data.upgrade_conditions.number5,
+          offline_number: data.upgrade_conditions.offline_number,
+          upgrade_level: data.upgrade_conditions.upgrade_level,
+          level_number: data.upgrade_conditions.level_number,
+          order_money: data.upgrade_conditions.order_money,
+          order_number: data.upgrade_conditions.order_number,
+          selforder_money: data.upgrade_conditions.selforder_money,
+          selforder_number: data.upgrade_conditions.selforder_number,
+          downgradecondition: data.degradation_conditions.downgradecondition,
+          downgrade_switch: data.degradation_conditions.downgrade_switch,
+          upgrade_conditions: data.degradation_conditions.upgrade_conditions,
+          adaptive_degradation: data.degradation_conditions.adaptive_degradation,
+          degradation_conditions: data.degradation_conditions.degradation_conditions,
+          downgradeconditions: data.degradation_conditions.downgradeconditions,
+          weight: data.weight
+        };
+      } finally {
+        this.loading = false;
+      }
     }
   }
 };

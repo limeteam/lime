@@ -29,9 +29,9 @@
       <el-table v-loading="loading" :data="items.list" border style="width: 100%">
         <el-table-column label="ID" prop="id" width="80px" />
         <el-table-column label="等级名称" prop="name" width="100px" />
-        <el-table-column label="升级条件" prop="comic_num" width="80px" />
-        <el-table-column label="降级条件" prop="sort" width="123px" />
-        <el-table-column label="权重" prop="sort" width="123px" />
+        <el-table-column label="升级条件" prop="upgrade_conditions" width="80px" />
+        <el-table-column label="降级条件" prop="degradation_conditions" width="123px" />
+        <el-table-column label="权重" prop="weight" width="123px" />
         <el-table-column label="操作" prop="operation" fixed="right">
           <template slot-scope="{row}">
             <el-button icon="el-icon-edit" type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
@@ -52,12 +52,7 @@
 </template>
 
 <script>
-import {
-  categoryList,
-  createCategory,
-  updateCategory,
-  deleteCategory
-} from "@/api/lime-admin/comicCategory";
+import { DistributorLevelList } from "@/api/lime-admin/distributorLevel";
 import Pagination from "@/components/Pagination";
 
 export default {
@@ -111,6 +106,9 @@ export default {
     handleCreate() {
       this.$router.push({ path: "/distributor/distributorLevelCreate" });
     },
+    handleUpdate(row){
+      this.$router.push({ path: "/distributor/distributorLevelUpdate?id=" + row.id });
+    },
     handleDelete(row) {
       this.$confirm("此操作将永久删除数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -143,20 +141,11 @@ export default {
       // 获取列表
       this.loading = true;
       try {
-        const list = await categoryList(this.formData);
-        this.items.list = list.data.list;
-        for (const v of this.items.list) {
-          switch (v.channel_id) {
-            case 1:
-              v.channel_id = "男生";
-              break;
-            case 2:
-              v.channel_id = "女生";
-              break;
-            default:
-              v.channel_id = "全部";
-          }
-        }
+        const list = await DistributorLevelList(this.formData);
+        this.items.list = list.data.result;
+        // for (const v of this.items.list) {
+        //   //todo
+        // }
         this.items.total_items = list.data.total;
       } finally {
         this.loading = false;

@@ -169,7 +169,7 @@ export default {
       // 获取列表
       this.loading = true;
       try {
-        const list = await getDistributionSetting('settlementSetting');
+        const list = await getDistributionSetting('distributionSetting');
         if (list.data.result !== null){
           this.form = list.data.result;
         }

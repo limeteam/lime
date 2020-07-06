@@ -306,6 +306,13 @@ export const asyncRoutes = [
         meta: { title: '创建分销商', icon: 'list' }
       },
       {
+        path: '/distributor/distributorLevelUpdate',
+        component: () => import('@/views/distributor/levelUpdate'),
+        name: 'distributorLevelUpdate',
+        hidden: true,
+        meta: { title: '修改分销商', icon: 'list' }
+      },
+      {
         path: '/distributor/distributionSetting',
         component: () => import('@/views/distributor/setting'),
         name: 'distributionSetting',

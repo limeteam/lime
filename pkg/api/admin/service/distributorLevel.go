@@ -32,7 +32,7 @@ func (cs DistributorLevelService) List(dto dto.GeneralListDto) ([]model.Distribu
 func (cs DistributorLevelService) Create(dto dto.DistributorLevelCreateDto) (model.DistributorLevel, error) {
 	Model := model.DistributorLevel{
 		Name:                   dto.Name,
-		Repurchase_commission:  dto.Repurchase_commission,
+		Recommendtype:          dto.Recommendtype,
 		Auto_upgrade:           dto.Auto_upgrade,
 		Upgrade_conditions:     dto.Upgrade_conditions,
 		Adaptive_degradation:   dto.Adaptive_degradation,
@@ -54,13 +54,14 @@ func (cs DistributorLevelService) Update(dto dto.DistributorLevelEditDto) int64 
 	}
 	c := DistributorLevelDao.Update(&Model, map[string]interface{}{
 		"name":                   dto.Name,
-			"repurchase_commission":  dto.Repurchase_commission,
-			"auto_upgrade":           dto.Auto_upgrade,
-			"upgrade_conditions":     dto.Upgrade_conditions,
-			"adaptive_degradation":   dto.Adaptive_degradation,
-			"degradation_conditions": dto.Degradation_conditions,
-			"weight":                 dto.Weight,
-			"updated_at":             time.Now(),
+		"recommendtype":          dto.Recommendtype,
+		"buyagain_switch":dto.Buyagain_switch,
+		"auto_upgrade":           dto.Auto_upgrade,
+		"upgrade_conditions":     dto.Upgrade_conditions,
+		"adaptive_degradation":   dto.Adaptive_degradation,
+		"degradation_conditions": dto.Degradation_conditions,
+		"weight":                 dto.Weight,
+		"updated_at":             time.Now(),
 	})
 	return c.RowsAffected
 }
