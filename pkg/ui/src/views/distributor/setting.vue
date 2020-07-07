@@ -100,9 +100,7 @@
         </el-card>
       </el-tab-pane>
       <el-tab-pane label="结算设置" name="second">结算设置</el-tab-pane>
-      <el-tab-pane label="申请协议" name="third">申请协议</el-tab-pane>
-      <el-tab-pane label="文案样式" name="fourth">文案样式</el-tab-pane>
-      <el-tab-pane label="推送通知" name="five">推送通知</el-tab-pane>
+      <el-tab-pane label="推送通知" name="third">推送通知</el-tab-pane>
     </el-tabs>
   </div>
 </template>

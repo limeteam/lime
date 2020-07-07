@@ -54,7 +54,7 @@
         :total="items.total_items"
         :page.sync="formData.page"
         :limit.sync="formData.page_size"
-        @pagination="getCategoryList"
+        @pagination="getDistributorList"
       />
       <!--列表 -->
     </el-card>
@@ -84,15 +84,15 @@
 
 <script>
 import {
-  categoryList,
-  createCategory,
-  updateCategory,
-  deleteCategory
-} from "@/api/lime-admin/comicCategory";
+  getDistributor,
+  distributorList,
+  updateDistributor,
+  deleteDistributor
+} from "@/api/lime-admin/distributor";
 import Pagination from "@/components/Pagination";
 
 export default {
-  name: "CategoryList",
+  name: "DistributorList",
   components: { Pagination },
   data() {
     return {
@@ -145,16 +145,16 @@ export default {
   computed: {},
   created() {},
   mounted() {
-    this.getCategoryList();
+    this.getDistributorList();
   },
   methods: {
     onSubmit() {
       // 查询按钮
       this.formData.page = 1;
-      this.getCategoryList();
+      this.getDistributorList();
     },
     on_refresh() {
-      this.getCategoryList();
+      this.getDistributorList();
     },
     timeChange(val) {
       // 时间选择
@@ -185,72 +185,20 @@ export default {
       this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.push({ path: "/novel/books/?cid" + row.id });
     },
-    handleCreate() {
-      this.resetTemp();
-      this.dialogStatus = "create";
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
-    },
-    createData() {
-      this.$refs["dataForm"].validate(valid => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024; // mock a id
-          createCategory(this.temp).then(() => {
-            this.getCategoryList();
-            this.dialogFormVisible = false;
-            this.$notify({
-              title: "成功",
-              message: "新增成功",
-              type: "success",
-              duration: 2000
-            });
-          });
-        }
-      });
-    },
-    handleUpdate(row) {
-      this.temp = Object.assign({}, row); // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp);
-      this.dialogStatus = "update";
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
-    },
-    updateData() {
-      this.$refs["dataForm"].validate(valid => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp);
-          tempData.timestamp = +new Date(tempData.timestamp); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateCategory(this.temp.id, tempData).then(() => {
-            this.getCategoryList();
-            this.dialogFormVisible = false;
-            this.$notify({
-              title: "成功",
-              message: "更新成功",
-              type: "success",
-              duration: 2000
-            });
-          });
-        }
-      });
-    },
     handleDelete(row) {
       this.$confirm('此操作将永久删除数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteCategory(row.id, { id: row.id }).then(() => {
+        updateDistributor(row.id, { id: row.id }).then(() => {
           this.$notify({
             title: '成功',
             message: '删除成功',
             type: 'success',
             duration: 2000
           })
-          this.getCategoryList();
+          this.getDistributorList();
         }).catch((res) => {
           this.$message.error(res.msg)
         })
@@ -259,26 +207,14 @@ export default {
     currentChange(index) {
       // 分页
       this.formData.page = index;
-      this.getCategoryList();
+      this.getDistributorList();
     },
-    async getCategoryList() {
+    async getDistributorList() {
       // 获取列表
       this.loading = true;
       try {
-        const list = await categoryList(this.formData);
+        const list = await distributorList(this.formData);
         this.items.list = list.data.list;
-        for (const v of this.items.list) {
-          switch (v.channel_id) {
-            case 1:
-              v.channel_id = "男生";
-              break;
-            case 2:
-              v.channel_id = "女生";
-              break;
-            default:
-              v.channel_id = "全部";
-          }
-        }
         this.items.total_items = list.data.total;
       } finally {
         this.loading = false;

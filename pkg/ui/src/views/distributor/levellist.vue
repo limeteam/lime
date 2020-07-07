@@ -143,9 +143,6 @@ export default {
       try {
         const list = await DistributorLevelList(this.formData);
         this.items.list = list.data.result;
-        // for (const v of this.items.list) {
-        //   //todo
-        // }
         this.items.total_items = list.data.total;
       } finally {
         this.loading = false;
