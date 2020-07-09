@@ -23,4 +23,7 @@ func Front(e *gin.Engine) {
 	V1ChaptersController := &controllersFront.ChaptersController{}
 	v1.GET("/chapters", V1ChaptersController.List)
 	v1.GET("/chapters/:id", V1ChaptersController.Get)
+
+	V1WechatController := &controllersFront.WechatController{}
+	v1.POST("/wechat/callback", V1WechatController.Callback)
 }
