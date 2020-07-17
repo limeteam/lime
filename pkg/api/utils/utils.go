@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"bytes"
 	"crypto/md5"
+	"crypto/rand"
 	"encoding/hex"
 	"errors"
 	"github.com/nfnt/resize"
@@ -11,6 +13,7 @@ import (
 	"image/jpeg"
 	"image/png"
 	"io"
+	"math/big"
 	"reflect"
 	"regexp"
 )
@@ -81,4 +84,17 @@ func VerifyMobileFormat(mobileNum string) bool {
 
 	reg := regexp.MustCompile(regular)
 	return reg.MatchString(mobileNum)
+}
+
+func CreateRandomString(len int) string  {
+	var container string
+	var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	b := bytes.NewBufferString(str)
+	length := b.Len()
+	bigInt := big.NewInt(int64(length))
+	for i := 0;i < len ;i++  {
+		randomInt,_ := rand.Int(rand.Reader,bigInt)
+		container += string(str[randomInt.Int64()])
+	}
+	return container
 }

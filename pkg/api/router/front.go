@@ -25,5 +25,5 @@ func Front(e *gin.Engine) {
 	v1.GET("/chapters/:id", V1ChaptersController.Get)
 
 	V1WechatController := &controllersFront.WechatController{}
-	v1.POST("/wechat/callback", V1WechatController.Callback)
+	v1.GET("/wechat/callback", V1WechatController.Callback)
 }

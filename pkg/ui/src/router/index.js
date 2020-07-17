@@ -90,7 +90,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     name: 'Operation',
     meta: {
-      title: '运营管理',
+      title: '运营',
       icon: 'component'
     },
     children: [
@@ -123,7 +123,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     name: 'Novels',
     meta: {
-      title: '小说管理',
+      title: '小说',
       icon: 'component'
     },
     children: [
@@ -205,7 +205,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     name: 'Comics',
     meta: {
-      title: '漫画管理',
+      title: '漫画',
       icon: 'component'
     },
     children: [
@@ -280,7 +280,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     name: 'Distributor',
     meta: {
-      title: '分销管理',
+      title: '分销',
       icon: 'component'
     },
     children: [
@@ -326,6 +326,25 @@ export const asyncRoutes = [
         hidden: true,
         meta: { title: '结算设置', icon: 'list' }
       },
+    ]
+  },
+  {
+    path: '/settings',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Settings',
+    meta: {
+      title: '设置',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: '/setting/wechat',
+        component: () => import('@/views/setting/wechat'),
+        name: 'WechatSetting',
+        hidden: false,
+        meta: { title: '微信设置', icon: 'list' }
+      }
     ]
   },
 

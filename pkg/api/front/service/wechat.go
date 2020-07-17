@@ -1,17 +1,24 @@
 package service
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	wechatSdk "github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	offConfig "github.com/silenceper/wechat/v2/officialaccount/config"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"github.com/spf13/viper"
+	"lime/pkg/api/front/dao"
 	"lime/pkg/api/front/domain/wechat"
 )
+var ConfigDao = dao.ConfigDao{}
 
 type WechatService struct{}
-
+type wechatSettingBase struct {
+	Url string
+	Token string
+	Encodingaeskey string
+}
 func (ws WechatService) Callback(c *gin.Context) {
 	wc := wechatSdk.NewWechat()
 	redisOpts := &cache.RedisOpts{
@@ -22,11 +29,18 @@ func (ws WechatService) Callback(c *gin.Context) {
 		IdleTimeout: 60, //second
 	}
 	redisCache := cache.NewRedis(redisOpts)
+	config := ConfigDao.GetByCode("wechatSetting")
+	value := config.Config_value
+	settingBase := &wechatSettingBase{}
+	errSetting := json.Unmarshal(value,&settingBase)
+	if errSetting != nil {
+		return
+	}
 	cfg := &offConfig.Config{
 		AppID:          viper.GetString("wechat.appid"),
 		AppSecret:      viper.GetString("wechat.appsecret"),
-		Token:          viper.GetString("wechat.token"),
-		EncodingAESKey: viper.GetString("wechat.encodingaeskey"),
+		Token:          settingBase.Token,
+		EncodingAESKey: settingBase.Encodingaeskey,
 		Cache:          redisCache,
 	}
 	officialAccount := wc.GetOfficialAccount(cfg)
