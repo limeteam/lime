@@ -14,11 +14,17 @@ import (
 var ConfigDao = dao.ConfigDao{}
 
 type WechatService struct{}
-type wechatSettingBase struct {
+type WechatSetting struct {
 	Url string
 	Token string
 	Encodingaeskey string
 }
+type WechatBaseSetting struct {
+	Appid string
+	AppSecret string
+	IpWhitelist string
+}
+
 func (ws WechatService) Callback(c *gin.Context) {
 	wc := wechatSdk.NewWechat()
 	redisOpts := &cache.RedisOpts{
@@ -31,16 +37,24 @@ func (ws WechatService) Callback(c *gin.Context) {
 	redisCache := cache.NewRedis(redisOpts)
 	config := ConfigDao.GetByCode("wechatSetting")
 	value := config.Config_value
-	settingBase := &wechatSettingBase{}
-	errSetting := json.Unmarshal(value,&settingBase)
+	setting := &WechatSetting{}
+	errSetting := json.Unmarshal(value,&setting)
 	if errSetting != nil {
 		return
 	}
+
+	wechatBaseSetting := ConfigDao.GetByCode("wechatBaseSetting")
+	wechatBaseSettingvalue := wechatBaseSetting.Config_value
+	settingBase := &WechatBaseSetting{}
+	errBaseSetting := json.Unmarshal(wechatBaseSettingvalue,&settingBase)
+	if errBaseSetting != nil {
+		return
+	}
 	cfg := &offConfig.Config{
-		AppID:          viper.GetString("wechat.appid"),
-		AppSecret:      viper.GetString("wechat.appsecret"),
-		Token:          settingBase.Token,
-		EncodingAESKey: settingBase.Encodingaeskey,
+		AppID:          settingBase.Appid,
+		AppSecret:      settingBase.AppSecret,
+		Token:          setting.Token,
+		EncodingAESKey: setting.Encodingaeskey,
 		Cache:          redisCache,
 	}
 	officialAccount := wc.GetOfficialAccount(cfg)

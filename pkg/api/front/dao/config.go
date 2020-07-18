@@ -17,6 +17,10 @@ func (c ConfigDao) Get(id int) model.Config {
 
 func (c ConfigDao) GetByCode(code string) model.Config {
 	var Config model.Config
+	//configCache, err := cache.Get(code)
+	//if err == nil {
+	//	return configCache
+	//}
 	db := db.GetGormDB()
 	db.Where("config_code = ?", code).First(&Config)
 	return Config

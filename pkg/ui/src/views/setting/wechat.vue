@@ -10,7 +10,7 @@
                 style="float: right; padding: 3px 0"
                 type="text"
                 @click="handleEdit"
-                v-if="disableEditBase == 1"
+                v-if="disableEdit == 1"
               >编辑</el-button>
               <el-button
                 style="float: right; padding: 3px 0"
@@ -29,7 +29,7 @@
               >
                 <el-form-item label="URL" prop="url">
                   <el-col :span="20">
-                    <el-input v-model="form.url" :disabled="disableEditBase == 1" />
+                    <el-input v-model="form.url" :disabled="disableEdit == 1" />
                   </el-col>
                   <el-col :span="4" style="padding-left:10px;">
                     <button
@@ -43,7 +43,7 @@
                 </el-form-item>
                 <el-form-item label="Token" prop="token">
                   <el-col :span="17">
-                    <el-input v-model="form.token" :disabled="disableEditBase == 1" />
+                    <el-input v-model="form.token" :disabled="disableEdit == 1" />
                   </el-col>
                   <el-col :span="2" style="padding-left:10px;">
                     <button
@@ -55,12 +55,12 @@
                     />
                   </el-col>
                   <el-col :span="2" style="padding-left:5px;">
-                    <el-button @click="genRandom" :disabled="disableEditBase == 1">随机生成</el-button>
+                    <el-button @click="genRandom" :disabled="disableEdit == 1">随机生成</el-button>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="EncodingAESKey" prop="encodingaeskey">
                   <el-col :span="20">
-                    <el-input v-model="form.encodingaeskey" :disabled="disableEditBase == 1" />
+                    <el-input v-model="form.encodingaeskey" :disabled="disableEdit == 1" />
                   </el-col>
                   <el-col :span="4" style="padding-left:10px;">
                     <button
@@ -87,29 +87,40 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>公众号开发信息</span>
-              <el-button style="float: right; padding: 3px 0" type="text" @click="saveData">编辑</el-button>
+              <el-button
+                style="float: right; padding: 3px 0"
+                type="text"
+                @click="handleEditBase"
+                v-if="disableEditBase == 1"
+              >编辑</el-button>
+              <el-button
+                style="float: right; padding: 3px 0"
+                type="text"
+                @click="saveBaseData"
+                v-else
+              >保存</el-button>
             </div>
             <div class="text item">
               <el-form
-                ref="dataForm2"
-                :model="form"
+                ref="dataBaseForm"
+                :model="formBase"
                 label-position="left"
                 label-width="200px"
                 size="small"
               >
-                <el-form-item label="开发者ID(AppID)" prop="title">
-                  <el-col :span="20">
-                    <el-input v-model="form.title" :disabled="true" />
+                <el-form-item label="开发者ID(AppID)" prop="appid">
+                  <el-col :span="10">
+                    <el-input v-model="formBase.appid" :disabled="disableEditBase == 1" />
                   </el-col>
                 </el-form-item>
-                <el-form-item label="开发者密码(AppSecret)" prop="title">
-                  <el-col :span="17">
-                    <el-input v-model="form.title" :disabled="true" />
+                <el-form-item label="开发者密码(AppSecret)" prop="appsecret">
+                  <el-col :span="15">
+                    <el-input v-model="formBase.appsecret" :disabled="disableEditBase == 1" />
                   </el-col>
                 </el-form-item>
-                <el-form-item label="IP白名单" prop="title">
+                <el-form-item label="IP白名单" prop="ip_whitelist">
                   <el-col :span="20">
-                    <el-input v-model="form.title" :disabled="true" />
+                    <el-input v-model="formBase.ip_whitelist" :disabled="disableEditBase == 1" />
                   </el-col>
                 </el-form-item>
               </el-form>
@@ -117,7 +128,9 @@
           </el-card>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="菜单配置" name="second"></el-tab-pane>
+      <el-tab-pane label="菜单配置" name="second">
+
+      </el-tab-pane>
       <el-tab-pane label="菜单链接" name="third">菜单链接</el-tab-pane>
     </el-tabs>
   </div>
@@ -130,17 +143,24 @@ export default {
   data() {
     return {
       activeName: "first",
+      disableEdit: 1,
       disableEditBase: 1,
       form: {
         url: "",
         token: "",
         encodingaeskey: "",
-        msg_encrypt_type: 1
+        msg_encrypt_type: 1,
+      },
+      formBase: {
+        appid: "",
+        appsecret: "",
+        ip_whitelist: ""
       }
     };
   },
   mounted() {
     this.getSetting();
+    this.getBaseSetting();
   },
   methods: {
     handleClick(tab, event) {
@@ -149,6 +169,9 @@ export default {
       //   }
     },
     handleEdit() {
+      this.disableEdit = 0;
+    },
+    handleEditBase() {
       this.disableEditBase = 0;
     },
     onCopy: function() {
@@ -159,7 +182,7 @@ export default {
       alert("复制失败");
     },
     saveData() {
-      this.disableEditBase = 1;
+      this.disableEdit = 1;
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           var data = {
@@ -177,12 +200,35 @@ export default {
         }
       });
     },
+    saveBaseData() {
+      this.disableEditBase = 1;
+      this.$refs["dataBaseForm"].validate(valid => {
+        if (valid) {
+          var data = {
+            config_code: "wechatBaseSetting",
+            config_value: this.formBase
+          };
+          wechatSetting("wechatBaseSetting", data).then(() => {
+            this.$notify({
+              title: "成功",
+              message: "保存成功",
+              type: "success",
+              duration: 2000
+            });
+          });
+        }
+      });
+    },
     async getSetting() {
       this.loading = true;
       try {
         const list = await getWetchatSetting("wechatSetting");
         if (list.data.result !== null) {
           this.form = list.data.result;
+        }
+        const baseSetting = await getWetchatSetting("wechatBaseSetting");
+        if (baseSetting.data.result !== null) {
+          this.formBase = baseSetting.data.result;
         }
       } finally {
         this.loading = false;
