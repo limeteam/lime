@@ -5,6 +5,7 @@ import (
 	"lime/pkg/api/admin/dto"
 	"lime/pkg/api/admin/service"
 	"lime/pkg/api/utils/e"
+	"lime/pkg/common/cache"
 )
 
 var ConfigService = service.ConfigService{}
@@ -54,6 +55,7 @@ func (C *ConfigController) EditByCode(c *gin.Context) {
 	var Dto dto.ConfigUpdateDto
 	if C.BindAndValidate(c, &Dto) {
 		affected := ConfigService.UpdateByCode(Dto)
+		cache.Del(Dto.Config_code)
 		if affected > 0 {
 			C.Ok(c, "更新成功")
 			return

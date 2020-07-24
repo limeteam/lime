@@ -1,7 +1,9 @@
 package dao
 
 import (
+	"gorm.io/datatypes"
 	"lime/pkg/api/admin/model"
+	"lime/pkg/common/cache"
 	"lime/pkg/common/db"
 )
 
@@ -15,13 +17,14 @@ func (c ConfigDao) Get(id int) model.Config {
 	return Config
 }
 
-func (c ConfigDao) GetByCode(code string) model.Config {
+func (c ConfigDao) GetByCode(code string) datatypes.JSON {
 	var Config model.Config
-	//configCache, err := cache.Get(code)
-	//if err == nil {
-	//	return configCache
-	//}
+	configCache, err := cache.Get(code)
+	if err == nil {
+		return datatypes.JSON(configCache)
+	}
 	db := db.GetGormDB()
 	db.Where("config_code = ?", code).First(&Config)
-	return Config
+	cache.Set(code, string(Config.Config_value), 3600)
+	return Config.Config_value
 }

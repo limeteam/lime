@@ -36,17 +36,15 @@ func (ws WechatService) Callback(c *gin.Context) {
 	}
 	redisCache := cache.NewRedis(redisOpts)
 	config := ConfigDao.GetByCode("wechatSetting")
-	value := config.Config_value
 	setting := &WechatSetting{}
-	errSetting := json.Unmarshal(value,&setting)
+	errSetting := json.Unmarshal(config,&setting)
 	if errSetting != nil {
 		return
 	}
 
 	wechatBaseSetting := ConfigDao.GetByCode("wechatBaseSetting")
-	wechatBaseSettingvalue := wechatBaseSetting.Config_value
 	settingBase := &WechatBaseSetting{}
-	errBaseSetting := json.Unmarshal(wechatBaseSettingvalue,&settingBase)
+	errBaseSetting := json.Unmarshal(wechatBaseSetting,&settingBase)
 	if errBaseSetting != nil {
 		return
 	}

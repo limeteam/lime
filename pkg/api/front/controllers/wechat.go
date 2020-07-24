@@ -9,6 +9,7 @@ import (
 type WechatController struct {
 	controllers.BaseController
 }
+
 var WechatService = service.WechatService{}
 
 func (C *WechatController) Callback(c *gin.Context) {
